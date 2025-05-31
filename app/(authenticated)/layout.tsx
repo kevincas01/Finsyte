@@ -10,8 +10,9 @@ export default async function AuthenticatedLayout({
 }) {
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <div className="flex flex-row sticky top-0">
+      <div className="flex flex-row">
         <SideBar />
+
         <div className="p-5 flex flex-col flex-1 bg-gray-50">{children}</div>
       </div>
     </div>

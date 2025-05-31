@@ -1,0 +1,65 @@
+"use client";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import GradientButton from "./Buttons/GradientButton";
+const SideBarItems = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    icon: <DashboardOutlinedIcon />,
+  },
+  {
+    label: "Accounts",
+    href: "/accounts",
+    icon: <AccountBalanceOutlinedIcon />, 
+  },
+  {
+    label: "Transactions",
+    href: "/transactions",
+    icon: <AttachMoneyOutlinedIcon />,
+  },
+  {
+    label: "Budgets",
+    href: "/budgets",
+    icon: <PieChartOutlineOutlinedIcon />,
+  },
+  {
+    label: "Goals",
+    href: "/goals",
+    icon: <TrackChangesOutlinedIcon />, 
+  },
+  {
+    label: "Settings",
+    href: "/settings",
+    icon: <SettingsOutlinedIcon />,
+  },
+];
+
+const SideBar = () => {
+  return (
+    <div className="flex flex-col w-50 h-screen border-r border-gray-200">
+      <div className="p-5 border-b-gray-200 border-b">
+        <h1 className="font-bold text-xl text-primaryBlue">Finport</h1>
+      </div>
+      <div className="p-5 flex flex-1 flex-col gap-3">
+        {SideBarItems.map((item) => (
+          <div
+            key={item.label}
+            className="hover:bg-gray-100 p-2 rounded-md text-gray-600 font-medium hover:text-black cursor-pointer flex flex-row items-center gap-2"
+          >
+            {item.icon} {item.label}
+          </div>
+        ))}
+      </div>
+      <div className="p-5 w-full flex flex-col ">
+        <GradientButton text="Sign Out" onClickFunction={() => {}} />
+      </div>
+    </div>
+  );
+};
+
+export default SideBar;

@@ -10,7 +10,7 @@ const SignInForm = ({ onTabSwitch }: SignInFormProps) => {
   return (
     <div className="p-10 flex flex-col gap-4 my-auto">
       <div className="text-center">
-        <h2 className="font-semibold text-3xl">SignIn</h2>
+        <h2 className="font-semibold text-3xl">Sign In</h2>
       </div>
 
       <TextInput

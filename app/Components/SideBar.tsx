@@ -41,7 +41,7 @@ const SideBarItems = [
 
 const SideBar = () => {
   return (
-    <div className="flex flex-col w-50 h-screen border-r border-gray-200">
+    <div className="sticky top-0 flex flex-col w-50 h-screen border-r border-gray-200">
       <div className="p-5 border-b-gray-200 border-b">
         <h1 className="font-bold text-xl text-primaryBlue">Finsyte</h1>
       </div>

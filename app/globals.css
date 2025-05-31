@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-
   --primary-blue: #2563eb;
   --primary-green: #22c55e;
 }
@@ -11,11 +10,14 @@
   --color-foreground: var(--foreground);
   --color-primaryBlue: var(--primary-blue);
   --color-primaryGreen: var(--primary-green);
-  --shadow-main: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  --shadow-main: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
+  --shadow-card: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
-
 
 body {
   background: var(--background);

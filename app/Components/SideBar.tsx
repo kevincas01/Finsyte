@@ -6,6 +6,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import GradientButton from "./Buttons/GradientButton";
+import { usePathname } from "next/navigation";
 const SideBarItems = [
   {
     label: "Dashboard",
@@ -15,7 +16,7 @@ const SideBarItems = [
   {
     label: "Accounts",
     href: "/accounts",
-    icon: <AccountBalanceOutlinedIcon />, 
+    icon: <AccountBalanceOutlinedIcon />,
   },
   {
     label: "Transactions",
@@ -30,7 +31,7 @@ const SideBarItems = [
   {
     label: "Goals",
     href: "/goals",
-    icon: <TrackChangesOutlinedIcon />, 
+    icon: <TrackChangesOutlinedIcon />,
   },
   {
     label: "Settings",
@@ -40,6 +41,8 @@ const SideBarItems = [
 ];
 
 const SideBar = () => {
+  const currentPath = usePathname();
+
   return (
     <div className="sticky top-0 flex flex-col w-50 h-screen border-r border-gray-200">
       <div className="p-5 border-b-gray-200 border-b">
@@ -49,7 +52,11 @@ const SideBar = () => {
         {SideBarItems.map((item) => (
           <div
             key={item.label}
-            className="hover:bg-gray-100 p-2 rounded-md text-gray-600 font-medium hover:text-black cursor-pointer flex flex-row items-center gap-2"
+            className={` p-2 rounded-md ${
+              currentPath == item.href
+                ? "bg-primaryBlue/10 border border-primaryBlue/50 text-primaryBlue"
+                : " hover:bg-gray-100 hover:text-black text-gray-600"
+            } font-medium  cursor-pointer flex flex-row items-center gap-2`}
           >
             {item.icon} {item.label}
           </div>

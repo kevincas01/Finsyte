@@ -2,6 +2,7 @@ import BalancesCard from "@/app/Components/Dashboard/BalancesCard";
 import BillsCard from "@/app/Components/Dashboard/BillsCard";
 import DebtCard from "@/app/Components/Dashboard/DebtCard";
 import ExpensesCard from "@/app/Components/Dashboard/ExpensesCard";
+import RecentTransactionsCard from "@/app/Components/Dashboard/RecentTransactionsCard";
 const DashboardPage = () => {
   return (
     <div className="flex flex-col gap-5">
@@ -17,6 +18,8 @@ const DashboardPage = () => {
         <DebtCard />
         <BillsCard />
       </div>
+
+      <RecentTransactionsCard/>
     </div>
   );
 };

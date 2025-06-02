@@ -66,7 +66,7 @@ const SideBar = () => {
         ))}
       </div>
       <div className="p-5 w-full flex flex-col ">
-        <GradientButton text="Sign Out" onClickFunction={() => {}} />
+        <GradientButton text="Sign Out" onClick={() => {}} />
       </div>
     </div>
   );

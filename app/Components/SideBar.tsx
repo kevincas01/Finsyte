@@ -7,6 +7,7 @@ import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import GradientButton from "./Buttons/GradientButton";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 const SideBarItems = [
   {
     label: "Dashboard",
@@ -58,7 +59,9 @@ const SideBar = () => {
                 : " hover:bg-gray-100 hover:text-black text-gray-600"
             } font-medium  cursor-pointer flex flex-row items-center gap-2`}
           >
-            {item.icon} {item.label}
+            <Link href={item.href}>
+              {item.icon} {item.label}
+            </Link>
           </div>
         ))}
       </div>

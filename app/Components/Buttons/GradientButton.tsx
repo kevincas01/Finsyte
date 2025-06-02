@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface GradientButtonProps {
-  text: string;
+  children: ReactNode;
   onClick: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
@@ -11,7 +11,7 @@ interface GradientButtonProps {
 }
 
 const GradientButton = ({
-  text,
+  children,
   onClick,
   type = "button",
   disabled = false,
@@ -29,7 +29,7 @@ const GradientButton = ({
       ${className}`}
       aria-busy={loading}
     >
-      {loading ? "Loading..." : text}
+      {loading ? "Loading..." : children}
     </button>
   );
 };

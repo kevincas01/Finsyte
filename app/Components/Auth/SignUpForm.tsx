@@ -19,7 +19,9 @@ const SignUpForm = ({ onTabSwitch }: SignUpFormProps) => {
         icon="email"
       />
       <PasswordInput />
-      <GradientButton text="Sign Up" onClick={handleSignIn} />
+      <GradientButton  onClick={handleSignIn} >
+      Sign Up
+      </GradientButton>
 
       <div className="flex items-center gap-4 w-full text-gray-500 text-sm">
         <div className="flex-grow border-t border-gray-300" />

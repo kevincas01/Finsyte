@@ -44,7 +44,7 @@ const PasswordInput = ({
           name={name}
           type={viewingPassword ? "text" : "password"}
           placeholder={placeholder}
-          className="flex-1 outline-none bg-transparent text-sm"
+          className="flex-1 outline-none bg-transparent text-gray-800"
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           required={required}

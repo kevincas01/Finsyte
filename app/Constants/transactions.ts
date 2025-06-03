@@ -1,4 +1,23 @@
-import { TransactionCategory } from "../Types/transactions";
+import { Transaction, TransactionCategory } from "../Types/transactions";
+
+
+export const TransactionCategories: TransactionCategory[] = [
+  "Automotive",
+  "Fees & Adjustments",
+  "Education",
+  "Food & Drink",
+  "Utilities",
+  "Entertainment",
+  "Travel",
+  "Shopping",
+  "Professional Services",
+  "Personal",
+  "Miscellaneous",
+  "Health & wellness",
+  "Gifts & donations",
+  "Gas",
+  "Groceries",
+];
 
 export const TransactionCategoryColors: Record<TransactionCategory, string> = {
     "Automotive": "bg-gray-100 text-gray-700",
@@ -18,3 +37,96 @@ export const TransactionCategoryColors: Record<TransactionCategory, string> = {
     "Groceries": "bg-lime-100 text-lime-700",
   };
   
+
+  export const mockTransactions: Transaction[] = [
+    {
+      id: "1",
+      date: "2025-06-01",
+      merchant: "Starbucks",
+      description: "Iced Latte and Croissant",
+      category: "Food & Drink",
+      account: "Chase Checking",
+      amount: -8.75,
+    },
+    {
+      id: "2",
+      date: "2025-06-02",
+      merchant: "Amazon",
+      description: "Bluetooth Headphones",
+      category: "Shopping",
+      account: "Capital One Credit",
+      amount: -59.99,
+    },
+    {
+      id: "3",
+      date: "2025-06-03",
+      merchant: "Netflix",
+      description: "Monthly subscription",
+      category: "Entertainment",
+      account: "Chase Checking",
+      amount: -15.49,
+    },
+    {
+      id: "4",
+      date: "2025-06-03",
+      merchant: "Shell Gas Station",
+      description: "Fuel for car",
+      category: "Gas",
+      account: "Wells Fargo Debit",
+      amount: -42.30,
+    },
+    {
+      id: "5",
+      date: "2025-06-04",
+      merchant: "Princeton University",
+      description: "Course material fee",
+      category: "Education",
+      account: "Chase Checking",
+      amount: -120.0,
+    },
+    {
+      id: "6",
+      date: "2025-06-04",
+      merchant: "Whole Foods",
+      description: "Weekly groceries",
+      category: "Groceries",
+      account: "Capital One Credit",
+      amount: -98.21,
+    },
+    {
+      id: "7",
+      date: "2025-06-05",
+      merchant: "Verizon",
+      description: "Monthly phone bill",
+      category: "Utilities",
+      account: "Wells Fargo Debit",
+      amount: -85.00,
+    },
+    {
+      id: "8",
+      date: "2025-06-05",
+      merchant: "Uber",
+      description: "Ride to airport",
+      category: "Travel",
+      account: "Chase Checking",
+      amount: -34.75,
+    },
+    {
+      id: "9",
+      date: "2025-06-06",
+      merchant: "CVS Pharmacy",
+      description: "Prescription refill",
+      category: "Health & wellness",
+      account: "Wells Fargo Debit",
+      amount: -18.50,
+    },
+    {
+      id: "10",
+      date: "2025-06-07",
+      merchant: "GoFundMe",
+      description: "Donation to local cause",
+      category: "Gifts & donations",
+      account: "Chase Checking",
+      amount: -25.00,
+    },
+  ];

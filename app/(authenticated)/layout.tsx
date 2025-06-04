@@ -1,6 +1,3 @@
-// app/(authenticated)/layout.tsx
-
-import React from "react";
 import SideBar from "../Components/SideBar";
 
 export default async function AuthenticatedLayout({
@@ -9,7 +6,7 @@ export default async function AuthenticatedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="font-[family-name:var(--font-geist-sans)]">
+    <div className="">
       <div className="flex flex-row">
         <SideBar />
 

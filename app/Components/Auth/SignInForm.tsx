@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import GradientButton from "../Buttons/GradientButton";
 import PasswordInput from "../Inputs/PasswordInput";
 import TextInput from "../Inputs/TextInput";
@@ -6,7 +8,12 @@ interface SignInFormProps {
   onTabSwitch: () => void;
 }
 const SignInForm = ({ onTabSwitch }: SignInFormProps) => {
-  const handleSignIn = () => {};
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignIn = () => {
+    console.log({ email, password });
+  };
   return (
     <div className="p-10 flex flex-col gap-4 my-auto">
       <div className="text-center">
@@ -17,9 +24,18 @@ const SignInForm = ({ onTabSwitch }: SignInFormProps) => {
         label="Email Address"
         placeholder="Enter your email"
         icon="email"
+        value={email}
+        onChange={(value) => {
+          setEmail(value);
+        }}
       />
-      <PasswordInput />
-      <GradientButton  onClick={handleSignIn} >
+      <PasswordInput
+        value={password}
+        onChange={(value) => {
+          setPassword(value);
+        }}
+      />
+      <GradientButton onClick={handleSignIn}>
         <p>Sign In</p>
       </GradientButton>
 

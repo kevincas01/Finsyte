@@ -24,7 +24,7 @@ const BlueButton = ({
       onClick={onClick}
       disabled={disabled || loading}
       className={`cursor-pointer text-center text-primaryBlue rounded-md font-medium px-4 py-2 transition duration-200 ease-in-out 
-      bg-primaryBlue/20 border border-gray-200 hover:bg-primaryBlue/30  flex gap-2 flex-1 justify-center
+      bg-primaryBlue/20 border border-gray-200 hover:bg-primaryBlue/30  flex gap-2 flex-1 justify-center items-center
       ${disabled || loading ? "opacity-50 cursor-not-allowed" : ""} 
       ${className}`}
       aria-busy={loading}

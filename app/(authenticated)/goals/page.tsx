@@ -1,8 +1,6 @@
-"use client";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import GradientButton from "@/app/Components/Buttons/GradientButton";
 import Overview from "@/app/Components/Goals/Overview";
 import GoalCard from "@/app/Components/Goals/GoalCard";
+import GoalsHeader from "@/app/Components/Goals/GoalsHeader";
 
 export const mockGoals = [
   {
@@ -48,20 +46,7 @@ const Goals = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex justify-between items-center">
-        <div className="">
-          <h1 className="font-bold text-3xl">Goals</h1>
-          <p className="text-gray-600 mt-1">
-            Track Progress towards your financial objectives.
-          </p>
-        </div>
-        <div className="flex flex-row gap-3">
-          <GradientButton onClick={() => {}}>
-            <AddOutlinedIcon />
-            <p>Add Goal</p>
-          </GradientButton>
-        </div>
-      </div>
+      <GoalsHeader/>
       <Overview
         totalGoals={mockGoals.length}
         totalTargetAmount={totalTargetAmount}

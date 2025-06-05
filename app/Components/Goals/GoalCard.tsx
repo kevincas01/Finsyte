@@ -1,16 +1,16 @@
+"use client";
 import { formatCurrency, formatDate } from "@/app/Utils/format";
 import ProgressBar from "../ProgressBar";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import NeutralButton from "../Buttons/NeutralButton";
 import BlueButton from "../Buttons/BlueButton";
 interface Goal {
-    title: string;
-    description?: string;
-    currentAmount: number;
-    targetAmount: number;
-    targetDate: string; // formatted as 'YYYY-MM-DD'
-  }
-  
+  title: string;
+  description?: string;
+  currentAmount: number;
+  targetAmount: number;
+  targetDate: string; // formatted as 'YYYY-MM-DD'
+}
 
 interface GoalCardProps {
   goal: Goal;
@@ -60,16 +60,12 @@ const GoalCard = ({ goal }: GoalCardProps) => {
         <span className="text-sm text-gray-600 flex items-center gap-1">
           <CalendarMonthOutlinedIcon fontSize="inherit" />
           <p>Deadline</p>
-        <p>{formatDate(goal.targetDate)}</p>
+          <p>{formatDate(goal.targetDate)}</p>
         </span>
       </div>
       <div className="flex flex-row gap-5">
-        <NeutralButton onClick={()=>{}}>
-            Add Money
-        </NeutralButton>
-        <BlueButton onClick={()=>{}}>
-            Edit Goal
-        </BlueButton>
+        <NeutralButton onClick={() => {}}>Add Money</NeutralButton>
+        <BlueButton onClick={() => {}}>Edit Goal</BlueButton>
       </div>
     </div>
   );

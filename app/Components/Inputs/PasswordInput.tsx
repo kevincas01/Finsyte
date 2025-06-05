@@ -20,7 +20,7 @@ const PasswordInput = ({
   value,
   onChange,
   name = "password",
-  required = false,
+  required = true,
 }: PasswordInputProps) => {
   const [viewingPassword, setViewingPassword] = useState(false);
 
@@ -36,32 +36,34 @@ const PasswordInput = ({
         </label>
       )}
 
-      <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-white focus-within:ring-2 focus-within:ring-primaryBlue">
-        <HttpsOutlinedIcon className="text-gray-500 mr-2" />
+      <div className="relative w-full">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+          <HttpsOutlinedIcon fontSize="small" />
+        </span>
+
+        <button
+          type="button"
+          onClick={togglePasswordVisibility}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 focus:outline-none cursor-pointer"
+          aria-label={viewingPassword ? "Hide password" : "Show password"}
+        >
+          {viewingPassword ? (
+            <VisibilityOffOutlinedIcon fontSize="small" />
+          ) : (
+            <VisibilityOutlinedIcon fontSize="small" />
+          )}
+        </button>
 
         <input
           id={name}
           name={name}
           type={viewingPassword ? "text" : "password"}
           placeholder={placeholder}
-          className="flex-1 outline-none bg-transparent text-gray-800"
+          className="w-full border border-gray-300 rounded-lg py-2 pr-10 pl-10 bg-white outline-none focus:ring-2 focus:ring-primaryBlue text-gray-800 font-medium"
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           required={required}
         />
-
-        <button
-          type="button"
-          onClick={togglePasswordVisibility}
-          className="ml-2 text-gray-500 focus:outline-none cursor-pointer"
-          aria-label={viewingPassword ? "Hide password" : "Show password"}
-        >
-          {viewingPassword ? (
-            <VisibilityOffOutlinedIcon />
-          ) : (
-            <VisibilityOutlinedIcon />
-          )}
-        </button>
       </div>
     </div>
   );

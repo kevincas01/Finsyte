@@ -1,19 +1,16 @@
-import React from "react";
+import { getBudgetColor, getGoalColor } from "../Utils/colors";
 
 interface ProgressBarProps {
   percentage: number; // value from 0 to 100
+  mode: "goal" | "budget";
 }
 
-const getColor = (percentage: number): string => {
-  if (percentage < 33) return "bg-red-500";
-  if (percentage < 66) return "bg-yellow-500";
-  return "bg-green-500";
-};
+const ProgressBar = ({ percentage, mode }: ProgressBarProps) => {
+  const clampedPercentage=Math.min(Math.max(percentage, 0), 100)
+  const progressWidth = `${clampedPercentage}%`;
+  const getColor = mode === "budget" ? getBudgetColor : getGoalColor;
 
-const ProgressBar = ({ percentage }: ProgressBarProps) => {
-  const progressWidth = `${Math.min(Math.max(percentage, 0), 100)}%`; // Clamp between 0–100
   const progressColor = getColor(percentage);
-
   return (
     <div className="w-full h-2 bg-gray-300 rounded-full overflow-hidden">
       <div

@@ -7,7 +7,7 @@ const TransactionsPage = () => {
   return (
     <div className="flex flex-col gap-5">
       <TransactionsHeader />
-      <TransactionsClient transactions={[]} />
+      <TransactionsClient transactions={transactions} />
     </div>
   );
 };

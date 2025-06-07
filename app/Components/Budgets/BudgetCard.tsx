@@ -83,7 +83,7 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
       </div>
 
       <div className="flex flex-row gap-5">
-        <NeutralButton onClick={() => {}}>Edit Money</NeutralButton>
+        <NeutralButton onClick={() => {}}>Edit Budget</NeutralButton>
       </div>
     </div>
   );

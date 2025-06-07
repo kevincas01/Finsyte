@@ -7,16 +7,32 @@ import DropdownInput from "../Inputs/DropdownInput";
 import TextInput from "../Inputs/TextInput";
 import ModalContainer from "./ModalContainer";
 import NumberInput from "../Inputs/NumberInput";
+import { Goal } from "@/app/Types/goals";
 
 interface GoalsModalProps {
   onClose: () => void;
+  onSubmit: (goal: Goal) => void;
+  mode?: "create" | "edit";
+  initialGoal?: Goal;
 }
-const GoalsModal = ({ onClose }: GoalsModalProps) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [targetAmount, setTargetAmount] = useState<number | "">("");
-  const [currentAmount, setCurrentAmount] = useState<number | "">("");
+
+const GoalsModal = ({
+  onClose,
+  onSubmit,
+  mode = "create",
+  initialGoal,
+}: GoalsModalProps) => {
+  const [title, setTitle] = useState(initialGoal?.title || "");
+  const [description, setDescription] = useState(
+    initialGoal?.description || ""
+  );
+  const [category, setCategory] = useState(initialGoal?.category || "");
+  const [targetAmount, setTargetAmount] = useState<number | "">(
+    initialGoal?.targetAmount ?? ""
+  );
+  const [currentAmount, setCurrentAmount] = useState<number | "">(
+    initialGoal?.currentAmount ?? ""
+  );
 
   const categoryOptions = GoalCategories.map((category) => ({
     label: category,
@@ -24,7 +40,11 @@ const GoalsModal = ({ onClose }: GoalsModalProps) => {
   }));
 
   return (
-    <ModalContainer title="Create New Goal" onClose={onClose} isOpen={true}>
+    <ModalContainer
+      title={mode === "edit" ? "Edit Goal" : "Create New Goal"}
+      onClose={onClose}
+      isOpen={true}
+    >
       <TextInput
         label="Goal Title *"
         placeholder="e.g. Emergency Fund"
@@ -57,18 +77,23 @@ const GoalsModal = ({ onClose }: GoalsModalProps) => {
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
-            // Handle form submission here
-            console.log({
+            const updatedGoal = {
               title,
               description,
               category,
-              targetAmount,
-              currentAmount,
-            });
+              targetAmount: Number(targetAmount),
+              currentAmount: Number(currentAmount),
+              targetDate:
+                initialGoal?.targetDate ??
+                new Date().toISOString().slice(0, 10), // fallback
+            };
+            onSubmit(updatedGoal);
+            onClose();
           }}
         >
-          Create Goal
+          {mode === "edit" ? "Save Changes" : "Create Goal"}
         </GradientButton>
+
         <NeutralButton onClick={onClose}>Cancel</NeutralButton>
       </div>
     </ModalContainer>

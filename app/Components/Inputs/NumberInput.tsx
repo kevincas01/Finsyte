@@ -3,8 +3,10 @@ import React from "react";
 interface NumberInputProps {
   label: string;
   required?: boolean;
-  value: number | ""; 
+  value: number | "";
   onChange: (value: number | "") => void;
+  minValue?: number;
+  maxValue?: number;
 }
 
 const NumberInput = ({
@@ -12,6 +14,8 @@ const NumberInput = ({
   required = true,
   value,
   onChange,
+  minValue,
+  maxValue,
 }: NumberInputProps) => {
   return (
     <div className="w-full">
@@ -29,7 +33,8 @@ const NumberInput = ({
             const val = e.target.value;
             onChange(val === "" ? "" : Number(val));
           }}
-          min={0}
+          min={minValue !== undefined ? minValue : undefined}
+          max={maxValue !== undefined ? maxValue : undefined}
           required={required}
           className="w-full border border-gray-300 rounded-lg py-2 px-3 bg-white outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 font-medium"
         />

@@ -13,6 +13,9 @@ const GoalsHeader = () => {
           onClose={() => {
             setIsModalOpen(false);
           }}
+          onSubmit={(goal) => {
+            console.log("New goal:", goal);
+          }}
         />
       )}
 

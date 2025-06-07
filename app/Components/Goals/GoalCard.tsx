@@ -4,13 +4,9 @@ import ProgressBar from "../ProgressBar";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import NeutralButton from "../Buttons/NeutralButton";
 import BlueButton from "../Buttons/BlueButton";
-interface Goal {
-  title: string;
-  description?: string;
-  currentAmount: number;
-  targetAmount: number;
-  targetDate: string; // formatted as 'YYYY-MM-DD'
-}
+import { Goal } from "@/app/Types/goals";
+import { useState } from "react";
+import GoalsModal from "../Modal/GoalsModal";
 
 interface GoalCardProps {
   goal: Goal;
@@ -18,6 +14,7 @@ interface GoalCardProps {
 
 const GoalCard = ({ goal }: GoalCardProps) => {
   const { title, description, currentAmount, targetAmount } = goal;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const remainingAmount = Math.max(targetAmount - currentAmount, 0);
   const progress =
@@ -25,6 +22,16 @@ const GoalCard = ({ goal }: GoalCardProps) => {
 
   return (
     <div className="p-5 bg-white rounded-md border border-gray-200 flex flex-col gap-2">
+      {isModalOpen && (
+        <GoalsModal
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={(updatedGoal) => {
+            console.log("Updated goal:", updatedGoal);
+          }}
+          mode="edit"
+          initialGoal={goal}
+        />
+      )}
       <p className="font-semibold">{title}</p>
       {description && <p className="text-sm">{description}</p>}
 
@@ -65,7 +72,7 @@ const GoalCard = ({ goal }: GoalCardProps) => {
       </div>
       <div className="flex flex-row gap-5">
         <NeutralButton onClick={() => {}}>Add Money</NeutralButton>
-        <BlueButton onClick={() => {}}>Edit Goal</BlueButton>
+        <BlueButton onClick={() => setIsModalOpen(true)}>Edit Goal</BlueButton>
       </div>
     </div>
   );

@@ -8,16 +8,29 @@ import DropdownInput from "../Inputs/DropdownInput";
 import NumberInput from "../Inputs/NumberInput";
 import TextInput from "../Inputs/TextInput";
 import ModalContainer from "./ModalContainer";
+import { Transaction } from "@/app/Types/transactions";
 
 interface TransactionsModalProps {
   onClose: () => void;
+  onSubmit: (transaction: Transaction) => void;
+  initialTransaction?: Transaction;
+  mode?: "create" | "edit";
 }
 
-const TransactionsModal = ({ onClose }: TransactionsModalProps) => {
-  const [merchant, setMerchant] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState<number | "">("");
-  const [category, setCategory] = useState("");
+const TransactionsModal = ({
+  onClose,
+  onSubmit,
+  initialTransaction,
+  mode = "create",
+}: TransactionsModalProps) => {
+  const [merchant, setMerchant] = useState(initialTransaction?.merchant || "");
+  const [description, setDescription] = useState(
+    initialTransaction?.description || ""
+  );
+  const [amount, setAmount] = useState<number | "">(
+    initialTransaction?.amount ?? ""
+  );
+  const [category, setCategory] = useState(initialTransaction?.category || "");
 
   const categoryOptions = TransactionCategories.map((category) => ({
     label: category,
@@ -25,11 +38,7 @@ const TransactionsModal = ({ onClose }: TransactionsModalProps) => {
   }));
 
   return (
-    <ModalContainer
-      title="Add new Transaction"
-      onClose={onClose}
-      isOpen={true}
-    >
+    <ModalContainer title= {mode === "edit" ? "Edit Transaction" : "Add New Transaction"} onClose={onClose} isOpen={true}>
       <TextInput
         label="Merchant *"
         placeholder="e.g. Starbucks"
@@ -57,10 +66,21 @@ const TransactionsModal = ({ onClose }: TransactionsModalProps) => {
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
-            console.log({ merchant, description, amount, category });
+            const newTransaction: Transaction = {
+              id: initialTransaction?.id || crypto.randomUUID(), // handle new vs existing
+              date: initialTransaction?.date || new Date().toISOString().slice(0, 10),
+              merchant,
+              description,
+              category: category as Transaction["category"],
+              account: initialTransaction?.account || "", // You may want to support account selection later
+              amount: Number(amount),
+            };
+        
+            onSubmit(newTransaction);
+            onClose();
           }}
         >
-          Add Transaction
+          {mode === "edit" ? "Save Changes" : "Add Transaction"}
         </GradientButton>
         <NeutralButton onClick={onClose}>Cancel</NeutralButton>
       </div>

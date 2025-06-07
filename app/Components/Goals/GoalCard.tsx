@@ -54,7 +54,7 @@ const GoalCard = ({ goal }: GoalCardProps) => {
           <p className="text-sm text-gray-600">Progress</p>
           <p className="font-semibold text-base">{progress.toFixed(0)}%</p>
         </div>
-        <ProgressBar percentage={progress} />
+        <ProgressBar percentage={progress} mode="goal" />
       </div>
       <div className="flex justify-between items-center mb-1">
         <span className="text-sm text-gray-600 flex items-center gap-1">

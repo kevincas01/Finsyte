@@ -67,12 +67,14 @@ const GoalsModal = ({
         label="Target Amount *"
         value={targetAmount}
         onChange={(value) => setTargetAmount(value)}
+        minValue={0}
       />
       <NumberInput
         label="Current Amount"
         required={false}
         value={currentAmount}
         onChange={(value) => setCurrentAmount(value)}
+        minValue={0}
       />
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton

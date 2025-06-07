@@ -43,6 +43,7 @@ const BudgetModal = ({ onClose }: BudgetModalProps) => {
         label="Budget Amount *"
         value={budgetAmount}
         onChange={(value) => setBudgetAmount(value)}
+        minValue={0}
       />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">

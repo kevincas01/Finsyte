@@ -5,11 +5,8 @@ import NeutralButton from "@/app/Components/Buttons/NeutralButton";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import TransactionsModal from "@/app/Components/Modal/TransactionsModal";
-import { Transaction } from "@/app/Types/transactions";
 
 const TransactionsHeader = () => {
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

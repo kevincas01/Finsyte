@@ -1,6 +1,8 @@
 import { TransactionCategoryColors } from "@/app/Constants/transactions";
 import { Transaction } from "@/app/Types/transactions";
 import { formatDate } from "@/app/Utils/format";
+import { useState } from "react";
+import TransactionsModal from "../Modal/TransactionsModal";
 
 type TransactionsTableProps = {
   transactions: Transaction[];
@@ -9,8 +11,28 @@ type TransactionsTableProps = {
 const TransactionsTable: React.FC<TransactionsTableProps> = ({
   transactions = [],
 }) => {
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="rounded-md border border-gray-200 overflow-x-auto">
+      {isModalOpen && selectedTransaction && (
+        <TransactionsModal
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedTransaction(null);
+          }}
+          onSubmit={(updatedTransaction) => {
+            // Replace the old transaction with the updated one (lifting state needed in parent if data lives above)
+            console.log("Updated transaction:", updatedTransaction);
+            setIsModalOpen(false);
+            setSelectedTransaction(null);
+          }}
+          initialTransaction={selectedTransaction}
+          mode="edit"
+        />
+      )}
+
       <table className="min-w-full text-sm bg-white">
         <thead>
           <tr>
@@ -21,6 +43,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
               "Category",
               "Account",
               "Amount",
+              "Actions",
             ].map((header) => (
               <th
                 key={header}
@@ -62,6 +85,17 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                       {txn.amount.toFixed(2)}
                     </span>
                   )}
+                </td>
+                <td className="px-6 py-4">
+                  <button
+                    onClick={() => {
+                      setSelectedTransaction(txn);
+                      setIsModalOpen(true);
+                    }}
+                    className="text-blue-600 hover:underline text-sm cursor-pointer"
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))

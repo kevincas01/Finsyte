@@ -13,6 +13,7 @@ const BudgetHeader = () => {
           onClose={() => {
             setIsModalOpen(false);
           }}
+          onSubmit={(budget)=>console.log(budget)}
         />
       )}
 

@@ -7,14 +7,28 @@ import ModalContainer from "./ModalContainer";
 import NumberInput from "../Inputs/NumberInput";
 import { BudgetPeriods } from "@/app/Constants/budgets";
 import { TransactionCategories } from "@/app/Constants/transactions";
+import { Budget, BudgetPeriodCategory } from "@/app/Types/budget";
 
 interface BudgetModalProps {
   onClose: () => void;
+  onSubmit: (budget: Budget) => void;
+  mode?: "create" | "edit";
+  initialBudget?: Budget;
 }
-const BudgetModal = ({ onClose }: BudgetModalProps) => {
-  const [category, setCategory] = useState("");
-  const [period, setPeriod] = useState("");
-  const [budgetAmount, setBudgetAmount] = useState<number | "">("");
+const BudgetModal = ({
+  onClose,
+  onSubmit,
+  mode = "create",
+  initialBudget,
+}: BudgetModalProps) => {
+  const [category, setCategory] = useState(initialBudget?.category || "");
+  const [period, setPeriod] = useState(initialBudget?.period || "Monthly");
+  const [budgetAmount, setBudgetAmount] = useState<number | "">(
+    initialBudget?.budgetAmount || ""
+  );
+  const [currentAmount, setCurentAmount] = useState<number | "">(
+    initialBudget?.currentAmount || ""
+  );
 
   const categoryOptions = TransactionCategories.map((category) => ({
     label: category,
@@ -26,7 +40,11 @@ const BudgetModal = ({ onClose }: BudgetModalProps) => {
   }));
 
   return (
-    <ModalContainer title="Create New Budget" onClose={onClose} isOpen={true}>
+    <ModalContainer
+      title={mode === "edit" ? "Edit Budget" : "Create New Budget"}
+      onClose={onClose}
+      isOpen={true}
+    >
       <DropdownInput
         label="Category *"
         options={categoryOptions}
@@ -37,7 +55,7 @@ const BudgetModal = ({ onClose }: BudgetModalProps) => {
         label="Budget Period"
         options={periodOptions}
         value={period}
-        onChange={(value) => setPeriod(value as string)}
+        onChange={(value) => setPeriod(value as BudgetPeriodCategory)}
       />
       <NumberInput
         label="Budget Amount *"
@@ -45,18 +63,27 @@ const BudgetModal = ({ onClose }: BudgetModalProps) => {
         onChange={(value) => setBudgetAmount(value)}
         minValue={0}
       />
+      <NumberInput
+        label="Current Amount"
+        value={currentAmount}
+        onChange={(value) => setCurentAmount(value)}
+        minValue={0}
+      />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
-            // Handle form submission here
-            console.log({
+            const budget = {
               category,
-              budgetAmount,
-            });
+              period,
+              budgetAmount: Number(budgetAmount),
+              currentAmount: Number(currentAmount),
+            };
+            onSubmit(budget);
+            onClose();
           }}
         >
-          Create Budget
+          {mode === "edit" ? "Save Changes" : "Create Budget"}
         </GradientButton>
         <NeutralButton onClick={onClose}>Cancel</NeutralButton>
       </div>

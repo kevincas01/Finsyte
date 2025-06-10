@@ -5,6 +5,7 @@ import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import GradientButton from "./Buttons/GradientButton";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -33,6 +34,11 @@ const SideBarItems = [
     label: "Goals",
     href: "/goals",
     icon: <TrackChangesOutlinedIcon />,
+  },
+  {
+    label: "Recurring",
+    href: "/recurring",
+    icon: <CalendarTodayOutlinedIcon />,
   },
   {
     label: "Settings",

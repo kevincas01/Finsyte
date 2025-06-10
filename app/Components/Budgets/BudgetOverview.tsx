@@ -1,21 +1,45 @@
 import { formatCurrency } from "@/app/Utils/format";
 import ProgressBar from "../ProgressBar";
+import { BudgetPeriodCategory } from "@/app/Types/budget";
 
 interface BudgetOverviewProps {
+  budgetPeriod: BudgetPeriodCategory;
   totalBudgetAmount: number;
   totalSavedAmount: number;
 }
 
 const BudgetOverview = ({
+  budgetPeriod,
   totalBudgetAmount,
   totalSavedAmount,
 }: BudgetOverviewProps) => {
   const progress =
     totalBudgetAmount > 0 ? (totalSavedAmount / totalBudgetAmount) * 100 : 0;
 
+  const now = new Date();
+  let title = "";
+
+  switch (budgetPeriod) {
+    case "Monthly":
+      title = `${now.toLocaleString("default", {
+        month: "long",
+      })} ${now.getFullYear()} Overview`;
+      break;
+    case "Quarterly":
+      const month = now.getMonth();
+      const quarter = Math.floor(month / 3) + 1;
+      title = `Q${quarter} ${now.getFullYear()} Overview`;
+      break;
+    case "Yearly":
+      title = `${now.getFullYear()} Overview`;
+      break;
+    default:
+      title = "Budget Overview";
+  }
+
   return (
     <div className="border border-gray-200 rounded-md bg-white p-5">
-      <h2 className="font-semibold">Budget Overview</h2>
+      <h2 className="font-semibold">{title}</h2>
 
       <div className="grid grid-cols-3 gap-5 mt-5">
         <div className="flex flex-col items-center justify-center">

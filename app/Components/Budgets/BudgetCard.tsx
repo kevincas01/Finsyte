@@ -2,14 +2,11 @@
 import { formatCurrency } from "@/app/Utils/format";
 import ProgressBar from "../ProgressBar";
 import NeutralButton from "../Buttons/NeutralButton";
-import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
-import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
-interface Budget {
-  title: string;
-  currentAmount: number;
-  budgetAmount: number;
-}
-
+import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import { useState } from "react";
+import BudgetModal from "../Modal/BudgetModal";
+import { Budget } from "@/app/Types/budget";
 interface BudgetCardProps {
   budget: Budget;
 }
@@ -40,16 +37,26 @@ const getBudgetStatus = (percentage: number) => {
 };
 
 const BudgetCard = ({ budget }: BudgetCardProps) => {
-  const { title, currentAmount, budgetAmount } = budget;
+  const { category, currentAmount, budgetAmount } = budget;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const remainingAmount = Math.max(budgetAmount - currentAmount, 0);
-  const progress =
-    budgetAmount > 0 ? (currentAmount / budgetAmount) * 100 : 0;
+  const progress = budgetAmount > 0 ? (currentAmount / budgetAmount) * 100 : 0;
 
   return (
     <div className="p-5 bg-white rounded-md border border-gray-200 flex flex-col gap-2">
+      {isModalOpen && (
+        <BudgetModal
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={(updatedGoal) => {
+            console.log("Updated goal:", updatedGoal);
+          }}
+          mode="edit"
+          initialBudget={budget}
+        />
+      )}
       <div className="flex justify-between">
-        <p className="font-semibold">{title}</p>
+        <p className="font-semibold">{category}</p>
         {getBudgetStatus(progress)}
       </div>
 
@@ -83,7 +90,9 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
       </div>
 
       <div className="flex flex-row gap-5">
-        <NeutralButton onClick={() => {}}>Edit Budget</NeutralButton>
+        <NeutralButton onClick={() => setIsModalOpen(true)}>
+          Edit Budget
+        </NeutralButton>
       </div>
     </div>
   );

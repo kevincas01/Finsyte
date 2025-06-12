@@ -38,7 +38,11 @@ const TransactionsModal = ({
   }));
 
   return (
-    <ModalContainer title= {mode === "edit" ? "Edit Transaction" : "Add New Transaction"} onClose={onClose} isOpen={true}>
+    <ModalContainer
+      title={mode === "edit" ? "Edit Transaction" : "Add New Transaction"}
+      onClose={onClose}
+      isOpen={true}
+    >
       <TextInput
         label="Merchant *"
         placeholder="e.g. Starbucks"
@@ -68,7 +72,9 @@ const TransactionsModal = ({
           onClick={() => {
             const newTransaction: Transaction = {
               id: initialTransaction?.id || crypto.randomUUID(), // handle new vs existing
-              date: initialTransaction?.date || new Date().toISOString().slice(0, 10),
+              date:
+                initialTransaction?.date ||
+                new Date().toISOString().slice(0, 10),
               merchant,
               description,
               category: category as Transaction["category"],

@@ -11,14 +11,14 @@ export const recurringExpenses: Recurring[] = [
   {
     name: "Rent",
     amount: 1500,
-    category: "Housing",
+    category: "Utilities",
     frequency: "Monthly",
     targetDate: "2025-07-01",
   },
   {
     name: "Renter's Insurance",
     amount: 20,
-    category: "Housing",
+    category: "Utilities",
     frequency: "Monthly",
     targetDate: "2025-07-01",
   },

@@ -11,5 +11,5 @@ export interface Recurring {
   amount: number;
   category: TransactionCategory;
   frequency: RecurringFrequencyCategory;
-  targetDate?: string;
+  targetDate: string;
 }

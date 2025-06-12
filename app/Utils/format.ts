@@ -17,12 +17,8 @@ export const formatNumberWithCommas = (value: number): string => {
 // Dates
 
 export function formatDate(input: string): string {
-  const date = new Date(input);
-  if (isNaN(date.getTime())) return "Invalid Date";
-
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = date.getFullYear();
+  const [year, month, day] = input.split("-");
+  if (!year || !month || !day) return "Invalid Date";
 
   return `${month}/${day}/${year}`;
 }

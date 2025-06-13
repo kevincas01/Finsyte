@@ -1,10 +1,11 @@
 import React from "react";
 
 interface NumberInputProps {
-  label: string;
+  label?: string;
   required?: boolean;
   value: number | "";
   onChange: (value: number | "") => void;
+  placeHolder?:string;
   minValue?: number;
   maxValue?: number;
 }
@@ -14,6 +15,7 @@ const NumberInput = ({
   required = true,
   value,
   onChange,
+  placeHolder,
   minValue,
   maxValue,
 }: NumberInputProps) => {
@@ -27,7 +29,7 @@ const NumberInput = ({
       <div className="relative w-full">
         <input
           type="number"
-          placeholder="0"
+          placeholder={placeHolder}
           value={value}
           onChange={(e) => {
             const val = e.target.value;

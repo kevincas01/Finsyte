@@ -5,8 +5,8 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 interface TextInputProps {
-  label: string;
-  placeholder: string;
+  label?: string;
+  placeholder?: string;
   value: string;
   icon?: "email" | "lock" | "person" | "search";
   required?: boolean;

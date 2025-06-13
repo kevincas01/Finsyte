@@ -1,16 +1,15 @@
 "use client";
 import { useState } from "react";
-import { GoalCategories } from "@/app/Constants/goals";
 import GradientButton from "../Buttons/GradientButton";
 import NeutralButton from "../Buttons/NeutralButton";
 import DropdownInput from "../Inputs/DropdownInput";
 import TextInput from "../Inputs/TextInput";
 import ModalContainer from "./ModalContainer";
 import NumberInput from "../Inputs/NumberInput";
-import { Goal } from "@/app/Types/goals";
 import { RecurringFrequencies } from "@/app/Constants/recurring";
 import { Recurring, RecurringFrequencyCategory } from "@/app/Types/recurring";
 import { TransactionCategories } from "@/app/Constants/transactions";
+import DateInput from "../Inputs/DateInput";
 
 interface RecurringModalProps {
   onClose: () => void;
@@ -34,6 +33,8 @@ const RecurringModal = ({
   const [amount, setAmount] = useState<number | "">(
     initialRecurring?.amount ?? ""
   );
+
+  const [targetDate, setTargetDate] = useState(initialRecurring?.targetDate||"");
 
   const categoryOptions = TransactionCategories.map((category) => ({
     label: category,
@@ -68,22 +69,21 @@ const RecurringModal = ({
         minValue={0}
       />
       <DropdownInput
-        label="Budget Period"
-        options={frequencyOptions}
-        value={frequency}
-        onChange={(value) => setFrequency(value as RecurringFrequencyCategory)}
-      />
-      <DropdownInput
         label="Category"
         options={categoryOptions}
         value={category}
         onChange={(value) => setCategory(value as string)}
       />
       <DropdownInput
-        label="Category"
+        label="Frequency"
         options={frequencyOptions}
         value={frequency}
         onChange={(value) => setFrequency(value as RecurringFrequencyCategory)}
+      />
+      <DateInput
+        label="Start Date"
+        value={targetDate}
+        onChange={(value) => setTargetDate(value)}
       />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">
@@ -94,6 +94,7 @@ const RecurringModal = ({
               frequency,
               category,
               amount: Number(amount),
+              targetDate
             };
             onSubmit(recurringPayment);
             onClose();

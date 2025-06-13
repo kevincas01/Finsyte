@@ -22,7 +22,7 @@ const DropdownInput: React.FC<DropdownInputProps> = ({
   return (
     <div className="flex flex-col flex-1">
       {label && (
-        <label className="block mb-1 text-sm font-medium">{label}</label>
+        <label className="block mb-1 text-sm font-medium text-gray-700">{label}</label>
       )}
       <select
         value={value}

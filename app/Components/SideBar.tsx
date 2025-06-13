@@ -6,6 +6,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
 import GradientButton from "./Buttons/GradientButton";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -39,6 +40,11 @@ const SideBarItems = [
     label: "Recurring",
     href: "/recurring",
     icon: <CalendarTodayOutlinedIcon />,
+  },
+  {
+    label: "Tools",
+    href: "/tools",
+    icon: <BuildOutlinedIcon />,
   },
   {
     label: "Settings",

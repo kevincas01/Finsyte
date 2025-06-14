@@ -21,6 +21,10 @@ const BillSplitterTool = () => {
   const [billAmount, setBillAmount] = useState<number | "">("");
   const [peopleAmount, setPeopleAmount] = useState<number | "">("");
 
+  const itemsTotal = itemList.reduce(
+    (totalAmount, item) => totalAmount + item.price,
+    0
+  );
   return (
     <div className="shadow-card p-5 rounded-md bg-white">
       <div className=" grid grid-cols-2">
@@ -102,10 +106,12 @@ const BillSplitterTool = () => {
         </div>
         <SplitResults
           splitMode={splitMode}
-          subtotal={Number(billAmount)}
+          subtotal={splitMode === "Even" ? Number(billAmount) : itemsTotal}
           tax={Number(tax)}
           tip={Number(tip)}
           peopleAmount={Number(peopleAmount)}
+          peopleList={peopleList}
+          itemList={itemList}
         />
       </div>
     </div>

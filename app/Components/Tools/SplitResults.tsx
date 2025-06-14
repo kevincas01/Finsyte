@@ -1,5 +1,6 @@
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import { BillItem } from "@/app/Types/tools";
 
 interface SplitResultsProps {
   splitMode: "Even" | "Itemized";
@@ -7,6 +8,8 @@ interface SplitResultsProps {
   tax: number;
   tip: number;
   peopleAmount: number;
+  peopleList: string[];
+  itemList: BillItem[];
 }
 
 const SplitResults = ({
@@ -15,6 +18,8 @@ const SplitResults = ({
   tax,
   tip,
   peopleAmount,
+  peopleList,
+  itemList,
 }: SplitResultsProps) => {
   const grandTotal = subtotal + (subtotal * tax) / 100 + tip;
   return (
@@ -63,12 +68,52 @@ const SplitResults = ({
                 <PeopleOutlineOutlinedIcon /> Per Person
               </span>
               <span className="text-3xl font-semibold">
-                ${grandTotal.toFixed(2)}
+                ${(grandTotal/peopleAmount).toFixed(2)}
               </span>
-              <p className="text-gray-600 text-sm">Split between {peopleAmount} people</p>
+              <p className="text-gray-600 text-sm">
+                Split between {peopleAmount} people
+              </p>
             </div>
           ) : (
-            "Items Subtotal"
+            peopleList.map((person) => {
+              const itemsTotal = itemList
+                .filter((item) => item.assignedTo.includes(person))
+                .reduce(
+                  (sum, item) => sum + item.price / item.assignedTo.length,
+                  0
+                );
+
+              const personTax = (itemsTotal * tax) / 100;
+              const personTip =
+                itemsTotal > 0 && peopleList.length > 0
+                  ? tip / peopleList.length
+                  : 0;
+              const totalOwed = itemsTotal + personTax + personTip;
+
+              return (
+                <div
+                  key={person}
+                  className="bg-primaryBlue/20 rounded-md p-3 flex flex-col text-sm"
+                >
+                  <div className="text-primaryBlue flex justify-between text-lg">
+                    <p className="font-semibold">{person}</p>
+                    <p className="font-semibold">${totalOwed.toFixed(2)}</p>
+                  </div>
+                  <div className="text-gray-600 flex justify-between">
+                    <p className="">Items</p>
+                    <p className="">${itemsTotal.toFixed(2)}</p>
+                  </div>
+                  <div className="text-gray-600 flex justify-between">
+                    <p className="">Tax %</p>
+                    <p className="">${personTax.toFixed(2)}</p>
+                  </div>
+                  <div className="text-gray-600 flex justify-between">
+                    <p className="">Tip</p>
+                    <p className="">${personTip.toFixed(2)}</p>
+                  </div>
+                </div>
+              );
+            })
           )}
         </div>
       )}

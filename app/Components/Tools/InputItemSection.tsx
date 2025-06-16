@@ -8,17 +8,16 @@ interface ItemInputSectionProps {
   itemList: BillItem[];
   setItemList: React.Dispatch<React.SetStateAction<BillItem[]>>;
   peopleList: string[];
-  setBillAmount: React.Dispatch<React.SetStateAction<number | "">>;
 }
 
 const ItemInputSection = ({
   itemList,
   setItemList,
   peopleList,
-  setBillAmount,
+
 }: ItemInputSectionProps) => {
-  const [itemName, setItemName] = useState("");
-  const [itemPrice, setItemPrice] = useState<number | "">("");
+  const [itemNameInput, setItemNameInput] = useState("");
+  const [itemPriceInput, setItemPriceInput] = useState<string >("");
 
   const handlePersonToggle = (itemIndex: number, personName: string) => {
     setItemList((prev) =>
@@ -36,39 +35,33 @@ const ItemInputSection = ({
   };
 
   const handleAddItem = () => {
-    if (itemName && itemPrice !== "") {
+    if (itemNameInput && itemPriceInput !== "") {
       setItemList((prev) => [
         ...prev,
         {
-          name: itemName.trim(),
-          price: Number(itemPrice),
+          name: itemNameInput.trim(),
+          price: Number(itemPriceInput),
           assignedTo: [],
         },
       ]);
-      setBillAmount((prev) => {
-        const currentTotal = typeof prev === "number" ? prev : 0;
-        const price = typeof itemPrice === "number" ? itemPrice : 0;
-        return currentTotal + price;
-      });
-
-      setItemName("");
-      setItemPrice("");
+      setItemNameInput("");
+      setItemPriceInput("");
     }
   };
 
   return (
     <div className="flex flex-col gap-2">
       <div>
-        <p className="font-medium text-sm mb-1">Add Item</p>
+        <p className="font-medium text-sm mb-1 text-gray-700">Items ({itemList.length})</p>
         <div className="flex gap-2">
           <TextInput
             placeholder="Item name"
-            value={itemName}
-            onChange={(value) => setItemName(value)}
+            value={itemNameInput}
+            onChange={(value) => setItemNameInput(value)}
           />
           <NumberInput
-            value={itemPrice}
-            onChange={(value) => setItemPrice(Number(value))}
+            value={itemPriceInput}
+            onChange={(value) => setItemPriceInput(value)}
             minValue={0}
             placeHolder="Price"
           />
@@ -89,11 +82,7 @@ const ItemInputSection = ({
               <p>${it.price.toFixed(2)}</p>
               <button
                 onClick={() => {
-                  setBillAmount((prev) => {
-                    const currentTotal = typeof prev === "number" ? prev : 0;
-                    const price = typeof it.price === "number" ? it.price : 0;
-                    return currentTotal - price;
-                  });
+
                   setItemList((prev) =>
                     prev.filter((_, index) => index !== idx)
                   );

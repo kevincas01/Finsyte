@@ -3,8 +3,8 @@ import React from "react";
 interface NumberInputProps {
   label?: string;
   required?: boolean;
-  value: number | "";
-  onChange: (value: number | "") => void;
+  value: string | "";
+  onChange: (value: string | "") => void;
   placeHolder?:string;
   minValue?: number;
   maxValue?: number;
@@ -33,7 +33,7 @@ const NumberInput = ({
           value={value}
           onChange={(e) => {
             const val = e.target.value;
-            onChange(val === "" ? "" : Number(val));
+            onChange(val);
           }}
           min={minValue !== undefined ? minValue : undefined}
           max={maxValue !== undefined ? maxValue : undefined}

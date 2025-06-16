@@ -10,6 +10,7 @@ import { RecurringFrequencies } from "@/app/Constants/recurring";
 import { Recurring, RecurringFrequencyCategory } from "@/app/Types/recurring";
 import { TransactionCategories } from "@/app/Constants/transactions";
 import DateInput from "../Inputs/DateInput";
+import { TransactionCategory } from "@/app/Types/transactions";
 
 interface RecurringModalProps {
   onClose: () => void;
@@ -29,12 +30,16 @@ const RecurringModal = ({
     initialRecurring?.frequency || "Monthly"
   );
 
-  const [category, setCategory] = useState(initialRecurring?.category || "");
-  const [amount, setAmount] = useState<number | "">(
-    initialRecurring?.amount ?? ""
+  const [category, setCategory] = useState(
+    initialRecurring?.category || "Miscellaneous"
+  );
+  const [amountInput, setAmount] = useState<string>(
+    String(initialRecurring?.amount) ?? ""
   );
 
-  const [targetDate, setTargetDate] = useState(initialRecurring?.targetDate||"");
+  const [targetDate, setTargetDate] = useState(
+    initialRecurring?.targetDate || ""
+  );
 
   const categoryOptions = TransactionCategories.map((category) => ({
     label: category,
@@ -64,7 +69,7 @@ const RecurringModal = ({
       <NumberInput
         label="Current Amount"
         required={false}
-        value={amount}
+        value={amountInput}
         onChange={(value) => setAmount(value)}
         minValue={0}
       />
@@ -72,7 +77,7 @@ const RecurringModal = ({
         label="Category"
         options={categoryOptions}
         value={category}
-        onChange={(value) => setCategory(value as string)}
+        onChange={(value) => setCategory(value as TransactionCategory)}
       />
       <DropdownInput
         label="Frequency"
@@ -89,12 +94,13 @@ const RecurringModal = ({
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
+            const parsedAmount = Math.max(0, parseFloat(amountInput) || 0);
             const recurringPayment = {
               name,
               frequency,
               category,
-              amount: Number(amount),
-              targetDate
+              amount: parsedAmount,
+              targetDate,
             };
             onSubmit(recurringPayment);
             onClose();

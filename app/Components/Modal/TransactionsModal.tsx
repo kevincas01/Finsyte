@@ -27,9 +27,10 @@ const TransactionsModal = ({
   const [description, setDescription] = useState(
     initialTransaction?.description || ""
   );
-  const [amount, setAmount] = useState<number | "">(
-    initialTransaction?.amount ?? ""
+  const [amountInput, setAmountInput] = useState<string>(
+    String(initialTransaction?.amount) ?? ""
   );
+
   const [category, setCategory] = useState(initialTransaction?.category || "");
 
   const categoryOptions = TransactionCategories.map((category) => ({
@@ -57,8 +58,8 @@ const TransactionsModal = ({
       />
       <NumberInput
         label="Amount *"
-        value={amount}
-        onChange={(value) => setAmount(value)}
+        value={amountInput}
+        onChange={(value) => setAmountInput(value)}
       />
       <DropdownInput
         label="Category"
@@ -70,18 +71,20 @@ const TransactionsModal = ({
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
+            const parsedAmount = Math.max(0, parseFloat(amountInput) || 0);
+
             const newTransaction: Transaction = {
-              id: initialTransaction?.id || crypto.randomUUID(), // handle new vs existing
+              id: initialTransaction?.id || crypto.randomUUID(),
               date:
                 initialTransaction?.date ||
                 new Date().toISOString().slice(0, 10),
               merchant,
               description,
               category: category as Transaction["category"],
-              account: initialTransaction?.account || "", // You may want to support account selection later
-              amount: Number(amount),
+              account: initialTransaction?.account || "",
+              amount: parsedAmount,
             };
-        
+
             onSubmit(newTransaction);
             onClose();
           }}

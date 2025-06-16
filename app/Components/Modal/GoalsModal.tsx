@@ -27,11 +27,11 @@ const GoalsModal = ({
     initialGoal?.description || ""
   );
   const [category, setCategory] = useState(initialGoal?.category || "");
-  const [targetAmount, setTargetAmount] = useState<number | "">(
-    initialGoal?.targetAmount ?? ""
+  const [targetAmountInput, setTargetAmount] = useState<string>(
+    String(initialGoal?.targetAmount) || ""
   );
-  const [currentAmount, setCurrentAmount] = useState<number | "">(
-    initialGoal?.currentAmount ?? ""
+  const [currentAmountInput, setCurrentAmount] = useState<string>(
+    String(initialGoal?.currentAmount) || ""
   );
 
   const categoryOptions = GoalCategories.map((category) => ({
@@ -65,26 +65,35 @@ const GoalsModal = ({
       />
       <NumberInput
         label="Target Amount *"
-        value={targetAmount}
+        value={targetAmountInput}
         onChange={(value) => setTargetAmount(value)}
         minValue={0}
       />
       <NumberInput
         label="Current Amount"
         required={false}
-        value={currentAmount}
+        value={currentAmountInput}
         onChange={(value) => setCurrentAmount(value)}
         minValue={0}
       />
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
+            const parsedTargetAmount = Math.max(
+              0,
+              parseFloat(targetAmountInput) || 0
+            );
+            const parsedCurrentAmount = Math.max(
+              0,
+              parseFloat(currentAmountInput) || 0
+            );
+
             const updatedGoal = {
               title,
               description,
               category,
-              targetAmount: Number(targetAmount),
-              currentAmount: Number(currentAmount),
+              targetAmount: parsedTargetAmount,
+              currentAmount: parsedCurrentAmount,
               targetDate:
                 initialGoal?.targetDate ??
                 new Date().toISOString().slice(0, 10), // fallback

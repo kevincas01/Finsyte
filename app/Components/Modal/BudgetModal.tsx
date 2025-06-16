@@ -23,11 +23,11 @@ const BudgetModal = ({
 }: BudgetModalProps) => {
   const [category, setCategory] = useState(initialBudget?.category || "");
   const [period, setPeriod] = useState(initialBudget?.period || "Monthly");
-  const [budgetAmount, setBudgetAmount] = useState<number | "">(
-    initialBudget?.budgetAmount || ""
+  const [budgetAmountInput, setBudgetAmountInput] = useState<string>(
+    String(initialBudget?.budgetAmount) || ""
   );
-  const [currentAmount, setCurentAmount] = useState<number | "">(
-    initialBudget?.currentAmount || ""
+  const [currentAmountInput, setCurentAmountInput] = useState<string>(
+    String(initialBudget?.currentAmount) || ""
   );
 
   const categoryOptions = TransactionCategories.map((category) => ({
@@ -59,25 +59,34 @@ const BudgetModal = ({
       />
       <NumberInput
         label="Budget Amount *"
-        value={budgetAmount}
-        onChange={(value) => setBudgetAmount(value)}
+        value={budgetAmountInput}
+        onChange={(value) => setBudgetAmountInput(value)}
         minValue={0}
       />
       <NumberInput
         label="Current Amount"
-        value={currentAmount}
-        onChange={(value) => setCurentAmount(value)}
+        value={currentAmountInput}
+        onChange={(value) => setCurentAmountInput(value)}
         minValue={0}
       />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
+            const parsedBudgetAmount = Math.max(
+              0,
+              parseFloat(budgetAmountInput) || 0
+            );
+            const parsedCurrentAmount = Math.max(
+              0,
+              parseFloat(currentAmountInput) || 0
+            );
+
             const budget = {
               category,
               period,
-              budgetAmount: Number(budgetAmount),
-              currentAmount: Number(currentAmount),
+              budgetAmount: parsedBudgetAmount,
+              currentAmount: parsedCurrentAmount,
             };
             onSubmit(budget);
             onClose();

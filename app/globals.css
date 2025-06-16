@@ -23,6 +23,9 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+button{
+  cursor: pointer;
+}
 
 /* Remove Scrolling Behavior-bounce */
 body {

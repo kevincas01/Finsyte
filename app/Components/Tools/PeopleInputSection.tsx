@@ -11,22 +11,22 @@ const PeopleInputSection = ({
   peopleList,
   setPeopleList,
 }: PeopleInputSectionProps) => {
-  const [personName, setPersonName] = useState("");
+  const [personNameInput, setPersonNameInput] = useState("");
   return (
     <div className="flex flex-col gap-2">
       <div>
-        <p className="font-medium text-sm mb-1">People</p>
+        <p className="font-medium text-sm mb-1 text-gray-700">People ({peopleList.length})</p>
         <div className="flex gap-2">
           <TextInput
             placeholder="Enter person's name"
-            value={personName}
-            onChange={(value) => setPersonName(value)}
+            value={personNameInput}
+            onChange={(value) => setPersonNameInput(value)}
           />
           <button
             onClick={() => {
-              if (personName.trim()) {
-                setPeopleList((prev) => [...prev, personName.trim()]);
-                setPersonName("");
+              if (personNameInput.trim()) {
+                setPeopleList((prev) => [...prev, personNameInput.trim()]);
+                setPersonNameInput("");
               }
             }}
             className="bg-primaryBlue text-white px-3 rounded-md cursor-pointer"
@@ -39,15 +39,13 @@ const PeopleInputSection = ({
       <div className="flex flex-col gap-2">
         {peopleList.map((p, idx) => (
           <div className="bg-gray-50 rounded-md p-2" key={idx}>
-            
             <span className="flex gap-2 w-full justify-between items-center">
-              <p>{p}</p>
+              <p className="font-medium">{p}</p>
               <button
                 onClick={() => {
-                    setPeopleList((prev) =>
-                        prev.filter((_, index) => index !== idx)
-                      );
-                 
+                  setPeopleList((prev) =>
+                    prev.filter((_, index) => index !== idx)
+                  );
                 }}
                 className={`text-sm `}
               >
@@ -55,7 +53,6 @@ const PeopleInputSection = ({
               </button>
             </span>
           </div>
-
         ))}
       </div>
     </div>

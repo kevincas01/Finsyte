@@ -46,10 +46,12 @@ const GoalsModal = ({
       isOpen={true}
     >
       <TextInput
-        label="Goal Title *"
+        label="Goal Title"
         placeholder="e.g. Emergency Fund"
         value={title}
         onChange={(value) => setTitle(value)}
+        required={true}
+        showRequired={true}
       />
       <TextInput
         label="Description"
@@ -64,10 +66,13 @@ const GoalsModal = ({
         onChange={(value) => setCategory(value as string)}
       />
       <NumberInput
-        label="Target Amount *"
+        label="Target Amount"
         value={targetAmountInput}
         onChange={(value) => setTargetAmount(value)}
         minValue={0}
+        required={true}
+        showRequired={true}
+        placeHolder="0"
       />
       <NumberInput
         label="Current Amount"
@@ -75,6 +80,7 @@ const GoalsModal = ({
         value={currentAmountInput}
         onChange={(value) => setCurrentAmount(value)}
         minValue={0}
+        placeHolder="0"
       />
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton

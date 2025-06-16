@@ -51,23 +51,27 @@ const BudgetModal = ({
         value={category}
         onChange={(value) => setCategory(value as string)}
       />
-      <DropdownInput
-        label="Budget Period"
-        options={periodOptions}
-        value={period}
-        onChange={(value) => setPeriod(value as BudgetPeriodCategory)}
-      />
       <NumberInput
-        label="Budget Amount *"
+        label="Budget Amount"
         value={budgetAmountInput}
         onChange={(value) => setBudgetAmountInput(value)}
         minValue={0}
+        placeHolder="0.00"
+        required={true}
+        showRequired={true}
       />
       <NumberInput
         label="Current Amount"
         value={currentAmountInput}
         onChange={(value) => setCurentAmountInput(value)}
         minValue={0}
+        placeHolder="0.00"
+      />
+      <DropdownInput
+        label="Budget Period"
+        options={periodOptions}
+        value={period}
+        onChange={(value) => setPeriod(value as BudgetPeriodCategory)}
       />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">

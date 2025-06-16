@@ -9,6 +9,7 @@ interface TextInputProps {
   placeholder?: string;
   value: string;
   icon?: "email" | "lock" | "person" | "search";
+  showRequired?: boolean;
   required?: boolean;
   onChange: (value: string) => void;
 }
@@ -25,7 +26,8 @@ const TextInput = ({
   placeholder,
   value,
   icon,
-  required = true,
+  showRequired=false,
+  required = false,
   onChange,
 }: TextInputProps) => {
   const IconComponent = icon ? iconMap[icon] : null;
@@ -34,7 +36,7 @@ const TextInput = ({
     <div className="w-full">
       {label && (
         <label className="block mb-1 text-sm font-medium text-gray-700">
-          {label}
+          {label} {required && showRequired && "*"}
         </label>
       )}
       <div className="relative w-full">

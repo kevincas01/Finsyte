@@ -45,10 +45,12 @@ const TransactionsModal = ({
       isOpen={true}
     >
       <TextInput
-        label="Merchant *"
+        label="Merchant"
         placeholder="e.g. Starbucks"
         value={merchant}
         onChange={(value) => setMerchant(value)}
+        showRequired={true}
+        required={true}
       />
       <TextInput
         label="Description"
@@ -57,9 +59,12 @@ const TransactionsModal = ({
         onChange={(value) => setDescription(value)}
       />
       <NumberInput
-        label="Amount *"
+        label="Amount"
         value={amountInput}
         onChange={(value) => setAmountInput(value)}
+        required={true}
+        showRequired={true}
+        placeHolder="0.00"
       />
       <DropdownInput
         label="Category"

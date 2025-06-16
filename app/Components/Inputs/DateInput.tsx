@@ -2,27 +2,28 @@ import React from "react";
 
 interface DateInputProps {
   label: string;
+  showRequired?: boolean;
   required?: boolean;
-  value: string; 
+  value: string;
   onChange: (value: string) => void;
-  minDate?: string; 
+  minDate?: string;
   maxDate?: string;
 }
 
 const DateInput = ({
   label,
-  required = true,
+  showRequired = false,
+  required = false,
   value,
   onChange,
   minDate,
   maxDate,
 }: DateInputProps) => {
-    console.log(value)
   return (
     <div className="w-full">
       {label && (
         <label className="block mb-1 text-sm font-medium text-gray-700">
-          {label}
+          {label} {required && showRequired && "*"}
         </label>
       )}
       <div className="relative w-full">

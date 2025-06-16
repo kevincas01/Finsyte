@@ -20,7 +20,7 @@ const PasswordInput = ({
   value,
   onChange,
   name = "password",
-  required = true,
+  required = false,
 }: PasswordInputProps) => {
   const [viewingPassword, setViewingPassword] = useState(false);
 

@@ -28,12 +28,14 @@ const SignInForm = ({ onTabSwitch }: SignInFormProps) => {
         onChange={(value) => {
           setEmail(value);
         }}
+        required={true}
       />
       <PasswordInput
         value={password}
         onChange={(value) => {
           setPassword(value);
         }}
+        required={true}
       />
       <GradientButton onClick={handleSignIn}>
         <p>Sign In</p>

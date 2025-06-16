@@ -2,17 +2,19 @@ import React from "react";
 
 interface NumberInputProps {
   label?: string;
+  showRequired?: boolean;
   required?: boolean;
   value: string | "";
   onChange: (value: string | "") => void;
-  placeHolder?:string;
+  placeHolder?: string;
   minValue?: number;
   maxValue?: number;
 }
 
 const NumberInput = ({
   label,
-  required = true,
+  showRequired=false,
+  required = false,
   value,
   onChange,
   placeHolder,
@@ -23,7 +25,7 @@ const NumberInput = ({
     <div className="w-full">
       {label && (
         <label className="block mb-1 text-sm font-medium text-gray-700">
-          {label}
+          {label} {required && showRequired && "*"}
         </label>
       )}
       <div className="relative w-full">

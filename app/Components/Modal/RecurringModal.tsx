@@ -61,17 +61,21 @@ const RecurringModal = ({
       isOpen={true}
     >
       <TextInput
-        label="Name *"
+        label="Name"
         placeholder="e.g. Rent"
         value={name}
         onChange={(value) => setName(value)}
+        required={true}
+        showRequired={true}
       />
       <NumberInput
-        label="Current Amount"
-        required={false}
+        label="Amount"
         value={amountInput}
         onChange={(value) => setAmount(value)}
         minValue={0}
+        placeHolder="0.00"
+        required={true}
+        showRequired={true}
       />
       <DropdownInput
         label="Category"

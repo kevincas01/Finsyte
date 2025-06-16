@@ -104,7 +104,7 @@ const SplitResults = ({
                     <p className="">${itemsTotal.toFixed(2)}</p>
                   </div>
                   <div className="text-gray-600 flex justify-between">
-                    <p className="">Tax %</p>
+                    <p className="">Tax</p>
                     <p className="">${personTax.toFixed(2)}</p>
                   </div>
                   <div className="text-gray-600 flex justify-between">

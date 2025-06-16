@@ -1,43 +1,52 @@
 "use client";
 
-import { useState } from "react";
 import NumberInput from "../Inputs/NumberInput";
 import SplitResults from "./SplitResults";
 import PeopleInputSection from "./PeopleInputSection";
-import { BillItem } from "@/app/Types/tools";
 import ItemInputSection from "./InputItemSection";
+import { useBillSplitterState } from "@/app/Hooks/useBillSplitter";
 
 const BillSplitterTool = () => {
-  const [splitMode, setSplitMode] = useState<"Even" | "Itemized">("Even");
-  const [tax, setTax] = useState<number | "">("");
-  const [taxMode, setTaxMode] = useState<"Percent" | "Dollar">("Percent");
-  const [tip, setTip] = useState<number | "">("");
-  const [tipMode, setTipMode] = useState<"Percent" | "Dollar">("Percent");
+  const {
+    splitMode,
+    setSplitMode,
+    billAmountInput,
+    setBillAmountInput,
+    peopleAmountInput,
+    setPeopleAmountInput,
+    taxInput,
+    setTaxInput,
+    tipInput,
+    setTipInput,
+    peopleList,
+    setPeopleList,
+    itemList,
+    setItemList,
+  } = useBillSplitterState();
 
-  const [peopleList, setPeopleList] = useState<string[]>([]);
-  const [itemList, setItemList] = useState<BillItem[]>([]);
-
+  const billAmount = parseFloat(billAmountInput) || 0;
+  const peopleAmount = Math.max(1, parseInt(peopleAmountInput) || 0);
+  const tax = Math.max(0, parseFloat(taxInput) || 0);
+  const tip = Math.max(0, parseFloat(tipInput) || 0);
   const splitModes = ["Even", "Itemized"] as const;
-  const [billAmount, setBillAmount] = useState<number | "">("");
-  const [peopleAmount, setPeopleAmount] = useState<number | "">("");
-
   const itemsTotal = itemList.reduce(
     (totalAmount, item) => totalAmount + item.price,
     0
   );
+  const subtotal = splitMode === "Even" ? billAmount : itemsTotal;
   return (
     <div className="shadow-card p-5 rounded-md bg-white">
       <div className=" grid grid-cols-2">
         <div className="flex flex-col gap-2 pr-5  border-r border-r-gray-200">
-          <div className="">
+          <div>
             <p className="font-semibold">Advanced Bill Splitter</p>
             <p className="text-gray-600">
               Split bills evenly or by items with custom assignments
             </p>
           </div>
-          <div className="">
-            <p className="block mb-1 text-sm font-medium ">Split Mode</p>
-            <div className="flex gap-5">
+          <div>
+            <p className="block mb-1 text-sm font-medium text-gray-700">Split Mode</p>
+            <div className="flex gap-2">
               {splitModes.map((mode) => (
                 <button
                   key={mode}
@@ -60,16 +69,16 @@ const BillSplitterTool = () => {
             <>
               <NumberInput
                 label="Total Bill Amount *"
-                value={billAmount}
+                value={billAmountInput}
                 placeHolder="0.00"
-                onChange={(value) => setBillAmount(value)}
+                onChange={setBillAmountInput}
                 minValue={0}
               />
               <NumberInput
                 label="Number of People *"
                 placeHolder="2"
-                value={peopleAmount}
-                onChange={(value) => setPeopleAmount(value)}
+                value={peopleAmountInput}
+                onChange={(value) => setPeopleAmountInput(value)}
                 minValue={1}
               />
             </>
@@ -84,32 +93,31 @@ const BillSplitterTool = () => {
                 itemList={itemList}
                 setItemList={setItemList}
                 peopleList={peopleList}
-                setBillAmount={setBillAmount}
               />
             </>
           )}
 
           <NumberInput
-            label="Tax"
-            value={tax}
+            label="Tax %"
+            value={taxInput}
             placeHolder="7"
-            onChange={(value) => setTax(value)}
+            onChange={(value) => setTaxInput(value)}
             minValue={0}
           />
           <NumberInput
-            label="Tip"
+            label="Tip $"
             placeHolder="0"
-            value={tip}
-            onChange={(value) => setTip(value)}
+            value={tipInput}
+            onChange={(value) => setTipInput(value)}
             minValue={0}
           />
         </div>
         <SplitResults
           splitMode={splitMode}
-          subtotal={splitMode === "Even" ? Number(billAmount) : itemsTotal}
-          tax={Number(tax)}
-          tip={Number(tip)}
-          peopleAmount={Number(peopleAmount)}
+          subtotal={subtotal}
+          tax={tax}
+          tip={tip}
+          peopleAmount={peopleAmount}
           peopleList={peopleList}
           itemList={itemList}
         />

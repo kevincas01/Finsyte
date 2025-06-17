@@ -1,14 +1,19 @@
 "use server";
-import { createSupabaseClient } from "../Clients/supabaseClient";
+import { createSupabaseClient, createSupabaseServerClient } from "../Clients/supabaseClient";
 
 export async function getUserSession() {
-  const supabase = await createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
 
   return supabase.auth.getSession();
 }
+export async function getUser() {
+  const supabase = await createSupabaseServerClient();
+
+  return supabase.auth.getUser();
+}
 
 export async function signInUser(data: AuthData) {
-  const supabase = await createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
 
   // Sign in the user
   const { data: signInData, error: signInError } =
@@ -27,7 +32,7 @@ export async function signInUser(data: AuthData) {
 }
 
 export async function signUpUser(data: AuthData) {
-  const supabase = await createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
 
   const result = await supabase.auth.signUp({
     email: data.email,
@@ -42,8 +47,8 @@ export async function signUpUser(data: AuthData) {
   }
 }
 
-export async function signOut() {
-  const supabase = await createSupabaseClient();
+export async function signOutUser() {
+  const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.signOut();
   if (error) {

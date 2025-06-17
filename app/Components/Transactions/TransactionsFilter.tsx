@@ -24,12 +24,16 @@ const TransactionsFilter = ({
     label: c,
     value: c,
   }));
-  const accounts = ["Chase Checking", "Capital One Credit","Wells Fargo Debit"]; // Replace with real values if needed
+  const accounts = [
+    "Chase Checking",
+    "Capital One Credit",
+    "Wells Fargo Debit",
+  ]; // Replace with real values if needed
 
   const accountOptions = accounts.map((a) => ({ label: a, value: a }));
 
   return (
-    <div className="bg-white p-6 shadow-card flex flex-row gap-5 rounded-md">
+    <div className="bg-white p-6 shadow-card flex flex-col lg:flex-row gap-5 rounded-md">
       <TextInput
         label="Search"
         placeholder="Search Transactions"
@@ -39,21 +43,23 @@ const TransactionsFilter = ({
           onSearchChange(value);
         }}
       />
-      <DropdownInput
-        label="Category"
-        options={[
-          { label: "All Categories", value: "All" },
-          ...categoryOptions,
-        ]}
-        value={category}
-        onChange={(option) => onCategoryChange(option as string)}
-      />
-      <DropdownInput
-        label="Account"
-        options={[{ label: "All Accounts", value: "All" }, ...accountOptions]}
-        value={account}
-        onChange={(option) => onAccountChange(option as string)}
-      />
+      <div className="flex flex-row gap-5">
+        <DropdownInput
+          label="Category"
+          options={[
+            { label: "All Categories", value: "All" },
+            ...categoryOptions,
+          ]}
+          value={category}
+          onChange={(option) => onCategoryChange(option as string)}
+        />
+        <DropdownInput
+          label="Account"
+          options={[{ label: "All Accounts", value: "All" }, ...accountOptions]}
+          value={account}
+          onChange={(option) => onAccountChange(option as string)}
+        />
+      </div>
     </div>
   );
 };

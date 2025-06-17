@@ -16,7 +16,7 @@ export default async function AuthenticatedLayout({
     <div className="">
       <div className="flex flex-row">
         <SideBar />
-        <div className="p-5 flex flex-col flex-1 bg-gray-50">{children}</div>
+        <div className="p-5 flex flex-col flex-1 bg-gray-50 overflow-auto">{children}</div>
       </div>
     </div>
   );

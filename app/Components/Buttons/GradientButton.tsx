@@ -1,13 +1,10 @@
 "use client";
 import React, { ReactNode } from "react";
 
-interface GradientButtonProps {
+interface GradientButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  onClick: () => void;
-  type?: "button" | "submit" | "reset";
-  disabled?: boolean;
   loading?: boolean;
-  className?: string;
 }
 
 const GradientButton = ({
@@ -23,7 +20,7 @@ const GradientButton = ({
       type={type}
       onClick={onClick}
       disabled={disabled || loading}
-      className={`cursor-pointer text-center text-white rounded-md text-lg font-medium px-4 py-2 transition duration-200 ease-in-out 
+      className={`cursor-pointer text-center text-white rounded-md text-lg font-medium px-4 py-1 transition duration-200 ease-in-out 
       bg-gradient-to-r from-primaryBlue to-primaryGreen hover:opacity-80 flex gap-2 justify-center items-center
       ${disabled || loading ? "opacity-50 cursor-not-allowed" : ""} 
       ${className}`}

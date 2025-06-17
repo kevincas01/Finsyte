@@ -61,6 +61,7 @@ const PasswordInput = ({
           placeholder={placeholder}
           className="w-full border border-gray-300 rounded-lg py-2 pr-10 pl-10 bg-white outline-none focus:ring-2 focus:ring-primaryBlue text-gray-800 font-medium"
           value={value}
+          minLength={6}
           onChange={(e) => onChange(e.target.value)}
           required={required}
         />

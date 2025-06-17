@@ -30,6 +30,7 @@ const SignInForm = ({ onTabSwitch }: SignInFormProps) => {
       setTimeout(() => {
         setErrorMessage("");
       }, 3000);
+      return
     }
     router.push(originalRef ?? "/dashboard");
   };
@@ -56,6 +57,7 @@ const SignInForm = ({ onTabSwitch }: SignInFormProps) => {
           setPassword(value);
         }}
         required={true}
+        name="signin-password"
       />
       <GradientButton type="submit">
         <p>Sign In</p>

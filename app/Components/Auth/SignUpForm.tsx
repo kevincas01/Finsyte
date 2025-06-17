@@ -24,7 +24,7 @@ const SignUpForm = ({ onTabSwitch }: SignUpFormProps) => {
     const signUpResult = await signUpUser(authData);
 
     if (!signUpResult.success) {
-      console.log(signUpResult)
+      console.log(signUpResult);
       setErrorMessage(
         "This email is already registered as a user! Try Signing In!"
       );
@@ -71,6 +71,7 @@ const SignUpForm = ({ onTabSwitch }: SignUpFormProps) => {
           setPassword(value);
         }}
         required={true}
+        name="signup-password"
       />
 
       <GradientButton type="submit">Sign Up</GradientButton>

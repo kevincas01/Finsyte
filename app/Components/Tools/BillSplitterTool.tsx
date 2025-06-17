@@ -36,8 +36,8 @@ const BillSplitterTool = () => {
   const subtotal = splitMode === "Even" ? billAmount : itemsTotal;
   return (
     <div className="shadow-card p-5 rounded-md bg-white">
-      <div className=" grid grid-cols-2">
-        <div className="flex flex-col gap-2 pr-5  border-r border-r-gray-200">
+      <div className=" grid grid-cols-1 md:grid-cols-2">
+        <div className="flex flex-col gap-2 pb-5 md:pb-0 md:pr-5  md:border-r md:border-r-gray-200">
           <div>
             <p className="font-semibold">Advanced Bill Splitter</p>
             <p className="text-gray-600">

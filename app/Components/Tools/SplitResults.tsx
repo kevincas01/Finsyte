@@ -23,7 +23,7 @@ const SplitResults = ({
 }: SplitResultsProps) => {
   const grandTotal = subtotal + (subtotal * tax) / 100 + tip;
   return (
-    <div className="flex flex-col gap-5 pl-5 ">
+    <div className="flex flex-col gap-5 pt-5 md:pl-5 ">
       <div className="">
         <p className="font-semibold">Split Results</p>
         <p className="text-gray-600">Breakdown of who owes what</p>

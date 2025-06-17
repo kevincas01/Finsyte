@@ -5,11 +5,12 @@ import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import BuildOutlinedIcon from "@mui/icons-material/BuildOutlined";
 import GradientButton from "./Buttons/GradientButton";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { signOutUser } from "../Utils/Actions.ts/auth";
 const SideBarItems = [
   {
     label: "Dashboard",
@@ -56,6 +57,10 @@ const SideBarItems = [
 const SideBar = () => {
   const currentPath = usePathname();
 
+  const handleSignOut = () => {
+    signOutUser();
+  };
+
   return (
     <div className="sticky top-0 flex flex-col min-w-60 h-screen border-r border-gray-200">
       <div className="p-5 border-b-gray-200 border-b">
@@ -78,7 +83,7 @@ const SideBar = () => {
         ))}
       </div>
       <div className="p-5 w-full flex flex-col ">
-        <GradientButton  onClick={() => {}}>
+        <GradientButton onClick={handleSignOut}>
           <p>Sign Out</p>
         </GradientButton>
       </div>

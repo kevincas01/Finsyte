@@ -1,7 +1,9 @@
 "use server";
 
-import { CountryCode, Products } from "plaid";
+import { CountryCode, Products} from "plaid";
 import { client } from "../Clients/plaid";
+import { createPlaidItem } from "./items";
+import { createPlaidAccounts } from "./accounts";
 
 export async function createLinkToken(userId: string) {
   try {
@@ -24,8 +26,10 @@ export async function createLinkToken(userId: string) {
 
 export async function exchangePublicToken({
   publicToken,
+  userId,
 }: {
   publicToken: string;
+  userId: string;
 }) {
   try {
     const response = await client.itemPublicTokenExchange({
@@ -35,13 +39,25 @@ export async function exchangePublicToken({
     const accessToken = response.data.access_token;
     const itemId = response.data.item_id;
 
-    // Optional: Store in Supabase
-    // const supabase = await createSupabaseServerClient();
-    // await supabase.from("plaid_items").insert({
-    //   user_id: userId,
-    //   item_id: itemId,
-    //   access_token: accessToken,
-    // });
+    const accountResponse = await client.accountsBalanceGet({
+      access_token: accessToken,
+    });
+
+    const institutionName =
+      accountResponse.data.item?.institution_id ?? "Unknown Institution";
+
+    await createPlaidItem({
+      userId,
+      accessToken,
+      itemId,
+      institutionName,
+    });
+
+    await createPlaidAccounts({
+      userId,
+      itemId,
+      accounts: accountResponse.data.accounts,
+    });
 
     return { success: true };
   } catch (error) {

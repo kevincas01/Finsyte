@@ -50,3 +50,21 @@ export const createPlaidAccounts = async ({
     return { success: false, error: "Unexpected server error" };
   }
 };
+
+
+export async function getUserAccountsWithItemId(id: string) {
+    const supabase = await createSupabaseServerClient();
+  
+    const { data, error } = await supabase
+      .from("accounts")
+      .select("*")
+      .eq("item_id", id)
+  
+    if (error) {
+      console.error("Failed to fetch user information:", error.message);
+      return { success: false, error: error.message };
+    }
+  
+    return { success: true, data };
+  }
+  

@@ -12,14 +12,14 @@ const AccountsPage = async () => {
     redirect("/");
   }
   const userId = userSession.id;
-  const itemWithAccounts = await getPlaidItemsWithAccounts(userId);
+  const itemsWithAccounts = await getPlaidItemsWithAccounts(userId);
 
   return (
     <div className="flex flex-col gap-5">
       <AccountsHeader userId={userId} />
 
-      {itemWithAccounts.data?.map((itemWithAccount) => (
-        <ConnectedItemAccounts key={itemWithAccount.id} itemWithAccount={itemWithAccount}/>
+      {itemsWithAccounts.data?.map((itemWithAccounts) => (
+        <ConnectedItemAccounts key={itemWithAccounts.id} itemWithAccounts={itemWithAccounts}/>
       ))}
     </div>
   );

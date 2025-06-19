@@ -1,22 +1,21 @@
 "use client";
 import { PlaidItemWithAccounts } from "@/app/Types/items";
-import React from "react";
 import NeutralButton from "../Buttons/NeutralButton";
 import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { formatCurrency } from "@/app/Utils/format";
 
 interface ConnectedItemAccountsProps {
-  itemWithAccount: PlaidItemWithAccounts;
+  itemWithAccounts: PlaidItemWithAccounts;
 }
 
-const ConnectedItemAccounts = ({ itemWithAccount }: ConnectedItemAccountsProps) => {
+const ConnectedItemAccounts = ({ itemWithAccounts }: ConnectedItemAccountsProps) => {
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <div className="flex flex-row justify-between items-center border-b border-gray-200 p-5 ">
         <div>
           <p className="font-semibold text-lg text-primaryBlue">
-            {itemWithAccount.institution_name || "Unnamed Institution"}
+            {itemWithAccounts.institution_name || "Unnamed Institution"}
           </p>
           <p className="text-sm text-gray-600">Last synced: 2 hours ago</p>
         </div>
@@ -33,7 +32,7 @@ const ConnectedItemAccounts = ({ itemWithAccount }: ConnectedItemAccountsProps) 
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-gray-50">
-        {itemWithAccount.accounts.map((account) => (
+        {itemWithAccounts.accounts.map((account) => (
           <div
             key={account.account_id}
             className="border border-blue-100 bg-white rounded-lg p-4 flex flex-col gap-1 "

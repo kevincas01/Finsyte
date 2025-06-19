@@ -21,11 +21,11 @@ const ConnectedItemAccounts = ({ itemWithAccounts }: ConnectedItemAccountsProps)
         </div>
 
         <div className="flex gap-3">
-          <NeutralButton onClick={() => {}} className="text-sm text-primaryGreen hover:bg-green-100">
+          <NeutralButton onClick={() => {}} className="text-sm text-primaryBlue hover:bg-primaryBlue/10">
             <SyncOutlinedIcon fontSize="inherit" />
             <span className="ml-1">Sync</span>
           </NeutralButton>
-          <NeutralButton onClick={() => {}} className="text-red-500 hover:bg-red-100 text-sm">
+          <NeutralButton onClick={() => {}} className="text-red-500 hover:bg-red-500/10 text-sm">
             <DeleteOutlineOutlinedIcon fontSize="inherit" />
           </NeutralButton>
         </div>

@@ -45,7 +45,7 @@ const ProfileInformation = ({ profileInfo }: ProfileInformationProps) => {
         <PermIdentityOutlinedIcon />
         <h3 className="text-xl font-semibold">Profile Information</h3>
       </div>
-      <div className="flex flex-row gap-5">
+      <div className="flex flex-col md:flex-row gap-5">
         <TextInput
           label="First Name"
           value={firstName}

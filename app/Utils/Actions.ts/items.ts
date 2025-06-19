@@ -1,4 +1,5 @@
 "use server";
+import { PlaidItemWithAccounts } from "@/app/Types/items";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 
 interface CreatePlaidItemParams {
@@ -31,3 +32,28 @@ export const createPlaidItem = async ({
 
   return { success: true };
 };
+
+export async function getPlaidItemsWithAccounts(userId: string): Promise<{
+  success: boolean;
+  data?: PlaidItemWithAccounts[];
+  error?: string;
+}> {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("plaid_items")
+    .select(
+      `
+      *,
+      accounts (*)
+    `
+    )
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Failed to fetch items with accounts:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data: data as PlaidItemWithAccounts[] };
+}

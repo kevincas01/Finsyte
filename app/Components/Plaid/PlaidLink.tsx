@@ -3,15 +3,19 @@ import {
   createLinkToken,
   exchangePublicToken,
 } from "@/app/Utils/Actions.ts/plaid";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, ReactNode } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import NeutralButton from "../Buttons/NeutralButton";
 
 interface PlaidLinkProps {
   userId: string;
+  children: ReactNode;
 }
 
-const PlaidLink = ({ userId }: PlaidLinkProps) => {
+const PlaidLink = ({
+  userId,
+  children,
+}: PlaidLinkProps) => {
   const [linkToken, setLinkToken] = useState("");
 
   useEffect(() => {
@@ -26,7 +30,7 @@ const PlaidLink = ({ userId }: PlaidLinkProps) => {
 
   const onSuccess = useCallback(
     async (public_token: string) => {
-      await exchangePublicToken({ publicToken: public_token,userId:userId });
+      await exchangePublicToken({ publicToken: public_token, userId: userId });
     },
     [userId]
   );
@@ -39,7 +43,7 @@ const PlaidLink = ({ userId }: PlaidLinkProps) => {
       disabled={!ready}
       className="text-primaryBlue "
     >
-      Link Bank Account
+      {children}
     </NeutralButton>
   );
 };

@@ -1,6 +1,11 @@
 "use server";
 
-import { CountryCode, Products} from "plaid";
+import {
+  CountryCode,
+  Products,
+  Transaction,
+  TransactionsSyncRequest,
+} from "plaid";
 import { client } from "../Clients/plaid";
 import { createPlaidItem } from "./items";
 import { createPlaidAccounts } from "./accounts";
@@ -65,3 +70,33 @@ export async function exchangePublicToken({
     return { success: false, error: "Failed to exchange public token" };
   }
 }
+
+export const getTransactionsFromItem = async (
+  accessToken: string
+): Promise<{ transactions: Transaction[]; cursor: string }> => {
+  let cursor: string | undefined = undefined;
+  let hasMore = true;
+  let allTransactions: Transaction[] = [];
+
+  while (hasMore) {
+    const request: TransactionsSyncRequest = {
+      access_token: accessToken,
+      cursor: cursor,
+    };
+
+    const response = await client.transactionsSync(request);
+    const data = response.data;
+
+    // Add new transactions to the list
+    allTransactions = allTransactions.concat(data.added);
+
+    // Update pagination and cursor
+    hasMore = data.has_more;
+    cursor = data.next_cursor;
+  }
+
+  return {
+    transactions: allTransactions,
+    cursor: cursor!,
+  };
+};

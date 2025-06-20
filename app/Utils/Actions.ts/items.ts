@@ -57,3 +57,36 @@ export async function getPlaidItemsWithAccounts(userId: string): Promise<{
 
   return { success: true, data: data as PlaidItemWithAccounts[] };
 }
+
+export const getLatestCursorOrNull = async (itemId: string) => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("plaid_items")
+    .select("cursor")
+    .eq("item_id", itemId)
+    .single();
+
+  if (error) {
+    console.error("Failed to fetch user information:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+};
+
+export const updateItemCursor = async (itemId: string, cursor: string) => {
+  const supabase = await createSupabaseServerClient();
+
+  const { error } = await supabase
+    .from("plaid_items")
+    .update(cursor)
+    .eq("item_id", itemId);
+
+  if (error) {
+    console.error("Failed to update item cursor:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+};

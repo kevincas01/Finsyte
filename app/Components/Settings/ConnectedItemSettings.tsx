@@ -4,6 +4,8 @@ import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlin
 import NeutralButton from "../Buttons/NeutralButton";
 import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { getTransactionsFromItem } from "@/app/Utils/Actions.ts/plaid";
+import { createTransactions } from "@/app/Utils/Actions.ts/transactions";
 
 interface ConnectedItemSettingsProps {
   itemsWithAccounts: PlaidItemWithAccounts[] | undefined;
@@ -11,6 +13,27 @@ interface ConnectedItemSettingsProps {
 const ConnectedItemSettings = ({
   itemsWithAccounts,
 }: ConnectedItemSettingsProps) => {
+  const handleItemSync = async (
+    itemId: string,
+    userId: string,
+    access_token: string
+  ) => {
+    // Handle sync: Sync transactions client.sync({})
+    // Returns latest transactions that have been added or modified
+
+    const transactions = (await getTransactionsFromItem(access_token))
+      .transactions;
+
+    const transactionResponse = await createTransactions({
+      userId,
+      itemId,
+      transactions,
+    });
+
+    // TODO
+    // Get latest sync for item and display it: use either a state or call db again
+  };
+
   return (
     <div className="flex flex-col gap-5 p-5 bg-white rounded-md border border-gray-200">
       <div className="flex items-center gap-3">
@@ -55,7 +78,9 @@ const ConnectedItemSettings = ({
 
             <div className="flex gap-2 mt-4 md:mt-0">
               <NeutralButton
-                onClick={() => {}}
+                onClick={() => {
+                  handleItemSync(item.item_id, item.user_id, item.access_token);
+                }}
                 className="text-sm text-primaryBlue hover:bg-primaryBlue/10 text-nowrap"
               >
                 <SyncOutlinedIcon fontSize="inherit" />

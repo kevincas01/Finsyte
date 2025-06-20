@@ -48,3 +48,30 @@ export const createTransactions = async ({
     return { success: false, error: "Unexpected server error" };
   }
 };
+
+export const getUserTransactionsWithAccount = async (
+  userId: string
+): Promise<{
+  success: boolean;
+  data?: DBTransactionWithAccount[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(
+      `
+        *,
+        account:account_id (*)
+      `
+    )
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Failed to fetch items with accounts:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data: data as DBTransactionWithAccount[] };
+};

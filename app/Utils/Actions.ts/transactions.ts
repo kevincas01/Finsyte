@@ -1,3 +1,4 @@
+"use server"
 import { Transaction } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 import { DBTransactionWithAccount } from "@/app/Types/transactions";

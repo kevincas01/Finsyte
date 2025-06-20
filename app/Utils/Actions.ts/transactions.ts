@@ -22,7 +22,7 @@ export const createTransactions = async ({
       account_id: transaction.account_id,
       amount: transaction.amount,
       datetime: transaction.datetime,
-      name: transaction.merchant_name,
+      name: transaction.merchant_name || transaction.name,
       description: transaction.original_description,
       pending: transaction.pending,
       transaction_id: transaction.transaction_id,

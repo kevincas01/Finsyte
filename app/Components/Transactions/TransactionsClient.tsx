@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import TransactionsHeader from "./TransactionsHeader";
 import TransactionsFilter from "./TransactionsFilter";
 import TransactionsTable from "./TransactionsTable";
-import { Transaction } from "@/app/Types/transactions";
+import { ClientTransactionWithAccount } from "@/app/Types/transactions";
 
 interface Props {
-  transactions: Transaction[];
+  transactions: ClientTransactionWithAccount[];
 }
 
 const TransactionsClient = ({ transactions }: Props) => {
@@ -29,12 +28,14 @@ const TransactionsClient = ({ transactions }: Props) => {
     setAccount(value);
   };
   const filteredTransactions = useMemo(() => {
-    return transactions.filter((tx) => {
-      const matchesSearch = tx.merchant
-        .toLowerCase()
+    return transactions.filter((transaction) => {
+      const matchesSearch = transaction
+        .name!.toLowerCase()
         .includes(search.toLowerCase());
-      const matchesCategory = category === "All" || tx.category === category;
-      const matchesAccount = account === "All" || tx.account === account;
+      const matchesCategory =
+        category === "All" || transaction.financeCategory === category;
+      const matchesAccount =
+        account === "All" || transaction.account.name === account;
       return matchesSearch && matchesCategory && matchesAccount;
     });
   }, [search, category, account, transactions]);

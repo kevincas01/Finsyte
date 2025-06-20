@@ -1,5 +1,4 @@
-import { Transaction, TransactionCategory } from "../Types/transactions";
-
+import { TransactionCategory } from "../Types/transactions";
 
 export const TransactionCategories: TransactionCategory[] = [
   "Automotive",
@@ -19,114 +18,20 @@ export const TransactionCategories: TransactionCategory[] = [
   "Groceries",
 ];
 
-export const TransactionCategoryColors: Record<TransactionCategory, string> = {
-    "Automotive": "bg-gray-100 text-gray-700",
-    "Fees & Adjustments": "bg-red-100 text-red-600",
-    "Education": "bg-indigo-100 text-indigo-600",
-    "Food & Drink": "bg-blue-100 text-blue-600",
-    "Utilities": "bg-green-100 text-green-700",
-    "Entertainment": "bg-purple-100 text-purple-700",
-    "Travel": "bg-yellow-100 text-yellow-700",
-    "Shopping": "bg-pink-100 text-pink-600",
-    "Professional Services": "bg-cyan-100 text-cyan-700",
-    "Personal": "bg-teal-100 text-teal-700",
-    "Miscellaneous": "bg-neutral-100 text-neutral-600",
-    "Health & wellness": "bg-emerald-100 text-emerald-600",
-    "Gifts & donations": "bg-rose-100 text-rose-600",
-    "Gas": "bg-orange-100 text-orange-700",
-    "Groceries": "bg-lime-100 text-lime-700",
-  };
-  
-
-  export const mockTransactions: Transaction[] = [
-    {
-      id: "1",
-      date: "2025-06-01",
-      merchant: "Starbucks",
-      description: "Iced Latte and Croissant",
-      category: "Food & Drink",
-      account: "Chase Checking",
-      amount: -8.75,
-    },
-    {
-      id: "2",
-      date: "2025-06-02",
-      merchant: "Amazon",
-      description: "Bluetooth Headphones",
-      category: "Shopping",
-      account: "Capital One Credit",
-      amount: -59.99,
-    },
-    {
-      id: "3",
-      date: "2025-06-03",
-      merchant: "Netflix",
-      description: "Monthly subscription",
-      category: "Entertainment",
-      account: "Chase Checking",
-      amount: -15.49,
-    },
-    {
-      id: "4",
-      date: "2025-06-03",
-      merchant: "Shell Gas Station",
-      description: "Fuel for car",
-      category: "Gas",
-      account: "Wells Fargo Debit",
-      amount: -42.30,
-    },
-    {
-      id: "5",
-      date: "2025-06-04",
-      merchant: "Princeton University",
-      description: "Course material fee",
-      category: "Education",
-      account: "Chase Checking",
-      amount: -120.0,
-    },
-    {
-      id: "6",
-      date: "2025-06-04",
-      merchant: "Whole Foods",
-      description: "Weekly groceries",
-      category: "Groceries",
-      account: "Capital One Credit",
-      amount: -98.21,
-    },
-    {
-      id: "7",
-      date: "2025-06-05",
-      merchant: "Verizon",
-      description: "Monthly phone bill",
-      category: "Utilities",
-      account: "Wells Fargo Debit",
-      amount: -85.00,
-    },
-    {
-      id: "8",
-      date: "2025-06-05",
-      merchant: "Uber",
-      description: "Ride to airport",
-      category: "Travel",
-      account: "Chase Checking",
-      amount: -34.75,
-    },
-    {
-      id: "9",
-      date: "2025-06-06",
-      merchant: "CVS Pharmacy",
-      description: "Prescription refill",
-      category: "Health & wellness",
-      account: "Wells Fargo Debit",
-      amount: -18.50,
-    },
-    {
-      id: "10",
-      date: "2025-06-07",
-      merchant: "GoFundMe",
-      description: "Donation to local cause",
-      category: "Gifts & donations",
-      account: "Chase Checking",
-      amount: -25.00,
-    },
-  ];
+export const TransactionCategoryColors: Record<string, string> = {
+  Automotive: "bg-gray-100 text-gray-700",
+  "Fees & Adjustments": "bg-red-100 text-red-600",
+  Education: "bg-indigo-100 text-indigo-600",
+  "Food & Drink": "bg-blue-100 text-blue-600",
+  Utilities: "bg-green-100 text-green-700",
+  Entertainment: "bg-purple-100 text-purple-700",
+  Travel: "bg-yellow-100 text-yellow-700",
+  Shopping: "bg-pink-100 text-pink-600",
+  "Professional Services": "bg-cyan-100 text-cyan-700",
+  Personal: "bg-teal-100 text-teal-700",
+  Miscellaneous: "bg-neutral-100 text-neutral-600",
+  "Health & wellness": "bg-emerald-100 text-emerald-600",
+  "Gifts & donations": "bg-rose-100 text-rose-600",
+  Gas: "bg-orange-100 text-orange-700",
+  Groceries: "bg-lime-100 text-lime-700",
+};

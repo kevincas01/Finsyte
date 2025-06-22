@@ -98,6 +98,7 @@ const GoalsModal = ({
             );
 
             const updatedGoal = {
+              id: initialGoal?.id,
               title,
               description,
               targetAmount: parsedTargetAmount,

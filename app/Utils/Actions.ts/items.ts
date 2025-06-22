@@ -80,7 +80,7 @@ export const updateItemCursor = async (itemId: string, cursor: string) => {
 
   const { error } = await supabase
     .from("plaid_items")
-    .update(cursor)
+    .update({ cursor })
     .eq("item_id", itemId);
 
   if (error) {

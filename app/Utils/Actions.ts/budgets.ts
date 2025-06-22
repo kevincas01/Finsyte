@@ -1,5 +1,5 @@
 "use server";
-import { ClientBudget } from "@/app/Types/budget";
+import { ClientBudget, DBBudget } from "@/app/Types/budget";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 
 export const createBudget = async ({
@@ -33,4 +33,26 @@ export const createBudget = async ({
   }
 
   return { success: true };
+};
+
+export const getUserBudgets = async (
+  userId: string
+): Promise<{
+  success: boolean;
+  data?: DBBudget[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("budgets")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Failed to fetch user budgets:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
 };

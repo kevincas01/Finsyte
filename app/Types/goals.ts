@@ -8,11 +8,20 @@ export type GoalCategory =
   | "Savings"
   | "Other";
 
-export interface Goal {
+export interface DBGoal {
+  id: number;
+  user_id: string;
+  title: string;
+  description: string;
+  target_amount: number;
+  current_amount: number;
+  deadline_date: string;
+}
+export interface ClientGoal {
+  id: number;
   title: string;
   description?: string;
-  category?: string;
   targetAmount: number;
   currentAmount: number;
-  targetDate: string;
+  deadlineDate: string;
 }

@@ -7,13 +7,13 @@ import ModalContainer from "./ModalContainer";
 import NumberInput from "../Inputs/NumberInput";
 import { BudgetPeriods } from "@/app/Constants/budgets";
 import { TransactionCategories } from "@/app/Constants/transactions";
-import { Budget, BudgetPeriodCategory } from "@/app/Types/budget";
+import { ClientBudget, BudgetPeriodCategory } from "@/app/Types/budget";
 
 interface BudgetModalProps {
   onClose: () => void;
-  onSubmit: (budget: Budget) => void;
+  onSubmit: (budget: Partial<ClientBudget>) => void;
   mode?: "create" | "edit";
-  initialBudget?: Budget;
+  initialBudget?: ClientBudget;
 }
 const BudgetModal = ({
   onClose,
@@ -21,7 +21,7 @@ const BudgetModal = ({
   mode = "create",
   initialBudget,
 }: BudgetModalProps) => {
-  const [category, setCategory] = useState(initialBudget?.category || "");
+  const [category, setCategory] = useState(initialBudget?.financeCategory || "");
   const [period, setPeriod] = useState(initialBudget?.period || "Monthly");
   const [budgetAmountInput, setBudgetAmountInput] = useState<string>(
     String(initialBudget?.budgetAmount) || ""
@@ -72,6 +72,8 @@ const BudgetModal = ({
         options={periodOptions}
         value={period}
         onChange={(value) => setPeriod(value as BudgetPeriodCategory)}
+        required={true}
+        showRequired={true}
       />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">
@@ -87,7 +89,7 @@ const BudgetModal = ({
             );
 
             const budget = {
-              category,
+              financeCategory:category,
               period,
               budgetAmount: parsedBudgetAmount,
               currentAmount: parsedCurrentAmount,

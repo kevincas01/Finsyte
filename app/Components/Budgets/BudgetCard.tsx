@@ -6,9 +6,10 @@ import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import { useState } from "react";
 import BudgetModal from "../Modal/BudgetModal";
-import { Budget } from "@/app/Types/budget";
+import { ClientBudget } from "@/app/Types/budget";
+
 interface BudgetCardProps {
-  budget: Budget;
+  budget: ClientBudget;
 }
 
 const getBudgetStatus = (percentage: number) => {
@@ -37,7 +38,7 @@ const getBudgetStatus = (percentage: number) => {
 };
 
 const BudgetCard = ({ budget }: BudgetCardProps) => {
-  const { category, currentAmount, budgetAmount } = budget;
+  const { financeCategory, currentAmount, budgetAmount } = budget;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const remainingAmount = Math.max(budgetAmount - currentAmount, 0);
@@ -56,7 +57,7 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
         />
       )}
       <div className="flex justify-between">
-        <p className="font-semibold">{category}</p>
+        <p className="font-semibold">{financeCategory}</p>
         {getBudgetStatus(progress)}
       </div>
 

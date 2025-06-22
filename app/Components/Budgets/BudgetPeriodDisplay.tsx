@@ -2,11 +2,11 @@
 import BudgetCard from "@/app/Components/Budgets/BudgetCard";
 import BudgetOverview from "@/app/Components/Budgets/BudgetOverview";
 import { BudgetPeriods} from "@/app/Constants/budgets";
-import { Budget, BudgetPeriodCategory } from "@/app/Types/budget";
+import {BudgetPeriodCategory, ClientBudget } from "@/app/Types/budget";
 import { useState } from "react";
 
 interface BudgetPeriodDisplayProps {
-  budgets: Budget[];
+  budgets: ClientBudget[];
 }
 const BudgetPeriodDisplay = ({ budgets }: BudgetPeriodDisplayProps) => {
   const [selectedPeriod, setSelectedPeriod] =

@@ -8,6 +8,7 @@ import BlueButton from "../Buttons/BlueButton";
 import { useState } from "react";
 import GoalsModal from "../Modal/GoalsModal";
 import { ClientGoal } from "@/app/Types/goals";
+import { updateGoal } from "@/app/Utils/Actions.ts/goals";
 
 interface GoalCardProps {
   goal: ClientGoal;
@@ -26,8 +27,19 @@ const GoalCard = ({ goal }: GoalCardProps) => {
       {isModalOpen && (
         <GoalsModal
           onClose={() => setIsModalOpen(false)}
-          onSubmit={(updatedGoal) => {
-            console.log("Updated goal:", updatedGoal);
+          onSubmit={async (updatedGoal) => {
+            const result = await updateGoal({
+              id: updatedGoal.id,
+              currentAmount: updatedGoal.currentAmount!,
+              targetAmount: updatedGoal.targetAmount!,
+              title: updatedGoal.title!,
+              description: updatedGoal.description!,
+              deadlineDate: updatedGoal.deadlineDate!,
+            });
+
+            if (!result.success) {
+              console.error("Failed to update budget:", result.error);
+            }
           }}
           mode="edit"
           initialGoal={goal}

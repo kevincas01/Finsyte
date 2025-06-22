@@ -8,12 +8,12 @@ import DropdownInput from "../Inputs/DropdownInput";
 import NumberInput from "../Inputs/NumberInput";
 import TextInput from "../Inputs/TextInput";
 import ModalContainer from "./ModalContainer";
-import { Transaction } from "@/app/Types/transactions";
+import { ClientTransactionWithAccount } from "@/app/Types/transactions";
 
 interface TransactionsModalProps {
   onClose: () => void;
-  onSubmit: (transaction: Transaction) => void;
-  initialTransaction?: Transaction;
+  onSubmit: (transaction: Partial<ClientTransactionWithAccount>) => void;
+  initialTransaction?: ClientTransactionWithAccount;
   mode?: "create" | "edit";
 }
 
@@ -23,7 +23,8 @@ const TransactionsModal = ({
   initialTransaction,
   mode = "create",
 }: TransactionsModalProps) => {
-  const [merchant, setMerchant] = useState(initialTransaction?.merchant || "");
+  console.log(initialTransaction)
+  const [merchant, setMerchant] = useState(initialTransaction?.name || "");
   const [description, setDescription] = useState(
     initialTransaction?.description || ""
   );
@@ -31,7 +32,9 @@ const TransactionsModal = ({
     String(initialTransaction?.amount) ?? ""
   );
 
-  const [category, setCategory] = useState(initialTransaction?.category || "");
+  const [category, setCategory] = useState(
+    initialTransaction?.financeCategory || ""
+  );
 
   const categoryOptions = TransactionCategories.map((category) => ({
     label: category,
@@ -78,15 +81,13 @@ const TransactionsModal = ({
           onClick={() => {
             const parsedAmount = Math.max(0, parseFloat(amountInput) || 0);
 
-            const newTransaction: Transaction = {
-              id: initialTransaction?.id || crypto.randomUUID(),
-              date:
-                initialTransaction?.date ||
+            const newTransaction: Partial<ClientTransactionWithAccount> = {
+              datetime:
+                initialTransaction?.datetime ||
                 new Date().toISOString().slice(0, 10),
-              merchant,
+              name: merchant,
               description,
-              category: category as Transaction["category"],
-              account: initialTransaction?.account || "",
+              financeCategory: category,
               amount: parsedAmount,
             };
 

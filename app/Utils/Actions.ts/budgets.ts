@@ -56,3 +56,30 @@ export const getUserBudgets = async (
 
   return { success: true, data };
 };
+
+export const updateBudget = async ({
+  id,
+  currentAmount,
+  budgetAmount,
+  financeCategory,
+  period,
+}: Partial<ClientBudget>): Promise<{ success: boolean; error?: string }> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { error } = await supabase
+    .from("budgets")
+    .update({
+      current_amount: currentAmount,
+      budget_amount: budgetAmount,
+      finance_category: financeCategory,
+      period,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Failed to update budget:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+};

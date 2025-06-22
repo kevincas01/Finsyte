@@ -3,6 +3,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import GradientButton from "@/app/Components/Buttons/GradientButton";
 import { useState } from "react";
 import GoalsModal from "../Modal/GoalsModal";
+import { createGoal } from "@/app/Utils/Actions.ts/goals";
 const GoalsHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,8 +14,19 @@ const GoalsHeader = () => {
           onClose={() => {
             setIsModalOpen(false);
           }}
-          onSubmit={(goal) => {
-            console.log("New goal:", goal);
+          onSubmit={async (goal) => {
+            const result = await createGoal({
+              currentAmount: goal.currentAmount!,
+              targetAmount: goal.targetAmount!,
+              title: goal.title,
+              description: goal.description,
+              deadlineDate: goal.deadlineDate,
+            });
+
+            if (!result.success) {
+              console.error("Failed to create budget:", result.error);
+              // You can also show a toast or alert here
+            }
           }}
         />
       )}
@@ -27,7 +39,11 @@ const GoalsHeader = () => {
           </p>
         </div>
         <div className="flex flex-row gap-3">
-          <GradientButton onClick={() => {setIsModalOpen(true)}}>
+          <GradientButton
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
             <AddOutlinedIcon />
             <p>Add Goal</p>
           </GradientButton>

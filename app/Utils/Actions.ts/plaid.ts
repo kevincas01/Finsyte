@@ -72,25 +72,24 @@ export async function exchangePublicToken({
 }
 
 export const getTransactionsFromItem = async (
-  accessToken: string
+  accessToken: string,
+  startingCursor?: string
 ): Promise<{ transactions: Transaction[]; cursor: string }> => {
-  let cursor: string | undefined = undefined;
+  let cursor: string | undefined = startingCursor;
   let hasMore = true;
   let allTransactions: Transaction[] = [];
 
   while (hasMore) {
     const request: TransactionsSyncRequest = {
       access_token: accessToken,
-      cursor: cursor,
+      cursor,
     };
 
     const response = await client.transactionsSync(request);
     const data = response.data;
 
-    // Add new transactions to the list
     allTransactions = allTransactions.concat(data.added);
 
-    // Update pagination and cursor
     hasMore = data.has_more;
     cursor = data.next_cursor;
   }

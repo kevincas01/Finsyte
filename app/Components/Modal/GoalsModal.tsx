@@ -3,17 +3,17 @@ import { useState } from "react";
 import { GoalCategories } from "@/app/Constants/goals";
 import GradientButton from "../Buttons/GradientButton";
 import NeutralButton from "../Buttons/NeutralButton";
-import DropdownInput from "../Inputs/DropdownInput";
 import TextInput from "../Inputs/TextInput";
 import ModalContainer from "./ModalContainer";
 import NumberInput from "../Inputs/NumberInput";
-import { Goal } from "@/app/Types/goals";
+import { ClientGoal } from "@/app/Types/goals";
+import DateInput from "../Inputs/DateInput";
 
 interface GoalsModalProps {
   onClose: () => void;
-  onSubmit: (goal: Goal) => void;
+  onSubmit: (goal: Partial<ClientGoal>) => void;
   mode?: "create" | "edit";
-  initialGoal?: Goal;
+  initialGoal?: ClientGoal;
 }
 
 const GoalsModal = ({
@@ -26,12 +26,14 @@ const GoalsModal = ({
   const [description, setDescription] = useState(
     initialGoal?.description || ""
   );
-  const [category, setCategory] = useState(initialGoal?.category || "");
   const [targetAmountInput, setTargetAmount] = useState<string>(
     String(initialGoal?.targetAmount) || ""
   );
   const [currentAmountInput, setCurrentAmount] = useState<string>(
     String(initialGoal?.currentAmount) || ""
+  );
+  const [deadlineDate, setDeadlineDate] = useState(
+    initialGoal?.deadlineDate || ""
   );
 
   const categoryOptions = GoalCategories.map((category) => ({
@@ -59,12 +61,6 @@ const GoalsModal = ({
         value={description}
         onChange={(value) => setDescription(value)}
       />
-      <DropdownInput
-        label="Category"
-        options={categoryOptions}
-        value={category}
-        onChange={(value) => setCategory(value as string)}
-      />
       <NumberInput
         label="Target Amount"
         value={targetAmountInput}
@@ -82,6 +78,13 @@ const GoalsModal = ({
         minValue={0}
         placeHolder="0"
       />
+      <DateInput
+        label="Deadline"
+        value={deadlineDate}
+        onChange={(value) => setDeadlineDate(value)}
+        required={true}
+        showRequired={true}
+      />
       <div className="grid grid-cols-[2fr_auto] gap-5">
         <GradientButton
           onClick={() => {
@@ -97,11 +100,10 @@ const GoalsModal = ({
             const updatedGoal = {
               title,
               description,
-              category,
               targetAmount: parsedTargetAmount,
               currentAmount: parsedCurrentAmount,
-              targetDate:
-                initialGoal?.targetDate ??
+              deadlineDate:
+                initialGoal?.deadlineDate ??
                 new Date().toISOString().slice(0, 10), // fallback
             };
             onSubmit(updatedGoal);

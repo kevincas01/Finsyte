@@ -1,7 +1,7 @@
 "use server";
 import { ClientBudget, DBBudget } from "@/app/Types/budget";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
-import { ClientGoal } from "@/app/Types/goals";
+import { ClientGoal, DBGoal } from "@/app/Types/goals";
 
 export const createGoal = async ({
   currentAmount,
@@ -38,3 +38,24 @@ export const createGoal = async ({
   return { success: true };
 };
 
+export const getUserGoals = async (
+  userId: string
+): Promise<{
+  success: boolean;
+  data?: DBGoal[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("goals")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Failed to fetch user goals:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+};

@@ -4,12 +4,13 @@ import ProgressBar from "../ProgressBar";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import NeutralButton from "../Buttons/NeutralButton";
 import BlueButton from "../Buttons/BlueButton";
-import { Goal } from "@/app/Types/goals";
+
 import { useState } from "react";
 import GoalsModal from "../Modal/GoalsModal";
+import { ClientGoal } from "@/app/Types/goals";
 
 interface GoalCardProps {
-  goal: Goal;
+  goal: ClientGoal;
 }
 
 const GoalCard = ({ goal }: GoalCardProps) => {
@@ -67,7 +68,7 @@ const GoalCard = ({ goal }: GoalCardProps) => {
         <span className="text-sm text-gray-600 flex items-center gap-1">
           <CalendarMonthOutlinedIcon fontSize="inherit" />
           <p>Deadline</p>
-          <p>{formatDate(goal.targetDate)}</p>
+          <p>{formatDate(goal.deadlineDate)}</p>
         </span>
       </div>
       <div className="flex flex-row gap-5">

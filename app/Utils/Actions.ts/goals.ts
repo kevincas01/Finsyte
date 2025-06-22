@@ -59,3 +59,32 @@ export const getUserGoals = async (
 
   return { success: true, data };
 };
+
+export const updateGoal = async ({
+  id,
+  currentAmount,
+  targetAmount,
+  title,
+  description,
+  deadlineDate,
+}: Partial<ClientGoal>): Promise<{ success: boolean; error?: string }> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { error } = await supabase
+    .from("goals")
+    .update({
+      current_amount: currentAmount,
+      target_amount: targetAmount,
+      title,
+      description,
+      deadline_date: deadlineDate,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Failed to update goal:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+};

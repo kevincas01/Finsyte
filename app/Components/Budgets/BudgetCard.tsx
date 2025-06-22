@@ -7,6 +7,7 @@ import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import { useState } from "react";
 import BudgetModal from "../Modal/BudgetModal";
 import { ClientBudget } from "@/app/Types/budget";
+import { updateBudget } from "@/app/Utils/Actions.ts/budgets";
 
 interface BudgetCardProps {
   budget: ClientBudget;
@@ -49,8 +50,18 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
       {isModalOpen && (
         <BudgetModal
           onClose={() => setIsModalOpen(false)}
-          onSubmit={(updatedGoal) => {
-            console.log("Updated goal:", updatedGoal);
+          onSubmit={async (updatedBudget) => {
+            const result = await updateBudget({
+              id: updatedBudget.id,
+              currentAmount: updatedBudget.currentAmount!,
+              budgetAmount: updatedBudget.budgetAmount!,
+              financeCategory: updatedBudget.financeCategory!,
+              period: updatedBudget.period!,
+            });
+
+            if (!result.success) {
+              console.error("Failed to update budget:", result.error);
+            }
           }}
           mode="edit"
           initialBudget={budget}

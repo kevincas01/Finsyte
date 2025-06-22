@@ -89,6 +89,7 @@ const BudgetModal = ({
             );
 
             const budget = {
+              id:initialBudget?.id,
               financeCategory:category,
               period,
               budgetAmount: parsedBudgetAmount,

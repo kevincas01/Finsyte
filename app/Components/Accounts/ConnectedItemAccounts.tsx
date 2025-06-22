@@ -6,7 +6,10 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { formatCurrency } from "@/app/Utils/format";
 import { getTransactionsFromItem } from "@/app/Utils/Actions.ts/plaid";
 import { createTransactions } from "@/app/Utils/Actions.ts/transactions";
-import { getLatestCursorOrNull, updateItemCursor } from "@/app/Utils/Actions.ts/items";
+import {
+  getLatestCursorOrNull,
+  updateItemCursor,
+} from "@/app/Utils/Actions.ts/items";
 
 interface ConnectedItemAccountsProps {
   itemWithAccounts: PlaidItemWithAccounts;
@@ -15,46 +18,46 @@ interface ConnectedItemAccountsProps {
 const ConnectedItemAccounts = ({
   itemWithAccounts,
 }: ConnectedItemAccountsProps) => {
-    const handleItemSync = async (
-        itemId: string,
-        userId: string,
-        accessToken: string
-      ) => {
-        // Step 1: Get latest cursor from DB
-        const { success, data, error } = await getLatestCursorOrNull(itemId);
-        if (!success) {
-          console.error("Error fetching cursor:", error);
-          return;
-        }
-      
-        const startingCursor = data?.cursor ?? undefined;
-      
-        const { transactions, cursor: newCursor } = await getTransactionsFromItem(
-          accessToken,
-          startingCursor
-        );
-    
-        const transactionResponse = await createTransactions({
-          userId,
-          itemId,
-          transactions,
-        });
-      
-        if (!transactionResponse.success) {
-          console.error("Error saving transactions:", transactionResponse.error);
-          return;
-        }
-      
-        const updateResult = await updateItemCursor(itemId, newCursor);
-        if (!updateResult.success) {
-          console.error("Failed to update item cursor:", updateResult.error);
-          return;
-        }
-      
-        // Optional: You could return the transactions or re-fetch latest from DB here
-        console.log("Sync completed successfully.");
-      };
-      
+  const handleItemSync = async (
+    itemId: string,
+    userId: string,
+    accessToken: string
+  ) => {
+    // Step 1: Get latest cursor from DB
+    const { success, data, error } = await getLatestCursorOrNull(itemId);
+    if (!success) {
+      console.error("Error fetching cursor:", error);
+      return;
+    }
+
+    const startingCursor = data?.cursor ?? undefined;
+
+    const { transactions, cursor: newCursor } = await getTransactionsFromItem(
+      accessToken,
+      startingCursor
+    );
+
+    const transactionResponse = await createTransactions({
+      userId,
+      itemId,
+      transactions,
+    });
+
+    if (!transactionResponse.success) {
+      console.error("Error saving transactions:", transactionResponse.error);
+      return;
+    }
+
+    const updateResult = await updateItemCursor(itemId, newCursor);
+    if (!updateResult.success) {
+      console.error("Failed to update item cursor:", updateResult.error);
+      return;
+    }
+
+    // Optional: You could return the transactions or re-fetch latest from DB here
+    console.log("Sync completed successfully.");
+  };
+
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <div className="flex flex-row justify-between items-center border-b border-gray-200 p-5 ">

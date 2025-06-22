@@ -6,6 +6,10 @@ import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { getTransactionsFromItem } from "@/app/Utils/Actions.ts/plaid";
 import { createTransactions } from "@/app/Utils/Actions.ts/transactions";
+import {
+  getLatestCursorOrNull,
+  updateItemCursor,
+} from "@/app/Utils/Actions.ts/items";
 
 interface ConnectedItemSettingsProps {
   itemsWithAccounts: PlaidItemWithAccounts[] | undefined;
@@ -16,13 +20,20 @@ const ConnectedItemSettings = ({
   const handleItemSync = async (
     itemId: string,
     userId: string,
-    access_token: string
+    accessToken: string
   ) => {
-    // Handle sync: Sync transactions client.sync({})
-    // Returns latest transactions that have been added or modified
+    const { success, data, error } = await getLatestCursorOrNull(itemId);
+    if (!success) {
+      console.error("Error fetching cursor:", error);
+      return;
+    }
 
-    const transactions = (await getTransactionsFromItem(access_token))
-      .transactions;
+    const startingCursor = data?.cursor ?? undefined;
+
+    const { transactions, cursor: newCursor } = await getTransactionsFromItem(
+      accessToken,
+      startingCursor
+    );
 
     const transactionResponse = await createTransactions({
       userId,
@@ -30,8 +41,19 @@ const ConnectedItemSettings = ({
       transactions,
     });
 
-    // TODO
-    // Get latest sync for item and display it: use either a state or call db again
+    if (!transactionResponse.success) {
+      console.error("Error saving transactions:", transactionResponse.error);
+      return;
+    }
+
+    const updateResult = await updateItemCursor(itemId, newCursor);
+    if (!updateResult.success) {
+      console.error("Failed to update item cursor:", updateResult.error);
+      return;
+    }
+
+    // Optional: You could return the transactions or re-fetch latest from DB here
+    console.log("Sync completed successfully.");
   };
 
   return (

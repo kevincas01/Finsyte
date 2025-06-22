@@ -3,6 +3,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import GradientButton from "@/app/Components/Buttons/GradientButton";
 import { useState } from "react";
 import BudgetModal from "../Modal/BudgetModal";
+import { createBudget } from "@/app/Utils/Actions.ts/budgets";
 const BudgetHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,7 +14,19 @@ const BudgetHeader = () => {
           onClose={() => {
             setIsModalOpen(false);
           }}
-          onSubmit={(budget)=>console.log(budget)}
+          onSubmit={async (budget) => {
+            const result = await createBudget({
+              currentAmount: budget.currentAmount!,
+              budgetAmount: budget.budgetAmount!,
+              financeCategory: budget.financeCategory!,
+              period: budget.period!,
+            });
+
+            if (!result.success) {
+              console.error("Failed to create budget:", result.error);
+              // You can also show a toast or alert here
+            }
+          }}
         />
       )}
 

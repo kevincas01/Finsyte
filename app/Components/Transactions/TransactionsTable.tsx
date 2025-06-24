@@ -1,8 +1,9 @@
 import { TransactionCategoryColors } from "@/app/Constants/transactions";
 import { ClientTransactionWithAccount } from "@/app/Types/transactions";
-import { formatDate } from "@/app/Utils/format";
 import { useState } from "react";
 import TransactionsModal from "../Modal/TransactionsModal";
+import { createTransaction } from "@/app/Utils/Actions.ts/transactions";
+import { formatDateToMMDDYYYY } from "@/app/Utils/format";
 
 type TransactionsTableProps = {
   transactions: ClientTransactionWithAccount[];
@@ -62,7 +63,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 className="border-t border-gray-100 hover:bg-gray-50 py-2"
               >
                 <td className="px-6 py-4">
-                  {formatDate(transaction.datetime)}
+                  {formatDateToMMDDYYYY(transaction.datetime)}
                 </td>
                 <td className="px-6 py-4 font-semibold text-base">
                   {transaction.name}
@@ -77,7 +78,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                     {transaction.financeCategory}
                   </span>
                 </td>
-                <td className="px-6 py-4">{transaction.account.name}</td>
+                <td className="px-6 py-4">{transaction.account?.name}</td>
                 <td className="px-6 py-4 font-semibold text-base">
                   $
                   {transaction.amount < 0 ? (

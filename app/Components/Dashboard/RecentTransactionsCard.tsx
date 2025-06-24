@@ -21,7 +21,7 @@ const RecentTransactionsCard = ({
           <div className="flex items-center">
             <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3">
               <span className="text-gray-600 text-sm">
-                {transaction.name}
+                {transaction.name[0]}
               </span>
             </div>
             <div>

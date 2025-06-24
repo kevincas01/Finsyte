@@ -1,9 +1,12 @@
-import {
-  mockTransactions,
-  TransactionCategoryColors,
-} from "@/app/Constants/transactions";
+import { TransactionCategoryColors } from "@/app/Constants/transactions";
+import { ClientTransaction } from "@/app/Types/transactions";
 
-const RecentTransactionsCard = () => {
+interface RecentTransactionsCardProps {
+  transactions: ClientTransaction[];
+}
+const RecentTransactionsCard = ({
+  transactions,
+}: RecentTransactionsCardProps) => {
   return (
     <div className="p-5 bg-white shadow-card rounded-md">
       <div className="flex flex-row justify-between mb-10">
@@ -13,22 +16,22 @@ const RecentTransactionsCard = () => {
         </button>
       </div>
       <div></div>
-      {mockTransactions.map((transaction, index) => (
+      {transactions.map((transaction, index) => (
         <div key={index} className="flex items-center justify-between p-3">
           <div className="flex items-center">
             <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3">
               <span className="text-gray-600 text-sm">
-                {transaction.merchant[0]}
+                {transaction.name}
               </span>
             </div>
             <div>
-              <p className="font-medium">{transaction.merchant}</p>
+              <p className="font-medium">{transaction.name}</p>
               <span
                 className={`text-xs font-medium px-2 py-1 rounded-full ${
-                  TransactionCategoryColors[transaction.category]
+                  TransactionCategoryColors[transaction.financeCategory!]
                 }`}
               >
-                {transaction.category}
+                {transaction.financeCategory}
               </span>
             </div>
           </div>
@@ -44,7 +47,7 @@ const RecentTransactionsCard = () => {
             )}
 
             <p className="text-sm text-gray-500">
-              {new Date(transaction.date).toLocaleDateString("en-US", {
+              {new Date(transaction.datetime).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",

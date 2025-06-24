@@ -1,6 +1,5 @@
 import BudgetHeader from "@/app/Components/Budgets/BudgetHeader";
 import BudgetPeriodDisplay from "@/app/Components/Budgets/BudgetPeriodDisplay";
-import { exampleBudgets } from "@/app/Constants/budgets";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { getUserBudgets } from "@/app/Utils/Actions.ts/budgets";
 import { mapToClientBudget } from "@/app/Utils/Transform/budgets";

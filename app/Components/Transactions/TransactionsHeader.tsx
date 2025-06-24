@@ -5,6 +5,7 @@ import NeutralButton from "@/app/Components/Buttons/NeutralButton";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import TransactionsModal from "@/app/Components/Modal/TransactionsModal";
+import { createTransaction } from "@/app/Utils/Actions.ts/transactions";
 
 const TransactionsHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,8 +17,20 @@ const TransactionsHeader = () => {
           onClose={() => {
             setIsModalOpen(false);
           }}
-          onSubmit={(goal) => {
-            console.log("New Transaction:", goal);
+          onSubmit={async (transaction) => {
+            const result = await createTransaction({
+              amount: transaction.amount,
+              name: transaction.name,
+              description: transaction.description,
+              pending: false,
+              logoUrl: null,
+              financeCategory:transaction.financeCategory
+            });
+
+            if (!result.success) {
+              console.error("Failed to create transaction:", result.error);
+              // You can also show a toast or alert here
+            }
           }}
         />
       )}

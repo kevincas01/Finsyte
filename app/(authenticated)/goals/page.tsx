@@ -4,7 +4,8 @@ import GoalsHeader from "@/app/Components/Goals/GoalsHeader";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { redirect } from "next/navigation";
 import { getUserGoals } from "@/app/Utils/Actions.ts/goals";
-import { mapToClientGoal } from "@/app/Utils/Transform/Goals";
+import { mapToClientGoal } from "@/app/Utils/Transform/goals";
+
 
 
 const GoalsPage = async () => {

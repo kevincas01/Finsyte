@@ -148,7 +148,8 @@ export const getUserTransactionsWithAccount = async (
         account:account_id (*)
       `
     )
-    .eq("user_id", userId);
+    .eq("user_id", userId)
+    .order("datetime", { ascending: false });
 
   if (error) {
     console.error("Failed to fetch items with accounts:", error.message);

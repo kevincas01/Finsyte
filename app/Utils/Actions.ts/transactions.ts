@@ -1,7 +1,52 @@
-"use server"
+"use server";
 import { Transaction } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
-import { DBTransactionWithAccount } from "@/app/Types/transactions";
+import {
+  ClientTransaction,
+  DBTransactionWithAccount,
+} from "@/app/Types/transactions";
+
+export const createTransaction = async ({
+  amount,
+  datetime,
+  name,
+  description,
+  pending,
+  logoUrl,
+  financeCategory,
+}: Partial<ClientTransaction>): Promise<{
+  success: boolean;
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    return { success: false, error: "User not authenticated." };
+  }
+  const goalProps = {
+    user_id: user.id,
+    amount,
+    datetime,
+    name,
+    description,
+    pending,
+    logo_url: logoUrl,
+    finance_category: financeCategory,
+  };
+  const { error } = await supabase.from("goals").insert(goalProps);
+
+  if (error) {
+    console.error("Error inserting goal:", error);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+};
 
 interface CreateTransactionsParams {
   userId: string;
@@ -21,7 +66,7 @@ export const createTransactions = async ({
       item_id: itemId,
       account_id: transaction.account_id,
       amount: transaction.amount,
-      datetime: transaction.datetime||transaction.date,
+      datetime: transaction.datetime || transaction.date,
       name: transaction.merchant_name || transaction.name,
       description: transaction.original_description,
       pending: transaction.pending,

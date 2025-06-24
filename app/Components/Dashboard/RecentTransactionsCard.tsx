@@ -9,7 +9,7 @@ const RecentTransactionsCard = ({
 }: RecentTransactionsCardProps) => {
   return (
     <div className="p-5 bg-white shadow-card rounded-md">
-      <div className="flex flex-row justify-between mb-10">
+      <div className="flex flex-row justify-between mb-5">
         <h4 className="text-xl font-semibold">Recent Transactions</h4>
         <button className="text-primaryBlue font-medium ml-1 cursor-pointer">
           View All

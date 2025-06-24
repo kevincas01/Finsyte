@@ -5,6 +5,8 @@ import ExpensesCard from "@/app/Components/Dashboard/ExpensesCard";
 import RecentTransactionsCard from "@/app/Components/Dashboard/RecentTransactionsCard";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { getUserInformation } from "@/app/Utils/Actions.ts/profiles";
+import { getUserTransactionsWithAccount } from "@/app/Utils/Actions.ts/transactions";
+import { mapToClientTransaction } from "@/app/Utils/Transform/transactions";
 import { redirect } from "next/navigation";
 const DashboardPage = async () => {
   const userSession = (await getUser()).data.user;
@@ -12,8 +14,12 @@ const DashboardPage = async () => {
   if (!userSession) {
     redirect("/");
   }
+  const userId = userSession.id;
   const profileInfo = (await getUserInformation(userSession.id))?.data;
-
+  const dbTransactions = (await getUserTransactionsWithAccount(userId)).data;
+  const transactions = dbTransactions!.map((transaction) =>
+    mapToClientTransaction(transaction)
+  );
   return (
     <div className="flex flex-col gap-5">
       <div className="">
@@ -31,7 +37,7 @@ const DashboardPage = async () => {
         <BillsCard />
       </div>
 
-      <RecentTransactionsCard />
+      <RecentTransactionsCard transactions={transactions} />
     </div>
   );
 };

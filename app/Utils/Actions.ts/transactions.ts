@@ -38,7 +38,7 @@ export const createTransaction = async ({
     logo_url: logoUrl,
     finance_category: financeCategory,
   };
-  const { error } = await supabase.from("goals").insert(goalProps);
+  const { error } = await supabase.from("transactions").insert(goalProps);
 
   if (error) {
     console.error("Error inserting goal:", error);

@@ -48,6 +48,42 @@ export const createTransaction = async ({
   return { success: true };
 };
 
+export const updateTransaction = async ({
+  id,
+  amount,
+  name,
+  description,
+  financeCategory,
+}: Partial<ClientTransaction>): Promise<{
+  success: boolean;
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  console.log( 
+    amount,
+    name,
+    description,
+    id,
+    financeCategory,)
+  const { error } = await supabase
+    .from("transactions")
+    .update({
+      amount,
+      name,
+      description,
+      finance_category:financeCategory,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error("Failed to update transaction:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+};
+
 interface CreateTransactionsParams {
   userId: string;
   itemId: string;

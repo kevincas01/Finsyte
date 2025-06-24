@@ -2,7 +2,7 @@ import { TransactionCategoryColors } from "@/app/Constants/transactions";
 import { ClientTransactionWithAccount } from "@/app/Types/transactions";
 import { useState } from "react";
 import TransactionsModal from "../Modal/TransactionsModal";
-import { createTransaction } from "@/app/Utils/Actions.ts/transactions";
+import { updateTransaction } from "@/app/Utils/Actions.ts/transactions";
 import { formatDateToMMDDYYYY } from "@/app/Utils/format";
 
 type TransactionsTableProps = {
@@ -23,11 +23,19 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
             setIsModalOpen(false);
             setSelectedTransaction(null);
           }}
-          onSubmit={(updatedTransaction) => {
-            // Replace the old transaction with the updated one (lifting state needed in parent if data lives above)
-            console.log("Updated transaction:", updatedTransaction);
-            setIsModalOpen(false);
-            setSelectedTransaction(null);
+          onSubmit={async (transaction) => {
+            const result = await updateTransaction({
+              id:transaction.id,
+              amount: transaction.amount,
+              name: transaction.name,
+              description: transaction.description,
+              financeCategory: transaction.financeCategory,
+            });
+
+            if (!result.success) {
+              console.error("Failed to update transaction:", result.error);
+              // You can also show a toast or alert here
+            }
           }}
           initialTransaction={selectedTransaction}
           mode="edit"

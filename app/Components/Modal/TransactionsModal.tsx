@@ -23,7 +23,6 @@ const TransactionsModal = ({
   initialTransaction,
   mode = "create",
 }: TransactionsModalProps) => {
-  console.log(initialTransaction)
   const [merchant, setMerchant] = useState(initialTransaction?.name || "");
   const [description, setDescription] = useState(
     initialTransaction?.description || ""
@@ -82,6 +81,7 @@ const TransactionsModal = ({
             const parsedAmount = Math.max(0, parseFloat(amountInput) || 0);
 
             const newTransaction: Partial<ClientTransactionWithAccount> = {
+              id: initialTransaction?.id,
               datetime:
                 initialTransaction?.datetime ||
                 new Date().toISOString().slice(0, 10),

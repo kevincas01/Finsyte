@@ -5,7 +5,7 @@ import {
 
 export const mapToClientTransaction = (
   transaction: DBTransactionWithAccount
-):ClientTransactionWithAccount=> {
+): ClientTransactionWithAccount => {
   return {
     id: transaction.id,
     amount: transaction.amount,
@@ -15,6 +15,8 @@ export const mapToClientTransaction = (
     pending: transaction.pending,
     logoUrl: transaction.logo_url,
     financeCategory: transaction.finance_category,
-    account: { id: transaction.account.id, name: transaction.account.name },
+    account: transaction.account
+      ? { id: transaction.account.id, name: transaction.account.name }
+      : null,
   };
 };

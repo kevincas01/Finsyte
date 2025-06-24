@@ -51,5 +51,5 @@ export interface ClientTransactionWithAccount extends ClientTransaction {
   account: {
     id: number;
     name: string;
-  };
+  } | null;
 }

@@ -25,7 +25,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
           }}
           onSubmit={async (transaction) => {
             const result = await updateTransaction({
-              id:transaction.id,
+              id: transaction.id,
               amount: transaction.amount,
               name: transaction.name,
               description: transaction.description,

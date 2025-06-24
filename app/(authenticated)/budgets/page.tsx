@@ -17,7 +17,6 @@ const BudgetsPage = async() => {
     mapToClientBudget(budget)
   );
 
-  getUserBudgets
   return (
     <div className="flex flex-col gap-5">
       <BudgetHeader />

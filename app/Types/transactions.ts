@@ -1,20 +1,19 @@
 import { Account } from "./account";
 
 export type TransactionCategory =
-  | "Automotive"
   | "Fees & Adjustments"
-  | "Education"
+  | "Housing"
+  | "Entertainment"
+  | "Transportation"
+  | "Travel"
   | "Food & Drink"
   | "Utilities"
-  | "Entertainment"
-  | "Travel"
-  | "Shopping"
-  | "Professional Services"
-  | "Personal"
   | "Miscellaneous"
-  | "Health & wellness"
-  | "Gifts & donations"
-  | "Gas"
+  | "Health & Wellness"
+  | "Education"
+  | "Shopping"
+  | "Personal"
+  | "Gifts & Donations"
   | "Groceries";
 
 export interface DBTransactionn {

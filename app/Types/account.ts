@@ -1,4 +1,4 @@
-export interface Account {
+export interface DBAccount {
   id: number;
   created_at: string;
   account_id: string;
@@ -12,4 +12,17 @@ export interface Account {
   subtype: string;
   iso_currency_code: string;
   item_id: string;
+}
+
+export interface ClientAccount {
+  id: number;
+  created_at: string;
+  name: string;
+  official_name: string;
+  mask: string;
+  available_balance: number;
+  current_balance: number;
+  type: string;
+  subtype: string;
+  iso_currency_code: string;
 }

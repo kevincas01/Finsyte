@@ -37,12 +37,12 @@ const RecentTransactionsCard = ({
           </div>
           <div className="text-right">
             {transaction.amount > 0 ? (
-              <p className="font-semibold text-green-500">
-                +${transaction.amount.toFixed(2)}
+              <p className="font-semibold text-red-500">
+                -${transaction.amount.toFixed(2)}
               </p>
             ) : (
-              <p className="font-semibold text-red-500">
-                -${(-1 * transaction.amount).toFixed(2)}
+              <p className="font-semibold text-green-500">
+                +${(-1 * transaction.amount).toFixed(2)}
               </p>
             )}
 

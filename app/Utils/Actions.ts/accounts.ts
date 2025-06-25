@@ -2,7 +2,7 @@
 
 import { AccountBase } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
-import { Account } from "@/app/Types/account";
+import { DBAccount } from "@/app/Types/account";
 
 interface CreatePlaidAccountsParams {
   userId: string;
@@ -70,7 +70,7 @@ export async function getUserAccountsWithItemId(id: string) {
 
 export async function getUserAccounts(userId: string): Promise<{
   success: boolean;
-  data?: Account[];
+  data?: DBAccount[];
   error?: string;
 }> {
   const supabase = await createSupabaseServerClient();

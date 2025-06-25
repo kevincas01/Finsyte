@@ -1,4 +1,4 @@
-import { Account } from "./account";
+import { DBAccount } from "./account";
 
 export type TransactionCategory =
   | "Fees & Adjustments"
@@ -32,7 +32,7 @@ export interface DBTransactionn {
 }
 
 export interface DBTransactionWithAccount extends DBTransactionn {
-  account: Account;
+  account: DBAccount;
 }
 
 export interface ClientTransaction {

@@ -1,4 +1,4 @@
-import { Account } from "./account";
+import { DBAccount } from "./account";
 
 export interface PlaidItem {
   id: number;
@@ -10,5 +10,5 @@ export interface PlaidItem {
   cursor: string ;
 }
 export interface PlaidItemWithAccounts extends PlaidItem{
-  accounts: Account[];
+  accounts: DBAccount[];
 }

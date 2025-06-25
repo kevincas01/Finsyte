@@ -1,5 +1,5 @@
 "use client";
-import { PlaidItemWithAccounts } from "@/app/Types/items";
+import { DBPlaidItemWithAccounts } from "@/app/Types/items";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import NeutralButton from "../Buttons/NeutralButton";
 import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
@@ -12,7 +12,7 @@ import {
 } from "@/app/Utils/Actions.ts/items";
 
 interface ConnectedItemSettingsProps {
-  itemsWithAccounts: PlaidItemWithAccounts[] | undefined;
+  itemsWithAccounts: DBPlaidItemWithAccounts[] | undefined;
 }
 const ConnectedItemSettings = ({
   itemsWithAccounts,

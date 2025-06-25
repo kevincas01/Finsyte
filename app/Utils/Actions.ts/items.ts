@@ -1,5 +1,5 @@
 "use server";
-import { PlaidItemWithAccounts } from "@/app/Types/items";
+import { DBPlaidItemWithAccounts } from "@/app/Types/items";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 
 interface CreatePlaidItemParams {
@@ -35,7 +35,7 @@ export const createPlaidItem = async ({
 
 export async function getPlaidItemsWithAccounts(userId: string): Promise<{
   success: boolean;
-  data?: PlaidItemWithAccounts[];
+  data?: DBPlaidItemWithAccounts[];
   error?: string;
 }> {
   const supabase = await createSupabaseServerClient();
@@ -55,7 +55,7 @@ export async function getPlaidItemsWithAccounts(userId: string): Promise<{
     return { success: false, error: error.message };
   }
 
-  return { success: true, data: data as PlaidItemWithAccounts[] };
+  return { success: true, data};
 }
 
 export const getLatestCursorOrNull = async (itemId: string) => {

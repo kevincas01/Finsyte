@@ -29,19 +29,6 @@ const GoalsPage = async () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <GoalProgress
-        goal={{
-          title: "Food & Dining",
-          currentAmount: 200,
-          targetAmount: 500,
-          deadlineDate: "2025-11-22T00:00:00.000Z",
-        }}
-        transactions={[
-          { id: "1", name: "Chipotle", amount: 20.5, date: "2025-06-18" },
-          { id: "2", name: "Trader Joe's", amount: 45.2, date: "2025-06-19" },
-          { id: "3", name: "Trader Joe's", amount: 45.2, date: "2025-06-19" },
-        ]}
-      />
 
       <Overview
         totalGoals={goals.length}

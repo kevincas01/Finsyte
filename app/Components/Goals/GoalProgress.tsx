@@ -2,19 +2,11 @@ import { formatCurrency } from "@/app/Utils/format";
 import React from "react";
 import ProgressBar from "../ProgressBar";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import { ClientGoal } from "@/app/Types/goals";
+import { ClientTransaction } from "@/app/Types/transactions";
 interface GoalProgressProps {
-  goal: {
-    title: string;
-    currentAmount: number;
-    targetAmount: number;
-    deadlineDate: string;
-  };
-  transactions: {
-    id: string;
-    name: string;
-    amount: number;
-    date: string;
-  }[];
+  goal: ClientGoal;
+  transactions: ClientTransaction[];
 }
 
 const GoalProgress = ({ goal, transactions }: GoalProgressProps) => {

@@ -1,6 +1,6 @@
 import { DBAccount } from "./account";
 
-export interface PlaidItem {
+export interface DBPlaidItem {
   id: number;
   created_at: string;
   item_id: string ;
@@ -9,6 +9,6 @@ export interface PlaidItem {
   institution_name: string ;
   cursor: string ;
 }
-export interface PlaidItemWithAccounts extends PlaidItem{
+export interface DBPlaidItemWithAccounts extends DBPlaidItem{
   accounts: DBAccount[];
 }

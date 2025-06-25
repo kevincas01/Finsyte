@@ -2,6 +2,7 @@
 
 import { AccountBase } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
+import { Account } from "@/app/Types/account";
 
 interface CreatePlaidAccountsParams {
   userId: string;
@@ -58,6 +59,26 @@ export async function getUserAccountsWithItemId(id: string) {
     .from("accounts")
     .select("*")
     .eq("item_id", id);
+
+  if (error) {
+    console.error("Failed to fetch user information:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+}
+
+export async function getUserAccounts(userId: string): Promise<{
+  success: boolean;
+  data?: Account[];
+  error?: string;
+}> {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("*")
+    .eq("user_id", userId);
 
   if (error) {
     console.error("Failed to fetch user information:", error.message);

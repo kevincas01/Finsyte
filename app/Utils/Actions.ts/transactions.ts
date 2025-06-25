@@ -5,6 +5,7 @@ import {
   ClientTransaction,
   DBTransactionWithAccount,
 } from "@/app/Types/transactions";
+import { mapPlaidCategoryToCustom } from "../categories";
 
 export const createTransaction = async ({
   amount,
@@ -108,7 +109,10 @@ export const createTransactions = async ({
       pending: transaction.pending,
       transaction_id: transaction.transaction_id,
       logo_url: transaction.logo_url,
-      finance_category: transaction.personal_finance_category?.primary,
+      finance_category: mapPlaidCategoryToCustom(
+        transaction.personal_finance_category?.primary as string,
+        transaction.personal_finance_category?.primary as string
+      ),
     };
 
     return supabase.from("transactions").insert(transactionData);

@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/app/Utils/format";
+import { formatCurrency, formatDateToMMDDYYYY} from "@/app/Utils/format";
 import React from "react";
 import ProgressBar from "../ProgressBar";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
@@ -55,10 +55,10 @@ const GoalProgress = ({ goal, transactions }: GoalProgressProps) => {
               className="flex justify-between items-center text-sm px-3 py-1 bg-gray-100 rounded-md"
             >
               <span>
-                <p className="font-medium text-base">{formatCurrency(tx.amount)} {tx.name}</p>
-                <p className="text-gray-600 ">Ate at starbucks </p>
+                <p className="font-medium text-base">{formatCurrency(tx.amount)} </p>
+                <p className="text-gray-600 ">{tx.name}</p>
               </span>
-              <p className="text-gray-600 text-sm">{new Date(goal.deadlineDate).toLocaleDateString()}</p>
+              <p className="text-gray-600 text-sm">{formatDateToMMDDYYYY(goal.deadlineDate)}</p>
             </div>
           ))
         ) : (
@@ -70,7 +70,7 @@ const GoalProgress = ({ goal, transactions }: GoalProgressProps) => {
         <span className="text-sm text-gray-600 flex items-center gap-1">
           <CalendarMonthOutlinedIcon fontSize="inherit" />
           <p>Deadline</p>
-          <p>{new Date(goal.deadlineDate).toLocaleDateString()}</p>
+          <p>{formatDateToMMDDYYYY(goal.deadlineDate)}</p>
         </span>
       </div>
     </div>

@@ -10,6 +10,7 @@ import {
   getLatestCursorOrNull,
   updateItemCursor,
 } from "@/app/Utils/Actions.ts/items";
+import { useRouter } from "next/navigation";
 
 interface ConnectedItemAccountsProps {
   itemWithAccounts: DBPlaidItemWithAccounts;
@@ -18,6 +19,7 @@ interface ConnectedItemAccountsProps {
 const ConnectedItemAccounts = ({
   itemWithAccounts,
 }: ConnectedItemAccountsProps) => {
+  const router = useRouter();
   const handleItemSync = async (
     itemId: string,
     userId: string,
@@ -93,24 +95,31 @@ const ConnectedItemAccounts = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-gray-50">
         {itemWithAccounts.accounts.map((account) => (
-          <div
-            key={account.account_id}
-            className="border border-blue-100 bg-white rounded-lg p-4 flex flex-col gap-1 "
+          <button
+            className=""
+            onClick={() => {
+              router.push(`/accounts/${account.account_id}`);
+            }}
           >
-            <p className="font-medium text-gray-800">
-              {account.name || "Unnamed Account"}
-            </p>
-            <p className="text-sm text-gray-600">
-              {account.type} &mdash; {account.subtype}
-            </p>
-            <p className="text-sm text-gray-400">Mask: ****{account.mask}</p>
-            <p className="font-semibold text-green-600 mt-2 text-lg">
-              {formatCurrency(account.current_balance) ?? "0.00"}
-            </p>
-            <p className="text-xs text-gray-600">
-              Available: {formatCurrency(account.available_balance) ?? "0.00"}
-            </p>
-          </div>
+            <div
+              key={account.account_id}
+              className="border border-blue-100 bg-white rounded-lg p-4 flex flex-col gap-1 items-start"
+            >
+              <p className="font-medium text-gray-800">
+                {account.name || "Unnamed Account"}
+              </p>
+              <p className="text-sm text-gray-600">
+                {account.type} &mdash; {account.subtype}
+              </p>
+              <p className="text-sm text-gray-400">Mask: ****{account.mask}</p>
+              <p className="font-semibold text-green-600 mt-2 text-lg">
+                {formatCurrency(account.current_balance) ?? "0.00"}
+              </p>
+              <p className="text-xs text-gray-600">
+                Available: {formatCurrency(account.available_balance) ?? "0.00"}
+              </p>
+            </div>{" "}
+          </button>
         ))}
       </div>
     </div>

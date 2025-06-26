@@ -94,12 +94,13 @@ const ConnectedItemAccounts = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-gray-50">
-        {itemWithAccounts.accounts.map((account) => (
+        {itemWithAccounts.accounts.map((account,index) => (
           <button
             className=""
             onClick={() => {
               router.push(`/accounts/${account.account_id}`);
             }}
+            key={index}
           >
             <div
               key={account.account_id}

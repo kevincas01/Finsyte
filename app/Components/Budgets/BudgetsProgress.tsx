@@ -4,6 +4,7 @@ import ProgressBar from "../ProgressBar";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { ClientBudget } from "@/app/Types/budget";
 import { ClientTransaction } from "@/app/Types/transactions";
+import TransactionsList from "../TransactionsList";
 interface BudgetProgressProps {
   budget: ClientBudget;
   transactions: ClientTransaction[];
@@ -49,21 +50,8 @@ const BudgetProgress = ({ budget, transactions }: BudgetProgressProps) => {
 
       <div className="h-50 max-h-52 overflow-auto flex flex-col gap-2 ">
         {transactions.length > 0 ? (
-          transactions.map((tx) => (
-            <div
-              key={tx.id}
-              className="flex justify-between items-center text-sm px-3 py-1 bg-gray-100 rounded-md"
-            >
-              <span>
-                <p className="font-medium text-base">
-                  {formatCurrency(tx.amount)}
-                </p>
-                <p className="text-gray-600 ">{tx.name}</p>
-              </span>
-              <p className="text-gray-600 text-sm">
-                {formatDateToMMDDYYYY(tx.datetime)}
-              </p>
-            </div>
+          transactions.map((transaction, index) => (
+            <TransactionsList transaction={transaction} key={index} />
           ))
         ) : (
           <p className="text-sm text-gray-400 italic">No recent transactions</p>

@@ -3,6 +3,7 @@ import { Transaction } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 import {
   ClientTransaction,
+  DBTransactionn,
   DBTransactionWithAccount,
 } from "@/app/Types/transactions";
 import { mapPlaidCategoryToCustom } from "../categories";
@@ -61,19 +62,13 @@ export const updateTransaction = async ({
 }> => {
   const supabase = await createSupabaseServerClient();
 
-  console.log( 
-    amount,
-    name,
-    description,
-    id,
-    financeCategory,)
   const { error } = await supabase
     .from("transactions")
     .update({
       amount,
       name,
       description,
-      finance_category:financeCategory,
+      finance_category: financeCategory,
     })
     .eq("id", id);
 
@@ -161,4 +156,29 @@ export const getUserTransactionsWithAccount = async (
   }
 
   return { success: true, data: data as DBTransactionWithAccount[] };
+};
+
+export const getUserTransactionsWithAccountId = async (
+  userId: string,
+  accountId: string
+): Promise<{
+  success: boolean;
+  data?: DBTransactionn[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(`*`)
+    .eq("account_id", accountId)
+    .eq("user_id", userId)
+    .order("datetime", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch items with accounts:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
 };

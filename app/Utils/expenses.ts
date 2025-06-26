@@ -1,4 +1,4 @@
-import { ClientTransactionWithAccount } from "@/app/Types/transactions";
+import { ClientTransaction } from "@/app/Types/transactions";
 
 interface MonthlyExpenseResult {
   total: number;
@@ -9,7 +9,7 @@ interface MonthlyExpenseResult {
 }
 
 export const getMonthlyExpensesTotal = (
-  transactions: ClientTransactionWithAccount[],
+  transactions: ClientTransaction[],
   includeTopCategory: boolean = false
 ): MonthlyExpenseResult => {
   const now = new Date();

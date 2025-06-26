@@ -6,9 +6,9 @@ import { mapToClientTransaction } from "@/app/Utils/Transform/transactions";
 import { redirect } from "next/navigation";
 
 interface Props {
-  params: {
+  params: Promise<{
     accountId: string;
-  };
+  }>;
 }
 
 export default async function AccountPage({ params }: Props) {
@@ -16,7 +16,7 @@ export default async function AccountPage({ params }: Props) {
   if (!userSession) redirect("/");
 
   const userId = userSession.id;
-  const accountId = params.accountId;
+  const accountId = (await params).accountId;
 
   const account = (await getAccountInfoWithAccountId(userId, accountId))?.data;
   if (!account) redirect("/dashboard");

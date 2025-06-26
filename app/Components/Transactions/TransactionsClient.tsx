@@ -35,7 +35,7 @@ const TransactionsClient = ({ transactions }: Props) => {
       const matchesCategory =
         category === "All" || transaction.financeCategory === category;
       const matchesAccount =
-        account === "All" || transaction.account.name === account;
+        account === "All" || transaction.account?.name === account;
       return matchesSearch && matchesCategory && matchesAccount;
     });
   }, [search, category, account, transactions]);

@@ -56,6 +56,8 @@ const SideBarItems = [
 
 const SideBar = () => {
   const currentPath = usePathname();
+  const paths = currentPath.split("/");
+;
 
   const handleSignOut = () => {
     signOutUser();
@@ -71,7 +73,7 @@ const SideBar = () => {
           <div
             key={item.label}
             className={` p-2 rounded-md ${
-              currentPath == item.href
+              `/${paths[1]}` === item.href
                 ? "bg-primaryBlue/10 border border-primaryBlue/50 text-primaryBlue"
                 : " hover:bg-gray-100 hover:text-black text-gray-600"
             } font-medium  cursor-pointer flex flex-row items-center gap-2`}

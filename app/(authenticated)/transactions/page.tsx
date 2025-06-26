@@ -3,7 +3,7 @@ import TransactionsClient from "@/app/Components/Transactions/TransactionsClient
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { redirect } from "next/navigation";
 import { getUserTransactionsWithAccount } from "@/app/Utils/Actions.ts/transactions";
-import { mapToClientTransaction } from "@/app/Utils/Transform/transactions";
+import { mapToClientTransactionWithAccount } from "@/app/Utils/Transform/transactions";
 
 const TransactionsPage = async () => {
   const userSession = (await getUser()).data.user;
@@ -15,7 +15,7 @@ const TransactionsPage = async () => {
 
   const dbTransactions = (await getUserTransactionsWithAccount(userId)).data;
   const transactions = dbTransactions!.map((transaction) =>
-    mapToClientTransaction(transaction)
+    mapToClientTransactionWithAccount(transaction)
   );
 
   return (

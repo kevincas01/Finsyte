@@ -8,7 +8,8 @@ import { useState } from "react";
 import BudgetModal from "../Modal/BudgetModal";
 import { ClientBudget } from "@/app/Types/budget";
 import { updateBudget } from "@/app/Utils/Actions.ts/budgets";
-
+import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import { useRouter } from "next/navigation";
 interface BudgetCardProps {
   budget: ClientBudget;
 }
@@ -39,6 +40,7 @@ const getBudgetStatus = (percentage: number) => {
 };
 
 const BudgetCard = ({ budget }: BudgetCardProps) => {
+  const router = useRouter();
   const { financeCategory, currentAmount, budgetAmount } = budget;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -46,7 +48,7 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
   const progress = budgetAmount > 0 ? (currentAmount / budgetAmount) * 100 : 0;
 
   return (
-    <div className="p-5 bg-white rounded-md border border-gray-200 flex flex-col gap-2">
+    <div className="p-5 bg-white rounded-md border border-gray-200 flex flex-col gap-3">
       {isModalOpen && (
         <BudgetModal
           onClose={() => setIsModalOpen(false)}
@@ -105,6 +107,14 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
         <NeutralButton onClick={() => setIsModalOpen(true)}>
           Edit Budget
         </NeutralButton>
+        <button
+          onClick={() => {
+            router.push(`/budgets/${budget.id}`);
+          }}
+          className="text-primaryBlue"
+        >
+          <ReadMoreIcon />
+        </button>
       </div>
     </div>
   );

@@ -104,7 +104,7 @@ const BudgetCard = ({ budget }: BudgetCardProps) => {
       </div>
 
       <div className="flex flex-row gap-5">
-        <NeutralButton onClick={() => setIsModalOpen(true)}>
+        <NeutralButton onClick={() => setIsModalOpen(true)} variant="gray">
           Edit Budget
         </NeutralButton>
         <button

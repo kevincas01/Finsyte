@@ -88,7 +88,9 @@ const GoalCard = ({ goal }: GoalCardProps) => {
         </span>
       </div>
       <div className="flex flex-row gap-5">
-        <NeutralButton onClick={() => {}}>Add Money</NeutralButton>
+        <NeutralButton variant="gray" onClick={() => {}}>
+          Add Money
+        </NeutralButton>
         <BlueButton onClick={() => setIsModalOpen(true)}>Edit Goal</BlueButton>
         <button
           onClick={() => {

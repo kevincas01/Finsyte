@@ -182,3 +182,28 @@ export const getUserTransactionsWithAccountId = async (
 
   return { success: true, data };
 };
+
+export const getUserTransactionsByCategory = async (
+  userId: string,
+  category: string
+): Promise<{
+  success: boolean;
+  data?: DBTransactionn[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(`*`)
+    .eq("finance_category", category)
+    .eq("user_id", userId)
+    .order("datetime", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch items with accounts:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+};

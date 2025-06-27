@@ -88,13 +88,14 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 </td>
                 <td className="px-6 py-4">{transaction.account?.name}</td>
                 <td className="px-6 py-4 font-semibold text-base">
-                  $
-                  {transaction.amount < 0 ? (
-                    (-1 * transaction.amount).toFixed(2)
+                  {transaction.amount > 0 ? (
+                    <p className="font-semibold ">
+                      ${transaction.amount.toFixed(2)}
+                    </p>
                   ) : (
-                    <span className="text-green-600">
-                      {transaction.amount.toFixed(2)}
-                    </span>
+                    <p className="font-semibold text-green-500">
+                      +${(-1 * transaction.amount).toFixed(2)}
+                    </p>
                   )}
                 </td>
                 <td className="px-6 py-4">

@@ -50,9 +50,7 @@ const BudgetProgress = ({ budget, transactions }: BudgetProgressProps) => {
 
       <div className="overflow-auto flex flex-col gap-2 box-border flex-1">
         {transactions.length > 0 ? (
-          transactions.map((transaction, index) => (
-            <TransactionsList transaction={transaction} key={index} />
-          ))
+          <TransactionsList transactions={transactions}/>
         ) : (
           <p className="text-sm text-gray-400 italic">No recent transactions</p>
         )}

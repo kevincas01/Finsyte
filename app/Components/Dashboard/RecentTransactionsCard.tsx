@@ -23,10 +23,8 @@ const RecentTransactionsCard = ({
           View All
         </button>
       </div>
-      <div></div>
-      {transactions.map((transaction, index) => (
-        <TransactionsList transaction={transaction} key={index} />
-      ))}
+
+      <TransactionsList transactions={transactions} />
     </div>
   );
 };

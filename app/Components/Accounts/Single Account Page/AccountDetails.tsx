@@ -1,10 +1,8 @@
 "use client";
 
-import { TransactionCategoryColors } from "@/app/Constants/transactions";
 import { DBAccount } from "@/app/Types/account";
 import { ClientTransaction } from "@/app/Types/transactions";
 import { formatCurrency } from "@/app/Utils/format";
-import Image from "next/image";
 import TransactionsList from "../../TransactionsList";
 
 interface Props {
@@ -33,11 +31,8 @@ export default function AccountDetails({ account, transactions }: Props) {
 
       <div className="bg-white border border-gray-200 rounded-lg p-4">
         <h2 className="font-semibold text-gray-800 ">Transactions</h2>
-        <ul className="divide-y divide-gray-100">
-          {transactions.map((transaction, index) => (
-            <TransactionsList transaction={transaction} key={index}/>
-          ))}
-        </ul>
+
+        <TransactionsList transactions={transactions} />
       </div>
     </div>
   );

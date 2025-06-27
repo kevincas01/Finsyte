@@ -57,6 +57,31 @@ export const getUserBudgets = async (
   return { success: true, data };
 };
 
+export const getBudgetInfoWithBudgetId = async (
+  userId: string,
+  budgetId: string
+): Promise<{
+  success: boolean;
+  data?: DBBudget;
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("budgets")
+    .select("*")
+    .eq("id", budgetId)
+    .eq("user_id", userId)
+    .single();
+
+  if (error) {
+    console.error("Failed to fetch user information:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+};
+
 export const updateBudget = async ({
   id,
   currentAmount,

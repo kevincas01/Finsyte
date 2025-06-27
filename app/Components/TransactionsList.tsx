@@ -2,6 +2,7 @@ import React from "react";
 import { ClientTransaction } from "../Types/transactions";
 import Image from "next/image";
 import { TransactionCategoryColors } from "../Constants/transactions";
+import { formatDateToMMDDYYYY } from "../Utils/format";
 interface TransactionsListProps {
   transaction: ClientTransaction;
 }
@@ -45,11 +46,7 @@ const TransactionsList = ({ transaction }: TransactionsListProps) => {
         )}
 
         <p className="text-sm text-gray-500">
-          {new Date(transaction.datetime).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
+          {formatDateToMMDDYYYY(transaction.datetime)}
         </p>
       </div>
     </div>

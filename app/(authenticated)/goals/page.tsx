@@ -29,6 +29,7 @@ const GoalsPage = async () => {
 
   return (
     <div className="flex flex-col gap-5">
+      <GoalsHeader/>
 
       <Overview
         totalGoals={goals.length}

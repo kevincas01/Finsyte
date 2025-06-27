@@ -39,7 +39,7 @@ const Overview = ({
         </div>
         <div className="flex flex-col items-center justify-center">
           <p className="text-sm text-gray-600">Overall Progress</p>
-          <p className="font-bold text-xl">{progress}%</p>
+          <p className="font-bold text-xl text-primaryBlue">{progress}%</p>
         </div>
       </div>
      

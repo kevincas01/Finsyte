@@ -35,7 +35,7 @@ const GoalsHeader = () => {
         <div className="">
           <h1 className="font-bold text-3xl">Goals</h1>
           <p className="text-gray-600 mt-1">
-            Track Progress towards your financial objectives.
+            Track progress towards your financial objectives.
           </p>
         </div>
         <div className="flex flex-row gap-3">

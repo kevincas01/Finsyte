@@ -9,12 +9,16 @@ import { useState } from "react";
 import GoalsModal from "../Modal/GoalsModal";
 import { ClientGoal } from "@/app/Types/goals";
 import { updateGoal } from "@/app/Utils/Actions.ts/goals";
+import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import { useRouter } from "next/navigation";
 
 interface GoalCardProps {
   goal: ClientGoal;
 }
 
 const GoalCard = ({ goal }: GoalCardProps) => {
+  const router = useRouter();
+
   const { title, description, currentAmount, targetAmount } = goal;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -86,6 +90,14 @@ const GoalCard = ({ goal }: GoalCardProps) => {
       <div className="flex flex-row gap-5">
         <NeutralButton onClick={() => {}}>Add Money</NeutralButton>
         <BlueButton onClick={() => setIsModalOpen(true)}>Edit Goal</BlueButton>
+        <button
+          onClick={() => {
+            router.push(`/goals/${goal.id}`);
+          }}
+          className="text-primaryBlue"
+        >
+          <ReadMoreIcon />
+        </button>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const GoalProgress = ({ goal, transactions }: GoalProgressProps) => {
   );
 
   return (
-    <div className="bg-white rounded-md p-5 border border-gray-200 flex flex-col gap-3">
+    <div className="overflow-auto bg-white rounded-md p-5 border border-gray-200 flex flex-col gap-3 h-full flex-1">
       <p className="font-semibold">{goal.title}</p>
 
       <div className="flex justify-between items-center">
@@ -48,7 +48,7 @@ const GoalProgress = ({ goal, transactions }: GoalProgressProps) => {
 
       <p className="font-semibold">Recent Activity</p>
 
-      <div className="h-50 max-h-52 overflow-auto flex flex-col gap-2 ">
+      <div className="overflow-auto flex flex-col gap-2 box-border flex-1">
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => (
             <TransactionsList transaction={transaction} key={index} />

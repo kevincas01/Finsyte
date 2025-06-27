@@ -18,7 +18,7 @@ const BudgetProgress = ({ budget, transactions }: BudgetProgressProps) => {
   );
 
   return (
-    <div className="bg-white rounded-md p-5 border border-gray-200 flex flex-col gap-3">
+    <div className="overflow-auto bg-white rounded-md p-5 border border-gray-200 flex flex-col gap-3 h-full flex-1">
       <p className="font-semibold">{budget.financeCategory}</p>
 
       <div className="flex justify-between items-center">
@@ -48,7 +48,7 @@ const BudgetProgress = ({ budget, transactions }: BudgetProgressProps) => {
 
       <p className="font-semibold">Recent Activity</p>
 
-      <div className="h-50 max-h-52 overflow-auto flex flex-col gap-2 ">
+      <div className="overflow-auto flex flex-col gap-2 box-border flex-1">
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => (
             <TransactionsList transaction={transaction} key={index} />
@@ -57,7 +57,6 @@ const BudgetProgress = ({ budget, transactions }: BudgetProgressProps) => {
           <p className="text-sm text-gray-400 italic">No recent transactions</p>
         )}
       </div>
-
       <div className="flex justify-center items-center mb-1 text-center">
         <span className="text-sm text-gray-600 flex items-center gap-1">
           <CalendarMonthOutlinedIcon fontSize="inherit" />

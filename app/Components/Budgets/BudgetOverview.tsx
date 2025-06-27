@@ -43,7 +43,7 @@ const BudgetOverview = ({
 
       <div className="grid grid-cols-3 gap-5 mt-5">
         <div className="flex flex-col items-center justify-center">
-          <p className="text-sm text-gray-600">Total Budget</p>
+          <p className="text-sm text-gray-600">Total Budgeted</p>
           <p className="font-bold text-xl">
             {formatCurrency(totalBudgetAmount)}
           </p>
@@ -56,7 +56,7 @@ const BudgetOverview = ({
         </div>
         <div className="flex flex-col items-center justify-center">
           <p className="text-sm text-gray-600">Remaining</p>
-          <p className="font-bold text-xl">
+          <p className="font-bold text-xl text-primaryBlue">
             {formatCurrency(totalBudgetAmount - totalSavedAmount)}
           </p>
         </div>

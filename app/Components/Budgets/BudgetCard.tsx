@@ -17,21 +17,21 @@ interface BudgetCardProps {
 const getBudgetStatus = (percentage: number) => {
   if (percentage < 80) {
     return (
-      <div className="flex text-sm items-center gap-1 text-green-600">
+      <div className="flex text-sm font-medium items-center gap-1 text-green-600">
         <TaskAltOutlinedIcon fontSize="inherit" />
         <p>On Track</p>
       </div>
     );
   } else if (percentage >= 80 && percentage <= 100) {
     return (
-      <div className="flex text-sm items-center gap-1 text-yellow-600">
+      <div className="flex text-sm font-medium items-center gap-1 text-yellow-600">
         <ReportProblemOutlinedIcon fontSize="inherit" />
         <p>Near Limit</p>
       </div>
     );
   } else {
     return (
-      <div className="flex text-sm items-center gap-1 text-red-600">
+      <div className="flex text-sm font-medium items-center gap-1 text-red-600">
         <ReportProblemOutlinedIcon fontSize="inherit" />
         <p>Over Budget</p>
       </div>

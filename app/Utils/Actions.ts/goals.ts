@@ -60,6 +60,31 @@ export const getUserGoals = async (
   return { success: true, data };
 };
 
+export const getGoalInfoWithGoalId = async (
+  userId: string,
+  budgetId: string
+): Promise<{
+  success: boolean;
+  data?: DBGoal;
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("goals")
+    .select("*")
+    .eq("id", budgetId)
+    .eq("user_id", userId)
+    .single();
+
+  if (error) {
+    console.error("Failed to fetch user information:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+};
+
 export const updateGoal = async ({
   id,
   currentAmount,

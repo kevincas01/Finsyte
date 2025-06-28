@@ -1,15 +1,29 @@
 import RecurringHeader from "@/app/Components/Recurring/RecurringHeader";
-import RecurringOverview from "@/app/Components/Recurring/RecurringOverview";
-import RecurringPaymentList from "@/app/Components/Recurring/RecurringPaymentList";
-import { recurringExpenses } from "@/app/Constants/recurring";
+import RecurringPaymentList from "@/app/Components/Recurring/RecurringTransactionsList";
+import { getUser } from "@/app/Utils/Actions.ts/auth";
+import { getUserRecurringTransactions } from "@/app/Utils/Actions.ts/recurring";
+import { mapToClientRecurring } from "@/app/Utils/Transform/recurring";
+import { redirect } from "next/navigation";
 
-const BudgetsPage = () => {
+const BudgetsPage = async () => {
+  const userSession = (await getUser()).data.user;
+
+  if (!userSession) {
+    redirect("/");
+  }
+  const userId = userSession.id;
+
+  const dbRecurring = (await getUserRecurringTransactions(userId)).data;
+
+  const recurringTransactions = dbRecurring!.map((recurring) =>
+    mapToClientRecurring(recurring)
+  );
 
   return (
     <div className="flex flex-col gap-5">
       <RecurringHeader />
 
-      <RecurringPaymentList expenses={recurringExpenses} />
+      <RecurringPaymentList recurringTransactions={recurringTransactions} />
     </div>
   );
 };

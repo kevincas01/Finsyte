@@ -5,10 +5,10 @@ import { formatDate } from "@/app/Utils/format";
 import React, { useState } from "react";
 import RecurringModal from "../Modal/RecurringModal";
 import { Recurring } from "@/app/Types/recurring";
-interface RecurringPaymentListProps {
+interface RecurringTransactionsListProps {
   expenses: Recurring[];
 }
-const RecurringPaymentList = ({ expenses }: RecurringPaymentListProps) => {
+const RecurringTransactionsList = ({ expenses }: RecurringTransactionsListProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRecurring, setSelectedRecurring] = useState<Recurring | null>(
     null
@@ -31,7 +31,7 @@ const RecurringPaymentList = ({ expenses }: RecurringPaymentListProps) => {
         />
       )}
       <div className="p-5 border-b border-b-gray-200">
-        <p className="font-semibold">All Recurring Payments</p>
+        <p className="font-semibold">All Recurring Transactionss</p>
       </div>
 
       {recurringExpenses.map((expense) => (
@@ -74,4 +74,4 @@ const RecurringPaymentList = ({ expenses }: RecurringPaymentListProps) => {
   );
 };
 
-export default RecurringPaymentList;
+export default RecurringTransactionsList;

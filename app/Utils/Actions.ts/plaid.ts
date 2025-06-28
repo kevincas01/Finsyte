@@ -99,3 +99,23 @@ export const getTransactionsFromItem = async (
     cursor: cursor!,
   };
 };
+
+export const getRecurringTransactions = async (
+  accessToken: string,
+  accountIds: string[]
+) => {
+  try {
+    const response = await client.transactionsRecurringGet({
+      access_token: accessToken,
+      account_ids: accountIds,
+    });
+
+    return {
+      inflows: response.data.inflow_streams,
+      outflows: response.data.outflow_streams,
+    };
+  } catch (error) {
+    console.error("Failed to get recurring transactions:", error);
+    throw error;
+  }
+};

@@ -6,7 +6,6 @@ export type RecurringFrequencyCategory =
   | "Quarterly"
   | "Yearly";
 
-
 export interface DBRecurringTransaction {
   id: number;
   user_id: string;
@@ -28,4 +27,15 @@ export interface ClientRecurringTransaction {
   frequency: string;
   last_date: string;
   next_date: string;
+}
+
+export interface DBRecurringTransactionWAccount extends DBRecurringTransaction {
+  account: {
+    name: string;
+  } 
+}
+
+export interface ClientRecurringTransactionWAccount
+  extends ClientRecurringTransaction {
+  accountName:string
 }

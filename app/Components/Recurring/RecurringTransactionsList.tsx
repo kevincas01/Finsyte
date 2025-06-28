@@ -1,18 +1,18 @@
 "use client";
-import { recurringExpenses } from "@/app/Constants/recurring";
 import { TransactionCategoryColors } from "@/app/Constants/transactions";
-import { formatDate } from "@/app/Utils/format";
+import { formatCurrency, formatDate } from "@/app/Utils/format";
 import React, { useState } from "react";
 import RecurringModal from "../Modal/RecurringModal";
-import { Recurring } from "@/app/Types/recurring";
+import { ClientRecurringTransaction } from "@/app/Types/recurring";
 interface RecurringTransactionsListProps {
-  expenses: Recurring[];
+  recurringTransactions: ClientRecurringTransaction[];
 }
-const RecurringTransactionsList = ({ expenses }: RecurringTransactionsListProps) => {
+const RecurringTransactionsList = ({
+  recurringTransactions,
+}: RecurringTransactionsListProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRecurring, setSelectedRecurring] = useState<Recurring | null>(
-    null
-  );
+  const [selectedRecurring, setSelectedRecurring] =
+    useState<ClientRecurringTransaction | null>(null);
   return (
     <div className="bg-white shadow-card rounded-md">
       {isModalOpen && selectedRecurring && (
@@ -31,42 +31,44 @@ const RecurringTransactionsList = ({ expenses }: RecurringTransactionsListProps)
         />
       )}
       <div className="p-5 border-b border-b-gray-200">
-        <p className="font-semibold">All Recurring Transactionss</p>
+        <p className="font-semibold">All Recurring Transactions</p>
       </div>
 
-      {recurringExpenses.map((expense) => (
+      {recurringTransactions.map((transaction) => (
         <div
-          key={expense.name}
+          key={transaction.name}
           className="flex flex-row justify-between p-5 border-b border-b-gray-200"
         >
           <div className="flex flex-row gap-2 items-center">
-            <p className="font-medium">{expense.name}</p>
+            <p className="font-medium">{transaction.name}</p>
 
             <span
               className={`my-auto text-xs font-medium px-2 py-1 rounded-full text-nowrap ${
-                TransactionCategoryColors[expense.category]
+                TransactionCategoryColors[transaction.category]
               }`}
             >
-              {expense.category}
+              {transaction.category}
             </span>
           </div>
           <div className="flex flex-row items-center gap-5">
             <div>
-              <p className="font-medium">${expense.amount}</p>
-              <p className="text-sm text-gray-600">{expense.frequency}</p>
+              <p className="font-medium">
+                {formatCurrency(transaction.amount, 2)}
+              </p>
+              <p className="text-sm text-gray-600">{transaction.frequency}</p>
             </div>
             <p className="font-medium text-sm">
-              {formatDate(expense?.targetDate)}
+              {formatDate(transaction?.next_date)}
             </p>
             <button
               onClick={() => {
-                setSelectedRecurring(expense);
+                setSelectedRecurring(transaction);
                 setIsModalOpen(true);
               }}
               className="text-blue-600 hover:underline text-sm cursor-pointer"
             >
               Edit
-            </button>{" "}
+            </button>
           </div>
         </div>
       ))}

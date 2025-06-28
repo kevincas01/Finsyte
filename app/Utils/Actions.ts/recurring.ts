@@ -1,7 +1,7 @@
 "use server";
 import { TransactionStream } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
-import { DBRecurringTransaction } from "@/app/Types/recurring";
+import { DBRecurringTransaction, DBRecurringTransactionWAccount } from "@/app/Types/recurring";
 import { mapPlaidCategoryToCustom } from "../categories";
 
 export const upsertRecurringOutflows = async (
@@ -45,6 +45,33 @@ export const getUserRecurringTransactions = async (
   const { data, error } = await supabase
     .from("recurring")
     .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Failed to fetch user goals:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data };
+};
+
+export const getUserRecurringTransactionsWAccount = async (
+  userId: string
+): Promise<{
+  success: boolean;
+  data?: DBRecurringTransactionWAccount[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("recurring")
+    .select(
+      `
+        *,
+       account:account_id (name)
+      `
+    )
     .eq("user_id", userId);
 
   if (error) {

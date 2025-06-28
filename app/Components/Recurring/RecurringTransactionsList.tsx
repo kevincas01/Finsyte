@@ -3,16 +3,19 @@ import { TransactionCategoryColors } from "@/app/Constants/transactions";
 import { formatCurrency, formatDate } from "@/app/Utils/format";
 import React, { useState } from "react";
 import RecurringModal from "../Modal/RecurringModal";
-import { ClientRecurringTransaction } from "@/app/Types/recurring";
+import {
+  ClientRecurringTransaction,
+  ClientRecurringTransactionWAccount,
+} from "@/app/Types/recurring";
 interface RecurringTransactionsListProps {
-  recurringTransactions: ClientRecurringTransaction[];
+  recurringTransactions: ClientRecurringTransactionWAccount[];
 }
 const RecurringTransactionsList = ({
   recurringTransactions,
 }: RecurringTransactionsListProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRecurring, setSelectedRecurring] =
-    useState<ClientRecurringTransaction | null>(null);
+    useState<ClientRecurringTransactionWAccount | null>(null);
   return (
     <div className="bg-white shadow-card rounded-md">
       {isModalOpen && selectedRecurring && (
@@ -39,8 +42,11 @@ const RecurringTransactionsList = ({
           key={transaction.name}
           className="flex flex-row justify-between p-5 border-b border-b-gray-200"
         >
-          <div className="flex flex-row gap-2 items-center">
-            <p className="font-medium">{transaction.name}</p>
+          <div className="flex flex-row gap-5 items-center">
+            <span>
+              <p className="font-medium">{transaction.name}</p>
+              <p className="text-gray-600">{transaction.accountName}</p>
+            </span>
 
             <span
               className={`my-auto text-xs font-medium px-2 py-1 rounded-full text-nowrap ${

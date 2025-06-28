@@ -19,7 +19,10 @@ const AccountsPage = async () => {
       <AccountsHeader userId={userId} />
 
       {itemsWithAccounts.data?.map((itemWithAccounts) => (
-        <ConnectedItemAccounts key={itemWithAccounts.id} itemWithAccounts={itemWithAccounts}/>
+        <ConnectedItemAccounts
+          key={itemWithAccounts.id}
+          itemWithAccounts={itemWithAccounts}
+        />
       ))}
     </div>
   );

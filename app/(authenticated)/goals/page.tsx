@@ -5,7 +5,6 @@ import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { redirect } from "next/navigation";
 import { getUserGoals } from "@/app/Utils/Actions.ts/goals";
 import { mapToClientGoal } from "@/app/Utils/Transform/goals";
-import GoalProgress from "@/app/Components/Goals/GoalProgress";
 
 const GoalsPage = async () => {
   const userSession = (await getUser()).data.user;

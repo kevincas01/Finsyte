@@ -7,16 +7,19 @@ import TextInput from "../Inputs/TextInput";
 import ModalContainer from "./ModalContainer";
 import NumberInput from "../Inputs/NumberInput";
 import { RecurringFrequencies } from "@/app/Constants/recurring";
-import { Recurring, RecurringFrequencyCategory } from "@/app/Types/recurring";
+import {
+  ClientRecurringTransaction,
+  RecurringFrequencyCategory,
+} from "@/app/Types/recurring";
 import { TransactionCategories } from "@/app/Constants/transactions";
 import DateInput from "../Inputs/DateInput";
 import { TransactionCategory } from "@/app/Types/transactions";
 
 interface RecurringModalProps {
   onClose: () => void;
-  onSubmit: (recurring: Recurring) => void;
+  onSubmit: (recurring: Partial<ClientRecurringTransaction>) => void;
   mode?: "create" | "edit";
-  initialRecurring?: Recurring;
+  initialRecurring?: ClientRecurringTransaction;
 }
 
 const RecurringModal = ({
@@ -37,9 +40,7 @@ const RecurringModal = ({
     String(initialRecurring?.amount) ?? ""
   );
 
-  const [targetDate, setTargetDate] = useState(
-    initialRecurring?.targetDate || ""
-  );
+  const [nextDate, setNextDate] = useState(initialRecurring?.next_date || "");
 
   const categoryOptions = TransactionCategories.map((category) => ({
     label: category,
@@ -91,8 +92,8 @@ const RecurringModal = ({
       />
       <DateInput
         label="Start Date"
-        value={targetDate}
-        onChange={(value) => setTargetDate(value)}
+        value={nextDate}
+        onChange={(value) => setNextDate(value)}
       />
 
       <div className="grid grid-cols-[2fr_auto] gap-5">
@@ -104,7 +105,7 @@ const RecurringModal = ({
               frequency,
               category,
               amount: parsedAmount,
-              targetDate,
+              nextDate,
             };
             onSubmit(recurringPayment);
             onClose();

@@ -18,6 +18,10 @@ export const upsertRecurringOutflows = async (
     frequency: outflow.frequency,
     last_date: outflow.last_date,
     next_date: outflow.predicted_next_date,
+    category: mapPlaidCategoryToCustom(
+      outflow.personal_finance_category?.primary as string,
+      outflow.personal_finance_category?.primary as string
+    ),
   }));
 
   const { error } = await supabase.from("recurring").upsert(formattedOutflows, {

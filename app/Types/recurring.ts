@@ -6,10 +6,26 @@ export type RecurringFrequencyCategory =
   | "Quarterly"
   | "Yearly";
 
-export interface Recurring {
+
+export interface DBRecurringTransaction {
+  id: number;
+  user_id: string;
+  stream_id: string;
+  account_id: string;
+  category: TransactionCategory;
   name: string;
   amount: number;
+  frequency: string;
+  last_date: string;
+  next_date: string;
+}
+
+export interface ClientRecurringTransaction {
+  id: number;
   category: TransactionCategory;
-  frequency: RecurringFrequencyCategory;
-  targetDate: string;
+  name: string;
+  amount: number;
+  frequency: string;
+  last_date: string;
+  next_date: string;
 }

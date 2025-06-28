@@ -4,13 +4,18 @@ import NeutralButton from "../Buttons/NeutralButton";
 import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { formatCurrency } from "@/app/Utils/format";
-import { getTransactionsFromItem } from "@/app/Utils/Actions.ts/plaid";
+import {
+  getRecurringTransactions,
+  getTransactionsFromItem,
+} from "@/app/Utils/Actions.ts/plaid";
 import { createTransactions } from "@/app/Utils/Actions.ts/transactions";
 import {
   getLatestCursorOrNull,
   updateItemCursor,
 } from "@/app/Utils/Actions.ts/items";
 import { useRouter } from "next/navigation";
+import { DBAccount } from "@/app/Types/account";
+import { upsertRecurringOutflows } from "@/app/Utils/Actions.ts/recurring";
 
 interface ConnectedItemAccountsProps {
   itemWithAccounts: DBPlaidItemWithAccounts;
@@ -23,7 +28,8 @@ const ConnectedItemAccounts = ({
   const handleItemSync = async (
     itemId: string,
     userId: string,
-    accessToken: string
+    accessToken: string,
+    accounts: DBAccount[]
   ) => {
     // Step 1: Get latest cursor from DB
     const { success, data, error } = await getLatestCursorOrNull(itemId);
@@ -56,6 +62,15 @@ const ConnectedItemAccounts = ({
       return;
     }
 
+    const accountIds = accounts.map((account) => account.account_id);
+
+    const { outflows } = await getRecurringTransactions(
+      accessToken,
+      accountIds
+    );
+
+    await upsertRecurringOutflows(userId, outflows);
+
     // Optional: You could return the transactions or re-fetch latest from DB here
     console.log("Sync completed successfully.");
   };
@@ -76,7 +91,8 @@ const ConnectedItemAccounts = ({
               handleItemSync(
                 itemWithAccounts.item_id,
                 itemWithAccounts.user_id,
-                itemWithAccounts.access_token
+                itemWithAccounts.access_token,
+                itemWithAccounts.accounts
               );
             }}
             className="text-sm text-primaryBlue hover:bg-primaryBlue/10"
@@ -94,7 +110,7 @@ const ConnectedItemAccounts = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-gray-50">
-        {itemWithAccounts.accounts.map((account,index) => (
+        {itemWithAccounts.accounts.map((account, index) => (
           <button
             className=""
             onClick={() => {

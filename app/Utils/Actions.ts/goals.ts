@@ -1,5 +1,4 @@
 "use server";
-import { ClientBudget, DBBudget } from "@/app/Types/budget";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 import { ClientGoal, DBGoal } from "@/app/Types/goals";
 

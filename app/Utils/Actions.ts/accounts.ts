@@ -23,7 +23,7 @@ export const createPlaidAccounts = async ({
       item_id: itemId,
       account_id: account.account_id,
       name: account.name,
-      official_name: account.official_name,
+      official_name: account.official_name || account.name,
       type: account.type,
       subtype: account.subtype,
       mask: account.mask,

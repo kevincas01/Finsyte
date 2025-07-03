@@ -2,7 +2,7 @@ import { formatCurrency } from "@/app/Utils/format";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 interface ExpensesCardProps {
   expensesTotal: number;
-  topExpense: { category: string; amount: number };
+  topExpense: { category: string; amount: number } | null;
 }
 const ExpensesCard = ({ expensesTotal, topExpense }: ExpensesCardProps) => {
   return (
@@ -15,10 +15,12 @@ const ExpensesCard = ({ expensesTotal, topExpense }: ExpensesCardProps) => {
       </div>
       <div className="mt-4">
         <h3 className="text-gray-600 text-sm font-medium">Monthly Expenses</h3>
-        <p className="font-bold text-2xl">{formatCurrency(expensesTotal)}</p>
-        <p className="text-gray-400 text-xs mt-1">
-          Top: {topExpense.category} ({formatCurrency(topExpense.amount)})
-        </p>
+        <p className="font-bold text-2xl">{formatCurrency(expensesTotal,2)}</p>
+        {topExpense && (
+          <p className="text-gray-400 text-xs mt-1">
+            Top: {topExpense.category} ({formatCurrency(topExpense.amount,2)})
+          </p>
+        )}
       </div>
     </div>
   );

@@ -48,8 +48,8 @@ const DashboardPage = async () => {
           accountsLength={accountsInfo?.length!}
         />
         <ExpensesCard
-          expensesTotal={expenseReport.total}
-          topExpense={expenseReport.topCategory!}
+          expensesTotal={expenseReport.total||0}
+          topExpense={expenseReport.topCategory|| null}
         />
         <DebtCard />
         <BillsCard />

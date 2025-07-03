@@ -37,17 +37,16 @@ const RecurringTransactionsList = ({
         <p className="font-semibold">All Recurring Transactions</p>
       </div>
 
-      {recurringTransactions.map((transaction) => (
+      {recurringTransactions.map((transaction, index) => (
         <div
-          key={transaction.name}
-          className="flex flex-row justify-between p-5 border-b border-b-gray-200"
+          key={index}
+          className="flex justify-between items-center p-4 border-b border-gray-200"
         >
-          <div className="flex flex-row gap-5 items-center">
+          <div className="flex flex-row gap-3">
             <span>
               <p className="font-medium">{transaction.name}</p>
-              <p className="text-gray-600">{transaction.accountName}</p>
+              <p className="text-gray-600 text-sm">{transaction.accountName}</p>
             </span>
-
             <span
               className={`my-auto text-xs font-medium px-2 py-1 rounded-full text-nowrap ${
                 TransactionCategoryColors[transaction.category]
@@ -56,12 +55,15 @@ const RecurringTransactionsList = ({
               {transaction.category}
             </span>
           </div>
-          <div className="flex flex-row items-center gap-5">
+
+          <div className="flex items-center gap-5 text-right">
             <div>
-              <p className="font-medium">
+              <p className="font-medium text-sm">
                 {formatCurrency(transaction.amount, 2)}
               </p>
-              <p className="text-sm text-gray-600">{transaction.frequency}</p>
+              <p className="text-xs text-gray-600 capitalize">
+                {transaction.frequency.toLowerCase()}
+              </p>
             </div>
             <p className="font-medium text-sm">
               {formatDate(transaction?.next_date)}
@@ -71,7 +73,7 @@ const RecurringTransactionsList = ({
                 setSelectedRecurring(transaction);
                 setIsModalOpen(true);
               }}
-              className="text-blue-600 hover:underline text-sm cursor-pointer"
+              className="text-sm text-blue-600 hover:underline"
             >
               Edit
             </button>

@@ -28,5 +28,9 @@ export default async function AccountPage({ params }: Props) {
     mapToClientTransaction(transaction)
   );
 
-  return <AccountDetails account={account} transactions={transactions} />;
+  return (
+    <div className=" max-h-[calc(100vh-40px)] flex flex-col gap-5 box-border flex-1">
+      <AccountDetails account={account} transactions={transactions} />
+    </div>
+  );
 }

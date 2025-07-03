@@ -10,6 +10,7 @@ import {
   getLatestCursorOrNull,
   updateItemCursor,
 } from "@/app/Utils/Actions.ts/items";
+import { getTimeDifference } from "@/app/Utils/time";
 
 interface ConnectedItemSettingsProps {
   itemsWithAccounts: DBPlaidItemWithAccounts[] | undefined;
@@ -76,8 +77,7 @@ const ConnectedItemSettings = ({
                 {item.institution_name || "Unnamed Institution"}
               </p>
               <p className="text-sm text-gray-600">
-                Last synced: 2 hours ago{" "}
-                {/* TODO: Replace with real timestamp later */}
+                Last synced: {getTimeDifference(item.last_synced)}
               </p>
             </div>
 

@@ -16,7 +16,9 @@ import {
 import { useRouter } from "next/navigation";
 import { DBAccount } from "@/app/Types/account";
 import { upsertRecurringOutflows } from "@/app/Utils/Actions.ts/recurring";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
+import { getAccountTypeMeta } from "@/app/Utils/accounts";
 interface ConnectedItemAccountsProps {
   itemWithAccounts: DBPlaidItemWithAccounts;
 }
@@ -75,6 +77,55 @@ const ConnectedItemAccounts = ({
     console.log("Sync completed successfully.");
   };
 
+  const renderAccountCard = (account: DBAccount) => {
+    const { icon, color } = getAccountTypeMeta(account.type);
+
+    const isDebt = account.type === "credit" || account.type === "loan";
+
+    return (
+      <>
+        <div className="flex flex-row justify-between items-center w-full">
+          <span className={`${color} px-3 py-2 text-white text-lg rounded-md`}>
+            {icon}
+          </span>
+          <span className="text-right">
+            <p
+              className={`font-semibold text-lg ${
+                isDebt ? "text-red-600" : "text-green-600"
+              }`}
+            >
+              {formatCurrency(account.current_balance, 2)}
+            </p>
+            {account.available_balance != null && (
+              <p className="text-xs text-gray-600">
+                Available: {formatCurrency(account.available_balance,2)}
+              </p>
+            )}
+          </span>
+        </div>
+
+        {/* Account details */}
+        <div className="flex flex-col gap-1 w-full">
+          <p className="font-semibold text-gray-800">{account.name}</p>
+          <p className="text-sm text-gray-600 capitalize">
+            {account.subtype?.replace("_", " ") || account.type} ••••
+            {account.mask}
+          </p>
+        </div>
+
+        <NeutralButton
+          className="w-full"
+          onClick={() => {
+            router.push(`/accounts/${account.account_id}`);
+          }}
+        >
+          <VisibilityOutlinedIcon />
+          View Transactions
+        </NeutralButton>
+      </>
+    );
+  };
+
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <div className="flex flex-row justify-between items-center border-b border-gray-200 p-5 ">
@@ -111,32 +162,12 @@ const ConnectedItemAccounts = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-gray-50">
         {itemWithAccounts.accounts.map((account, index) => (
-          <button
-            className=""
-            onClick={() => {
-              router.push(`/accounts/${account.account_id}`);
-            }}
+          <div
             key={index}
+            className="border border-gray-200 bg-white rounded-lg p-5 flex flex-col flex-1 gap-3 items-start w-full text-left"
           >
-            <div
-              key={account.account_id}
-              className="border border-blue-100 bg-white rounded-lg p-4 flex flex-col gap-1 items-start"
-            >
-              <p className="font-medium text-gray-800">
-                {account.name || "Unnamed Account"}
-              </p>
-              <p className="text-sm text-gray-600">
-                {account.type} &mdash; {account.subtype}
-              </p>
-              <p className="text-sm text-gray-400">Mask: ****{account.mask}</p>
-              <p className="font-semibold text-green-600 mt-2 text-lg">
-                {formatCurrency(account.current_balance) ?? "0.00"}
-              </p>
-              <p className="text-xs text-gray-600">
-                Available: {formatCurrency(account.available_balance) ?? "0.00"}
-              </p>
-            </div>{" "}
-          </button>
+            {renderAccountCard(account)}
+          </div>
         ))}
       </div>
     </div>

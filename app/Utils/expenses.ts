@@ -13,14 +13,14 @@ export const getMonthlyExpensesTotal = (
   includeTopCategory: boolean = false
 ): MonthlyExpenseResult => {
   const now = new Date();
-  const currentMonth = now.getMonth();
-  const currentYear = now.getFullYear();
+  const currentMonth = now.getUTCMonth();
+  const currentYear = now.getUTCFullYear();
 
   // Filter transactions for current month
   const monthlyTransactions = transactions.filter((tx) => {
     const txDate = new Date(tx.datetime);
     return (
-      txDate.getMonth() === currentMonth && txDate.getFullYear() === currentYear
+      txDate.getUTCMonth() === currentMonth && txDate.getUTCFullYear() === currentYear
     );
   });
 

@@ -26,12 +26,12 @@ const BudgetOverview = ({
       })} ${now.getFullYear()} Overview`;
       break;
     case "Quarterly":
-      const month = now.getMonth();
+      const month = now.getUTCMonth();
       const quarter = Math.floor(month / 3) + 1;
-      title = `Q${quarter} ${now.getFullYear()} Overview`;
+      title = `Q${quarter} ${now.getUTCFullYear()} Overview`;
       break;
     case "Yearly":
-      title = `${now.getFullYear()} Overview`;
+      title = `${now.getUTCFullYear()} Overview`;
       break;
     default:
       title = "Budget Overview";

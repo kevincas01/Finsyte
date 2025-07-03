@@ -90,3 +90,19 @@ export const updateItemCursor = async (itemId: string, cursor: string) => {
 
   return { success: true };
 };
+
+export const updateItemSyncTime = async (itemId: string) => {
+  const supabase = await createSupabaseServerClient();
+
+  const { error } = await supabase
+    .from("plaid_items")
+    .update({ last_synced: new Date().toISOString() }) 
+    .eq("item_id", itemId); 
+
+  if (error) {
+    console.error("Failed to update last_synced:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+};

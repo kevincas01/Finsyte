@@ -7,6 +7,7 @@ export interface DBPlaidItem {
   user_id: string ;
   access_token: string ;
   institution_name: string ;
+  last_synced:string;
   cursor: string ;
 }
 export interface DBPlaidItemWithAccounts extends DBPlaidItem{

@@ -12,6 +12,7 @@ import { createTransactions } from "@/app/Utils/Actions.ts/transactions";
 import {
   getLatestCursorOrNull,
   updateItemCursor,
+  updateItemSyncTime,
 } from "@/app/Utils/Actions.ts/items";
 import { useRouter } from "next/navigation";
 import { DBAccount } from "@/app/Types/account";
@@ -19,6 +20,7 @@ import { upsertRecurringOutflows } from "@/app/Utils/Actions.ts/recurring";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import { getAccountTypeMeta } from "@/app/Utils/accounts";
+import { getTimeDifference } from "@/app/Utils/time";
 interface ConnectedItemAccountsProps {
   itemWithAccounts: DBPlaidItemWithAccounts;
 }
@@ -73,6 +75,8 @@ const ConnectedItemAccounts = ({
 
     await upsertRecurringOutflows(userId, outflows);
 
+    await updateItemSyncTime(itemId);
+
     // Optional: You could return the transactions or re-fetch latest from DB here
     console.log("Sync completed successfully.");
   };
@@ -98,7 +102,7 @@ const ConnectedItemAccounts = ({
             </p>
             {account.available_balance != null && (
               <p className="text-xs text-gray-600">
-                Available: {formatCurrency(account.available_balance,2)}
+                Available: {formatCurrency(account.available_balance, 2)}
               </p>
             )}
           </span>
@@ -133,7 +137,9 @@ const ConnectedItemAccounts = ({
           <p className="font-semibold text-lg text-primaryBlue">
             {itemWithAccounts.institution_name || "Unnamed Institution"}
           </p>
-          <p className="text-sm text-gray-600">Last synced: 2 hours ago</p>
+          <p className="text-sm text-gray-600">
+            Last synced: {getTimeDifference(itemWithAccounts.last_synced)}
+          </p>
         </div>
 
         <div className="flex gap-3">

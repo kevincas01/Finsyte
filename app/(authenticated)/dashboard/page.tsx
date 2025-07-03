@@ -27,10 +27,22 @@ const DashboardPage = async () => {
 
   const expenseReport = getMonthlyExpensesTotal(transactions, true);
 
-  const totalBalance = accountsInfo?.reduce(
-    (total, account) => total + account.available_balance,
+  const positiveAccounts = accountsInfo?.filter(
+    (account) => account.type === "depository" || account.type === "investment"
+  );
+  const totalBalance = positiveAccounts!.reduce(
+    (total, account) => total + account.current_balance,
     0
   );
+
+  const negativeAccounts = accountsInfo?.filter(
+    (account) => account.type === "credit" || account.type === "loan"
+  );
+  const totalDebt =
+    negativeAccounts!.reduce(
+      (sum, account) => sum + Math.abs(account.current_balance),
+      0
+    ) ?? 0;
 
   return (
     <div className="flex flex-col gap-5">
@@ -45,13 +57,16 @@ const DashboardPage = async () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <BalancesCard
           totalBalance={totalBalance!}
-          accountsLength={accountsInfo?.length!}
+          accountsLength={positiveAccounts?.length!}
         />
         <ExpensesCard
-          expensesTotal={expenseReport.total||0}
-          topExpense={expenseReport.topCategory|| null}
+          expensesTotal={expenseReport.total || 0}
+          topExpense={expenseReport.topCategory || null}
         />
-        <DebtCard />
+        <DebtCard
+          totalDebt={totalDebt!}
+          accountsLength={negativeAccounts?.length!}
+        />
         <BillsCard />
       </div>
 

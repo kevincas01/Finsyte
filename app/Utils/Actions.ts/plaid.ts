@@ -15,7 +15,7 @@ export async function createLinkToken(userId: string) {
     const request = {
       user: { client_user_id: userId },
       client_name: "Your App Name",
-      products: [Products.Auth, Products.Transactions],
+      products: [Products.Auth, Products.Transactions, Products.Liabilities],
       country_codes: [CountryCode.Us],
       language: "en",
     };

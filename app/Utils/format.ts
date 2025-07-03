@@ -25,9 +25,9 @@ export function formatDate(input: string): string {
 
 export function formatDateToMMDDYYYY(dateString: string): string {
   const date = new Date(dateString);
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = date.getFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const year = date.getUTCFullYear();
 
   return `${month}/${day}/${year}`;
 }

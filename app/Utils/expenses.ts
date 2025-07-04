@@ -6,11 +6,13 @@ interface MonthlyExpenseResult {
     category: string;
     amount: number;
   };
+  categories?: Record<string, number>;
 }
 
 export const getMonthlyExpensesTotal = (
   transactions: ClientTransaction[],
-  includeTopCategory: boolean = false
+  includeTopCategory: boolean = false,
+  includeCategories: boolean = false
 ): MonthlyExpenseResult => {
   const now = new Date();
   const currentMonth = now.getUTCMonth();
@@ -20,7 +22,8 @@ export const getMonthlyExpensesTotal = (
   const monthlyTransactions = transactions.filter((tx) => {
     const txDate = new Date(tx.datetime);
     return (
-      txDate.getUTCMonth() === currentMonth && txDate.getUTCFullYear() === currentYear
+      txDate.getUTCMonth() === currentMonth &&
+      txDate.getUTCFullYear() === currentYear
     );
   });
 
@@ -29,7 +32,7 @@ export const getMonthlyExpensesTotal = (
 
   const total = expenses.reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
 
-  if (!includeTopCategory) {
+  if (!includeTopCategory && !includeCategories) {
     return { total };
   }
 
@@ -61,5 +64,6 @@ export const getMonthlyExpensesTotal = (
           amount: categoryTotals[topCategory],
         }
       : undefined,
+    categories: categoryTotals,
   };
 };

@@ -1,12 +1,12 @@
 import {
   ClientTransaction,
   ClientTransactionWithAccount,
-  DBTransactionn,
+  DBTransaction,
   DBTransactionWithAccount,
 } from "@/app/Types/transactions";
 
 export const mapToClientTransaction = (
-  transaction: DBTransactionn
+  transaction: DBTransaction
 ): ClientTransaction => {
   return {
     id: transaction.id,

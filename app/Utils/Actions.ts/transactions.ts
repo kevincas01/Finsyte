@@ -3,7 +3,7 @@ import { Transaction } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
 import {
   ClientTransaction,
-  DBTransactionn,
+  DBTransaction,
   DBTransactionWithAccount,
 } from "@/app/Types/transactions";
 import { mapPlaidCategoryToCustom } from "../categories";
@@ -163,7 +163,7 @@ export const getUserTransactionsWithAccountId = async (
   accountId: string
 ): Promise<{
   success: boolean;
-  data?: DBTransactionn[];
+  data?: DBTransaction[];
   error?: string;
 }> => {
   const supabase = await createSupabaseServerClient();
@@ -188,7 +188,7 @@ export const getUserTransactionsByCategory = async (
   category: string
 ): Promise<{
   success: boolean;
-  data?: DBTransactionn[];
+  data?: DBTransaction[];
   error?: string;
 }> => {
   const supabase = await createSupabaseServerClient();

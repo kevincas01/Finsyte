@@ -16,7 +16,7 @@ export type TransactionCategory =
   | "Gifts & Donations"
   | "Groceries";
 
-export interface DBTransactionn {
+export interface DBTransaction {
   id: number;
   user_id: string;
   item_id: string;
@@ -31,7 +31,7 @@ export interface DBTransactionn {
   finance_category: string | null;
 }
 
-export interface DBTransactionWithAccount extends DBTransactionn {
+export interface DBTransactionWithAccount extends DBTransaction {
   account: DBAccount;
 }
 

@@ -6,7 +6,9 @@ import RecentTransactionsCard from "@/app/Components/Dashboard/RecentTransaction
 import { getUserAccounts } from "@/app/Utils/Actions.ts/accounts";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { getUserInformation } from "@/app/Utils/Actions.ts/profiles";
-import { getUserTransactionsWithAccount } from "@/app/Utils/Actions.ts/transactions";
+import {
+  getUserTransactionsWithLimit,
+} from "@/app/Utils/Actions.ts/transactions";
 import { getMonthlyExpensesTotal } from "@/app/Utils/expenses";
 import { mapToClientTransaction } from "@/app/Utils/Transform/transactions";
 import { redirect } from "next/navigation";
@@ -18,7 +20,7 @@ const DashboardPage = async () => {
   }
   const userId = userSession.id;
   const profileInfo = (await getUserInformation(userId))?.data;
-  const dbTransactions = (await getUserTransactionsWithAccount(userId)).data;
+  const dbTransactions = (await getUserTransactionsWithLimit(userId, 10)).data;
   const transactions = dbTransactions!.map((transaction) =>
     mapToClientTransaction(transaction)
   );

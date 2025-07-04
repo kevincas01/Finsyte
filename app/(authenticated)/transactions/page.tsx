@@ -20,7 +20,6 @@ const TransactionsPage = async () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <TransactionsHeader />
       <TransactionsClient transactions={transactions!} />
     </div>
   );

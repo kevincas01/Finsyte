@@ -2,14 +2,18 @@ import BalancesCard from "@/app/Components/Dashboard/BalancesCard";
 import BillsCard from "@/app/Components/Dashboard/BillsCard";
 import DebtCard from "@/app/Components/Dashboard/DebtCard";
 import ExpensesCard from "@/app/Components/Dashboard/ExpensesCard";
+import MonthlyExpensesCard from "@/app/Components/Dashboard/MonthlyExpensesCard";
 import RecentTransactionsCard from "@/app/Components/Dashboard/RecentTransactionsCard";
 import { getUserAccounts } from "@/app/Utils/Actions.ts/accounts";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { getUserInformation } from "@/app/Utils/Actions.ts/profiles";
 import { getUserRecurringTransactions } from "@/app/Utils/Actions.ts/recurring";
-import { getUserTransactionsWithLimit } from "@/app/Utils/Actions.ts/transactions";
+import {
+  getUserTransactions,
+} from "@/app/Utils/Actions.ts/transactions";
 import { getStartAndEndOfCurrentWeek } from "@/app/Utils/date";
 import { getMonthlyExpensesTotal } from "@/app/Utils/expenses";
+import { formatCategoriesForRadial } from "@/app/Utils/format";
 import { mapToClientRecurring } from "@/app/Utils/Transform/recurring";
 import { mapToClientTransaction } from "@/app/Utils/Transform/transactions";
 import { redirect } from "next/navigation";
@@ -21,14 +25,14 @@ const DashboardPage = async () => {
   }
   const userId = userSession.id;
   const profileInfo = (await getUserInformation(userId))?.data;
-  const dbTransactions = (await getUserTransactionsWithLimit(userId, 10)).data;
+  const dbTransactions = (await getUserTransactions(userId)).data;
   const transactions = dbTransactions!.map((transaction) =>
     mapToClientTransaction(transaction)
   );
 
   const accountsInfo = (await getUserAccounts(userId)).data;
 
-  const expenseReport = getMonthlyExpensesTotal(transactions, true);
+  const expenseReport = getMonthlyExpensesTotal(transactions, true, true);
 
   const positiveAccounts = accountsInfo?.filter(
     (account) => account.type === "depository" || account.type === "investment"
@@ -66,6 +70,8 @@ const DashboardPage = async () => {
     0
   );
 
+  const chartData = formatCategoriesForRadial(expenseReport.categories);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="">
@@ -95,6 +101,7 @@ const DashboardPage = async () => {
         />
       </div>
 
+      <MonthlyExpensesCard chartData={chartData} />
       <RecentTransactionsCard transactions={transactions} />
     </div>
   );

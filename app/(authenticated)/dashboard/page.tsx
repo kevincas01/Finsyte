@@ -6,10 +6,11 @@ import RecentTransactionsCard from "@/app/Components/Dashboard/RecentTransaction
 import { getUserAccounts } from "@/app/Utils/Actions.ts/accounts";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import { getUserInformation } from "@/app/Utils/Actions.ts/profiles";
-import {
-  getUserTransactionsWithLimit,
-} from "@/app/Utils/Actions.ts/transactions";
+import { getUserRecurringTransactions } from "@/app/Utils/Actions.ts/recurring";
+import { getUserTransactionsWithLimit } from "@/app/Utils/Actions.ts/transactions";
+import { getStartAndEndOfCurrentWeek } from "@/app/Utils/date";
 import { getMonthlyExpensesTotal } from "@/app/Utils/expenses";
+import { mapToClientRecurring } from "@/app/Utils/Transform/recurring";
 import { mapToClientTransaction } from "@/app/Utils/Transform/transactions";
 import { redirect } from "next/navigation";
 const DashboardPage = async () => {
@@ -46,6 +47,25 @@ const DashboardPage = async () => {
       0
     ) ?? 0;
 
+  const dbRecurring = (await getUserRecurringTransactions(userId)).data;
+
+  const recurringTransactions = dbRecurring!.map((recurring) =>
+    mapToClientRecurring(recurring)
+  );
+
+  const { now, endOfWeek } = getStartAndEndOfCurrentWeek();
+
+  const upcomingTransactions = recurringTransactions.filter((tx) => {
+    const txDate = new Date(tx.next_date);
+    console.log(now, txDate, endOfWeek);
+    return txDate >= now && txDate <= endOfWeek;
+  });
+
+  const totalUpcomingBalance = upcomingTransactions.reduce(
+    (sum, tx) => sum + tx.amount,
+    0
+  );
+
   return (
     <div className="flex flex-col gap-5">
       <div className="">
@@ -69,7 +89,10 @@ const DashboardPage = async () => {
           totalDebt={totalDebt!}
           accountsLength={negativeAccounts?.length!}
         />
-        <BillsCard />
+        <BillsCard
+          totalUpcomingBalance={totalUpcomingBalance}
+          upcomingBalanceLength={upcomingTransactions.length}
+        />
       </div>
 
       <RecentTransactionsCard transactions={transactions} />

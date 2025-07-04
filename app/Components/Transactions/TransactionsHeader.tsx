@@ -6,8 +6,10 @@ import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import TransactionsModal from "@/app/Components/Modal/TransactionsModal";
 import { createTransaction } from "@/app/Utils/Actions.ts/transactions";
-
-const TransactionsHeader = () => {
+interface TransactionsHeaderProps {
+  onExport: () => void;
+}
+const TransactionsHeader = ({ onExport }: TransactionsHeaderProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -24,7 +26,7 @@ const TransactionsHeader = () => {
               description: transaction.description,
               pending: false,
               logoUrl: null,
-              financeCategory:transaction.financeCategory
+              financeCategory: transaction.financeCategory,
             });
 
             if (!result.success) {
@@ -42,7 +44,7 @@ const TransactionsHeader = () => {
           </p>
         </div>
         <div className="flex flex-row gap-3">
-          <NeutralButton onClick={() => {}}>
+          <NeutralButton onClick={onExport}>
             <FileDownloadOutlinedIcon />
             <p>Export</p>
           </NeutralButton>

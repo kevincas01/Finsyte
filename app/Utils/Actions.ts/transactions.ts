@@ -130,6 +130,54 @@ export const createTransactions = async ({
   }
 };
 
+export const getUserTransactions = async (
+  userId: string
+): Promise<{
+  success: boolean;
+  data?: DBTransaction[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select("*")
+    .eq("user_id", userId)
+    .order("datetime", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch items with accounts:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data: data as DBTransaction[] };
+};
+
+export const getUserTransactionsWithLimit = async (
+  userId: string,
+  limit: number
+): Promise<{
+  success: boolean;
+  data?: DBTransaction[];
+  error?: string;
+}> => {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select("*")
+    .eq("user_id", userId)
+    .limit(limit)
+    .order("datetime", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch items with accounts:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true, data: data as DBTransaction[] };
+};
+
 export const getUserTransactionsWithAccount = async (
   userId: string
 ): Promise<{

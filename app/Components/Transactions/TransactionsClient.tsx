@@ -4,6 +4,8 @@ import { useState, useMemo } from "react";
 import TransactionsFilter from "./TransactionsFilter";
 import TransactionsTable from "./TransactionsTable";
 import { ClientTransactionWithAccount } from "@/app/Types/transactions";
+import TransactionsHeader from "./TransactionsHeader";
+import { exportTransactionsToCSV } from "@/app/Utils/export";
 
 interface Props {
   transactions: ClientTransactionWithAccount[];
@@ -15,18 +17,19 @@ const TransactionsClient = ({ transactions }: Props) => {
   const [account, setAccount] = useState("All");
 
   const handleSearchChange = (value: string) => {
-    console.log("jnskdjfkjsadn kfjasd");
     setSearch(value);
   };
-
   const handleCategoryChange = (value: string) => {
-    console.log("jnskdjfkjsadn kfjasd");
     setCategory(value);
   };
   const handleAccountChange = (value: string) => {
-    console.log("jnskdjfkjsadn kfjasd");
     setAccount(value);
   };
+
+  const handleTransactionsExport = () => {
+    exportTransactionsToCSV(transactions);
+  };
+
   const filteredTransactions = useMemo(() => {
     return transactions.filter((transaction) => {
       const matchesSearch = transaction
@@ -42,6 +45,7 @@ const TransactionsClient = ({ transactions }: Props) => {
 
   return (
     <div className="flex flex-col gap-5">
+      <TransactionsHeader onExport={handleTransactionsExport} />
       <TransactionsFilter
         search={search}
         onSearchChange={handleSearchChange}

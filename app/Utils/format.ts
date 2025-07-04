@@ -31,3 +31,14 @@ export function formatDateToMMDDYYYY(dateString: string): string {
 
   return `${month}/${day}/${year}`;
 }
+
+export const formatCategoriesForRadial = (
+  categories?: Record<string, number>
+): { name: string; value: number }[] => {
+  if (!categories) return [];
+
+  return Object.entries(categories).map(([category, value]) => ({
+    name: category,
+    value,
+  }));
+};

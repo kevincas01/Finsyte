@@ -101,7 +101,7 @@ const DashboardPage = async () => {
       </div>
 
       <MonthlyExpensesCard chartData={chartData} />
-      <RecentTransactionsCard transactions={transactions} />
+      <RecentTransactionsCard transactions={transactions.slice(0, 10)} />
     </div>
   );
 };

@@ -25,7 +25,6 @@ const RecurringTransactionsList = ({
             setSelectedRecurring(null);
           }}
           onSubmit={(budget) => {
-            console.log(budget);
             setIsModalOpen(false);
             setSelectedRecurring(null);
           }}

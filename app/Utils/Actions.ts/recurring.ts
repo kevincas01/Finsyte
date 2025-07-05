@@ -1,7 +1,10 @@
 "use server";
 import { TransactionStream } from "plaid";
 import { createSupabaseServerClient } from "../Clients/supabaseClient";
-import { DBRecurringTransaction, DBRecurringTransactionWAccount } from "@/app/Types/recurring";
+import {
+  DBRecurringTransaction,
+  DBRecurringTransactionWAccount,
+} from "@/app/Types/recurring";
 import { mapPlaidCategoryToCustom } from "../categories";
 
 export const upsertRecurringOutflows = async (

@@ -2,11 +2,9 @@ import RecurringHeader from "@/app/Components/Recurring/RecurringHeader";
 import RecurringPaymentList from "@/app/Components/Recurring/RecurringTransactionsList";
 import { getUser } from "@/app/Utils/Actions.ts/auth";
 import {
-  getUserRecurringTransactions,
   getUserRecurringTransactionsWAccount,
 } from "@/app/Utils/Actions.ts/recurring";
 import {
-  mapToClientRecurring,
   mapToClientRecurringWAccount,
 } from "@/app/Utils/Transform/recurring";
 import { redirect } from "next/navigation";
@@ -21,7 +19,6 @@ const BudgetsPage = async () => {
 
   const dbRecurring = (await getUserRecurringTransactionsWAccount(userId)).data;
 
-  console.log(dbRecurring);
   const recurringTransactions = dbRecurring!.map((recurring) =>
     mapToClientRecurringWAccount(recurring)
   );

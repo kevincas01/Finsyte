@@ -61,7 +61,6 @@ const DashboardPage = async () => {
 
   const upcomingTransactions = recurringTransactions.filter((tx) => {
     const txDate = new Date(tx.next_date);
-    console.log(now, txDate, endOfWeek);
     return txDate >= now && txDate <= endOfWeek;
   });
 

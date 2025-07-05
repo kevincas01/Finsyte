@@ -24,7 +24,6 @@ const SignUpForm = ({ onTabSwitch }: SignUpFormProps) => {
     const signUpResult = await signUpUser(authData);
 
     if (!signUpResult.success) {
-      console.log(signUpResult);
       setErrorMessage(
         "This email is already registered as a user! Try Signing In!"
       );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import TransactionsModal from "../Modal/TransactionsModal";
 import { updateTransaction } from "@/app/Utils/Actions.ts/transactions";
 import { formatDateToMMDDYYYY } from "@/app/Utils/format";
+import Image from "next/image";
 
 type TransactionsTableProps = {
   transactions: ClientTransactionWithAccount[];
@@ -73,7 +74,22 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 <td className="px-6 py-4">
                   {formatDateToMMDDYYYY(transaction.datetime)}
                 </td>
-                <td className="px-6 py-4 font-semibold text-base">
+                <td className="px-6 py-4 font-semibold text-base flex ">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-3 relative overflow-hidden">
+                    {transaction.logoUrl ? (
+                      <Image
+                        fill
+                        src={transaction.logoUrl}
+                        alt="Merchant Logo"
+                        objectFit="cover"
+                        className="relative rounded-full"
+                      />
+                    ) : (
+                      <span className="text-gray-600 text-lg">
+                        {transaction.name[0]}
+                      </span>
+                    )}
+                  </div>
                   {transaction.name}
                 </td>
                 <td className="px-6 py-4">{transaction.description}</td>
